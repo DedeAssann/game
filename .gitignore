@@ -1,2 +1,7 @@
 # files and folders to ignore
 kivy_venv/
+__pycache__/
+README.md
+poetry.lock
+pyproject.toml
+*.yml
