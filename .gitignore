@@ -4,5 +4,4 @@ pyproject.toml
 *.yml
 README.md
 poetry.lock
-kivy_venv/
 .git/
