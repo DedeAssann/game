@@ -1,7 +1,0 @@
-# directories and files that must be excluded from tracked files
-__pycache__/
-pyproject.toml
-*.yml
-README.md
-poetry.lock
-.git/
