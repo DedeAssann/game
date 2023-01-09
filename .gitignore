@@ -1,0 +1,8 @@
+# directories and files that must be excluded from tracked files
+__pycache__
+*.toml
+*.yml
+README.md
+poetry.lock
+kivy_venv
+.git
