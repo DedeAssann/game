@@ -1,0 +1,37 @@
+# kivy 1.9.0
+<Wheel>:
+
+    Widget:
+        canvas:
+            Ellipse:
+                pos: self.pos
+                source: "wheel.png"
+                size: 100, 100
+
+
+<Generator>:
+
+    Widget:
+        orientation: "vertical"
+
+        Label:
+            text:"My Fortune App"
+            font_size: 64
+            color: 0.0039, 0.6313, 0.9058
+        Label:
+            id: random_label
+            text: "click"
+            colors: 0, 0, 0
+        Wheel:
+            id: wheel
+            center: self.parent.center
+        Widget:
+            Ellipse:
+                pos: self.pos
+                text: "Play"
+                size: 50, 25
+                font_size: 42
+                color: 0.0039, 0.6313, 0.9058
+                on_press: root.animate()
+
+
