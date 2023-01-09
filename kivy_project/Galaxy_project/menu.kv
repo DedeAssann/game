@@ -1,0 +1,63 @@
+#: import Screen kivy.uix.screenmanager
+#: import ScreenManager kivy.uix.screenmanager
+
+WindowManager:
+    MenuWidget:
+    SettingsWidget:
+
+<MenuWidget>:
+    name: "menu"
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .8
+        Rectangle:
+            size: self.size
+    Label:
+        font_size: dp(60)
+        font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+        text: root.parent.menu_title
+        pos_hint: {"center_x": .5, "center_y": .6}
+    Button:
+        font_size: dp(30)
+        font_name: "fonts/Eurostile.ttf"
+        text: root.parent.button_title
+        pos_hint: { "center_x": .5, "center_y": .3}
+        size_hint: .2, .1
+        on_press: root.parent.on_menu_button_pressed()
+        background_color: 1, .5, 1, 1
+    Button:
+        font_size: dp(30)
+        font_name: "fonts/Eurostile.ttf"
+        text: "S E T T I N G S"
+        pos_hint: { "center_x": .5, "center_y": .3}
+        size_hint: .3, .1
+        on_press:
+            app.root.current = "settings"
+            root.manager.transition.direction = "left"
+        background_color: 1, .5, 1, 1
+
+<SettingsWidget@Screen>:
+    name: "settings"
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .9
+        Rectangle:
+            size: self.size
+    Label:
+        text: "S  E  T  T  I  N  G  S"
+        font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+        font_size: dp(60)
+        pos_hint: {"center_x": .5, "top": 1}
+    Button:
+        font_size: dp(30)
+        font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+        text: "M E N U"
+        pos_hint: { "right": 1, "top": 1}
+        size_hint: .3, .1
+        on_press:
+            app.root.current = "menu"
+            root.manager.transition.direction = "right"
+        background_color: .8, .5, 1, .9
+
+
+<WindowManager@ScreenManager>:

@@ -1,0 +1,31 @@
+# kivy : 1.9
+
+<MyAppScreen>:
+
+    FloatLayout:
+        pos: 0, 0
+        size_hint: None, None
+        size: root.width*.67, root.height*.5
+
+        GridLayout:
+            cols: 4
+            pos_hint: {"x": .1, "y": .1}
+            size_hint: 1, 1
+
+            Button:
+                text:"Parameter"
+            Button:
+                text:"round"
+            Button:
+                text:","
+            Button:
+                text:"x"
+            Button:
+                text: "6"
+    
+    BoxLayout:
+        pos_hint: {"center_x":.5, "top":1}
+        size_hint: 1, .2
+
+        TextInput:
+            text: ""

@@ -1,0 +1,43 @@
+#: import Screen kivy.uix.screenmanager
+#: import ScreenManager kivy.uix.screenmanager
+
+WindowManager:
+    MainWindow:
+    SecondWindow:
+
+<MainWindow@Screen>:
+    name: "main"
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .8
+        Rectangle:
+            size: self.size
+    Label:
+        font_size: dp(60)
+        font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+        text: "M E N U  P A G E"
+        pos_hint: {"center_x": .5, "center_y": .65}
+    Button:
+        font_size: dp(30)
+        font_name: "fonts/Eurostile.ttf"
+        text: "S E T T I N G S"
+        pos_hint: { "center_x": .5, "center_y": .3}
+        size_hint: .3, .1
+        on_press:
+            app.root.current = "second"
+            root.manager.transition.direction = "left"
+        background_color: 1, .5, 1, 1
+
+
+
+<SecondWindow@Screen>:
+    name: "second"
+
+    Button:
+        text: "G O  B A C K"
+        on_press:
+            app.root.current = "main"
+            root.manager.transition.direction = "right"
+
+
+<WindowManager@ScreenManager>:
