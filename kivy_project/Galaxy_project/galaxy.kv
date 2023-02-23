@@ -1,5 +1,5 @@
 #:import menu menu
-
+#: import settings menu
 MainWidget:
 
 <MainWidget>:
@@ -7,11 +7,14 @@ MainWidget:
         Rectangle:
             size: self.size
             source: "bg1.jpg"
-    menu_widget: menu_widget
+    menu_widget: menu_window
+    settings_widget: settings_window
     perspective_point_x: self.width/2
     perspective_point_y: self.height*0.75
-    MenuWidget:
-        id: menu_widget
+    MenuWindow:
+        id: menu_window
+    SettingsWindow:
+        id: settings_window
     Label:
         id: score
         text: root.score_txt

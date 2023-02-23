@@ -5,7 +5,7 @@ A present, dans ce module je developpe avec aide le jeu du projet Galaxy.
 Ce jeu consiste a deplacer un spaceship sur un plan, et suivre le chemin trace devant soi...
 """
 
-# pylint: disable = import-outside-toplevel, no-name-in-module, wrong-import-position, wrong-import-order
+# pylint: disable = wrong-import-order, no-name-in-module, import-outside-toplevel, wrong-import-position
 
 from kivy.config import Config
 
@@ -23,9 +23,8 @@ from kivy.properties import NumericProperty, ObjectProperty, StringProperty, Clo
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.lang.builder import Builder
 
-
 # loading another .kv file...
-Builder.load_file("menu.kv")
+kv = Builder.load_file("menu.kv")
 
 
 class MainWidget(RelativeLayout):
@@ -55,12 +54,12 @@ class MainWidget(RelativeLayout):
     sound_restart = None
 
     menu_widget = ObjectProperty()
+    settings_widget = ObjectProperty()
     perspective_point_x = NumericProperty(0)
     perspective_point_y = NumericProperty(0)
     menu_title = StringProperty("G   A   L   A   X   Y")
     button_title = StringProperty("S T A R T")
     score_txt = StringProperty()
-    settings_widget = ObjectProperty()
     settings_button_title = StringProperty(" S  E  T  T  I  N  G  S")
 
     V_NB_LINES = 10
@@ -360,7 +359,7 @@ class MainWidget(RelativeLayout):
 
     def play_game_over_voice_sound(self):
         "a function that plays the game over voice when we are in a game over state"
-        if self.state_game_over:
+        if not self.state_game_over:
             self.sound_gameover_voice.play()
 
     def on_menu_button_pressed(self):
@@ -389,12 +388,13 @@ class MainWidget(RelativeLayout):
         This function handles all the behavior of the settings button which is on the menu page.
         ...
         """
-        self.menu_widget.opacity = 0
-        self.settings_widget.opacity = 0.9
 
 
 class GalaxyApp(App):
     "The main app class"
+
+    def build(self):
+        return kv
 
 
 GalaxyApp().run()
