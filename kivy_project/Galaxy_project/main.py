@@ -21,10 +21,11 @@ from kivy.graphics.context_instructions import Color
 from kivy.graphics.vertex_instructions import Line, Quad
 from kivy.properties import NumericProperty, ObjectProperty, StringProperty, Clock
 from kivy.uix.relativelayout import RelativeLayout
+from kivy.uix.screenmanager import ScreenManager
 from kivy.lang.builder import Builder
 
 # loading another .kv file...
-kv = Builder.load_file("menu.kv")
+Builder.load_file("menu.kv")
 
 
 class MainWidget(RelativeLayout):
@@ -58,7 +59,7 @@ class MainWidget(RelativeLayout):
     perspective_point_x = NumericProperty(0)
     perspective_point_y = NumericProperty(0)
     menu_title = StringProperty("G   A   L   A   X   Y")
-    button_title = StringProperty("S T A R T")
+    menu_button_title = StringProperty("S T A R T")
     score_txt = StringProperty()
     settings_button_title = StringProperty(" S  E  T  T  I  N  G  S")
 
@@ -112,6 +113,7 @@ class MainWidget(RelativeLayout):
 
     def reset_game(self):
         "Here we reset the main variables of the game, so we can restart the game."
+
         self.current_offset_y = 0
         self.current_y_loop = 0
         self.current_speed_x = 0
@@ -319,6 +321,8 @@ class MainWidget(RelativeLayout):
         self.update_tiles()
         self.update_ship()
 
+        # if app.root.current
+
         if not self.state_game_over and self.state_game_has_started:
             speed_y = speed * self.height / 100
             self.current_offset_y += speed_y * time_factor
@@ -390,11 +394,27 @@ class MainWidget(RelativeLayout):
         """
 
 
+"""
+class SettingsWindow(Screen):
+    pass
+
+
+class MenuWindow(Screen):
+    pass
+"""
+
+
 class GalaxyApp(App):
     "The main app class"
+    menu = MainWidget
+    WindowManager = ScreenManager()
 
+
+"""
     def build(self):
-        return kv
-
+        "..."
+        if self.WindowManager.current == "game_screen":
+            self.menu.state_game_has_started = True
+"""
 
 GalaxyApp().run()

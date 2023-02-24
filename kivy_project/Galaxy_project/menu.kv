@@ -1,20 +1,5 @@
-#: import Screen kivy.uix.screenmanager
-#: import ScreenManager kivy.uix.screenmanager
-#: import on_menu_button_pressed main
 
-#: set menu_title "G  A  L  A  X  Y"
-#: set button_title "S T A R T"
-#: set settings_button_title "S  E  T  T  I  N  G  S"
-#: set return_settings_button_title "M  E  N  U"
-
-
-WindowManager:
-    MenuWindow:
-    SettingsWindow:
-
-
-<MenuWindow@Screen>:
-    name: "menu"
+<MenuWidget>:
     canvas.before:
         Color:
             rgba: 0, 0, 0, .8
@@ -22,53 +7,16 @@ WindowManager:
             size: self.size
     Label:
         font_size: dp(60)
-        font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
-        text: menu_title
-        pos_hint: {"center_x": .5, "center_y": .6}
+        font_name: 'fonts/Sackers-Gothic-Std-Light.ttf'
+        text: root.parent.menu_title
+        pos_hint: { "center_x": .5, "center_y": .6}
     Button:
         font_size: dp(30)
-        font_name: "fonts/Eurostile.ttf"
-        text: button_title
+        font_name: 'fonts/Eurostile.ttf'
+        text: root.parent.menu_button_title
         pos_hint: { "center_x": .5, "center_y": .3}
-        size_hint: .2, .1
-        on_press: on_menu_button_pressed()
-        background_color: .8, .5, 1, .9
-    Button:
-        font_size: dp(30)
-        font_name: "fonts/Eurostile.ttf"
-        text: settings_button_title
-        pos_hint: { "right": 1, "top": 1}
-        size_hint: .3, .1
-        on_press: 
-            #root.parent.on_settings_button_pressed()
-            app.root.current = "settings"
-            root.manager.transition.direction = "right"
-        background_color: .8, .5, 1, .9
+        size_hint: .2, .15
+        on_press: root.parent.on_menu_button_pressed()
+        background_normal: ''
+        background_color: 1, .3, .4, .85
 
-
-<SettingsWindow@Screen>:
-    name: "settings"
-    
-    canvas.before:
-        Color:
-            rgba: 0, 0, 0, 0
-        Rectangle:
-            size: self.size
-    Label:
-        text: "S E T T I N G S"#root.parent.settings_button_title
-        font_name: "fonts/Lcd.ttf"
-        font_size: dp(110)
-        pos_hint: {"right": 1, "top": 1}
-        color: 1, 1, 1, 0.05
-    Button:
-        font_size: dp(20)
-        font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
-        text: return_settings_button_title
-        pos_hint: { "right": 1, "top": 1}
-        size_hint: .3, .1
-        on_press:
-            app.root.current = "menu"
-            root.manager.transition.direction = "left"
-        background_color: .8, .5, 1, .9
-
-<WindowManager@ScreenManager>:
