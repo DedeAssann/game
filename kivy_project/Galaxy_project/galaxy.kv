@@ -1,7 +1,6 @@
 # importing the necessary modules
 
 #: import Screen kivy.uix.screenmanager
-#: import ScreenManager kivy.uix.screenmanager
 #: import menu menu
 
 # defining the different needed variables
@@ -22,21 +21,30 @@ WindowManager:
 
 # defining the Screen that will manage the game Widget
 
-<GameWindow@Screen>:
+<GameWindow>:
     name: "game_screen"
+    main_widget: main_widget
+    home_button: home_button
     MainWidget:
-    Button:
-        font_size: dp(30)
-        font_name: "fonts/Eurostile.ttf"
-        text: return_settings_button_title
-        pos_hint: { "right": .2, "top": 1}
-        size_hint: .2, .1
+        id: main_widget
+    HomeButton:
+        id: home_button
         on_press:
             app.root.current = "home_screen"
-            root.manager.transition.direction = "up"
-            #root.parent.on_menu_button_pressed()
-        background_color: .8, .5, 1, .9
+        disabled:
+            main_widget.game_is_playing_state
 
+    
+<HomeButton>:
+    id: home_button
+    color: 0 , .3 , .55 , 1
+    font_size: dp(20)
+    font_name: "fonts/Eurostile.ttf"
+    text: return_settings_button_title
+    pos_hint: { "right": 1, "top": 1}
+    size_hint: .18, .08
+    background_color: .8, .5, 1, .08
+    
 
 # the game widget
 
@@ -46,13 +54,10 @@ WindowManager:
             size: self.size
             source: "bg1.jpg"
     menu_widget: menu_widget
-    #settings_widget: settings_window
     perspective_point_x: self.width/2
     perspective_point_y: self.height*0.75
     MenuWidget:
         id: menu_widget
-    #SettingsWindow:
-        #id: settings_window
     Label:
         id: score
         text: root.score_txt
@@ -84,47 +89,39 @@ WindowManager:
         size_hint: .2, .1
         on_press:
             app.root.current = "game_screen"
-            root.manager.transition.direction = "up"
-            #root.parent.on_menu_button_pressed()
-        background_color: .8, .5, 1, .9
+        background_color: .8, .5, 1, .2
     Button:
-        font_size: dp(30)
+        font_size: dp(20)
         font_name: "fonts/Eurostile.ttf"
         text: settings_button_title
         pos_hint: { "right": 1, "top": 1}
-        size_hint: .28, .09
+        size_hint: .18, .08
         on_press: 
-            #root.parent.on_settings_button_pressed()
             app.root.current = "settings_screen"
-            root.manager.transition.direction = "right"
-        background_color: .8, .5, 1, .9
+        background_color: .8, .5, 1, .2
 
 
 <SettingsWindow@Screen>:
     name: "settings_screen"
     canvas:
-        #Color:
-            #rgba: 0, 0, 0, 0.5
         Rectangle:
             size: self.size
             source: "bg1.jpg"
     Label:
         text: "S E T T I N G S"#root.parent.settings_button_title
         font_name: "fonts/Lcd.ttf"
-        font_size: dp(150)
+        font_size: dp(180)
         pos_hint: {"center_x": .5, "top": 1}
-        color: 1, 1, 1, 0.05
+        color: 1, 1, 1, 0.15
     Button:
         font_size: dp(20)
         font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
         text: return_settings_button_title
-        pos_hint: { "right": .28, "top": 1}
-        size_hint: .28, .09
+        pos_hint: { "right": .18, "top": 1}
+        size_hint: .18, .08
         on_press:
             app.root.current = "home_screen"
-            root.manager.transition.direction = "left"
-        background_color: .8, .5, 1, .9
+        background_color: .8, .5, 1, .2
 
 
-<WindowManager@ScreenManager>:
-
+<WindowManager>:

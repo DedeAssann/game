@@ -19,9 +19,16 @@ from kivy.core.window import Window
 from kivy.app import App
 from kivy.graphics.context_instructions import Color
 from kivy.graphics.vertex_instructions import Line, Quad
-from kivy.properties import NumericProperty, ObjectProperty, StringProperty, Clock
+from kivy.properties import (
+    NumericProperty,
+    ObjectProperty,
+    StringProperty,
+    BooleanProperty,
+    Clock,
+)
 from kivy.uix.relativelayout import RelativeLayout
-from kivy.uix.screenmanager import ScreenManager
+from kivy.uix.screenmanager import Screen, ScreenManager, NoTransition
+from kivy.uix.button import Button
 from kivy.lang.builder import Builder
 
 # loading another .kv file...
@@ -64,14 +71,14 @@ class MainWidget(RelativeLayout):
     settings_button_title = StringProperty(" S  E  T  T  I  N  G  S")
 
     V_NB_LINES = 10
-    V_LINES_SPACING = 0.4  # percentage in screen width
+    V_LINES_SPACING = 0.5  # percentage in screen width
     vertical_lines = []
 
     H_NB_LINES = 15
     H_LINES_SPACING = 0.1  # percentage in screen height
     horizontal_lines = []
 
-    SPEED = 0.4
+    SPEED = 0.6
     current_offset_y = 0
     current_y_loop = 0
 
@@ -85,8 +92,9 @@ class MainWidget(RelativeLayout):
 
     ship = None
 
-    state_game_over = False
-    state_game_has_started = False
+    state_game_over = BooleanProperty(False)
+    state_game_has_started = BooleanProperty(False)
+    game_is_playing_state = BooleanProperty(False)
 
     def __init__(self, **kwargs):
         """
@@ -321,9 +329,8 @@ class MainWidget(RelativeLayout):
         self.update_tiles()
         self.update_ship()
 
-        # if app.root.current
-
         if not self.state_game_over and self.state_game_has_started:
+            self.game_is_playing_state = True
             speed_y = speed * self.height / 100
             self.current_offset_y += speed_y * time_factor
 
@@ -340,7 +347,7 @@ class MainWidget(RelativeLayout):
 
             speed_x = self.current_speed_x * self.width / 100
             self.current_offset_x += speed_x * time_factor
-            if self.current_y_loop == 1000:
+            if self.current_y_loop == 900:
                 speed_x += 0.15
 
         # checking if we are in a game over state, and if the ship hasgone out of the track
@@ -350,10 +357,11 @@ class MainWidget(RelativeLayout):
         # and the title of the menu screen and the the title of the button is changed.
 
         if not self.check_ship_collision() and not self.state_game_over:
+            self.game_is_playing_state = False
             self.state_game_over = True
-            self.menu_widget.opacity = 0.8
+            self.menu_widget.opacity = 0.5
             self.menu_title = "G  A  M  E    O  V  E  R"
-            self.button_title = "R E S T A R T"
+            self.menu_button_title = "R E S T A R T"
 
             # PLaying the different songs related to the game over state
 
@@ -387,34 +395,32 @@ class MainWidget(RelativeLayout):
         self.state_game_has_started = True
         self.menu_widget.opacity = 0
 
-    def on_settings_button_pressed(self):
-        """
-        This function handles all the behavior of the settings button which is on the menu page.
-        ...
-        """
+
+class GameWindow(Screen):
+    "The screen that cary's the MainWidget interface"
+
+    def __init__(self, **kw):
+        super().__init__(**kw)
 
 
-"""
-class SettingsWindow(Screen):
-    pass
+class HomeButton(Button):
+    "A simple button"
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
 
-class MenuWindow(Screen):
-    pass
-"""
+class WindowManager(ScreenManager):
+    "..."
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        transition = NoTransition(duration=1)
+        self.transition = transition
 
 
 class GalaxyApp(App):
-    "The main app class"
-    menu = MainWidget
-    WindowManager = ScreenManager()
+    """The main app class"""
 
-
-"""
-    def build(self):
-        "..."
-        if self.WindowManager.current == "game_screen":
-            self.menu.state_game_has_started = True
-"""
 
 GalaxyApp().run()
