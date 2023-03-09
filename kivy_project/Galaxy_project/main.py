@@ -10,12 +10,14 @@ Ce jeu consiste a deplacer un spaceship sur un plan, et suivre le chemin trace d
 from kivy.config import Config
 
 # configuring the screen which is gonna be opened by kivy
-Config.set("graphics", "width", "900")
-Config.set("graphics", "height", "400")
+Config.set("graphics", "width", "1200")
+Config.set("graphics", "height", "650")
+
+from kivy.core.window import Window
 
 import random
 from kivy import platform
-from kivy.core.window import Window
+
 from kivy.app import App
 from kivy.graphics.context_instructions import Color
 from kivy.graphics.vertex_instructions import Line, Quad
@@ -62,13 +64,26 @@ class MainWidget(RelativeLayout):
     sound_restart = None
 
     menu_widget = ObjectProperty()
-    settings_widget = ObjectProperty()
+    pause_button = ObjectProperty()
+    pause_widget = ObjectProperty()
+
     perspective_point_x = NumericProperty(0)
     perspective_point_y = NumericProperty(0)
+    score = NumericProperty(0)
+    best_score = NumericProperty(0)
+
+    score_txt = StringProperty(score)
+    best_score_txt = StringProperty(best_score)
     menu_title = StringProperty("G   A   L   A   X   Y")
     menu_button_title = StringProperty("S T A R T")
-    score_txt = StringProperty()
+    # pause_widget_title = StringProperty()
     settings_button_title = StringProperty(" S  E  T  T  I  N  G  S")
+    pause_button_txt = StringProperty("P A U S E")
+
+    pause_state = BooleanProperty(False)
+    state_game_over = BooleanProperty(False)
+    state_game_has_started = BooleanProperty(False)
+    game_is_playing_state = BooleanProperty(False)
 
     V_NB_LINES = 10
     V_LINES_SPACING = 0.5  # percentage in screen width
@@ -78,7 +93,7 @@ class MainWidget(RelativeLayout):
     H_LINES_SPACING = 0.1  # percentage in screen height
     horizontal_lines = []
 
-    SPEED = 0.6
+    SPEED = 0.4
     current_offset_y = 0
     current_y_loop = 0
 
@@ -91,10 +106,6 @@ class MainWidget(RelativeLayout):
     tiles_coordinates = []
 
     ship = None
-
-    state_game_over = BooleanProperty(False)
-    state_game_has_started = BooleanProperty(False)
-    game_is_playing_state = BooleanProperty(False)
 
     def __init__(self, **kwargs):
         """
@@ -130,7 +141,7 @@ class MainWidget(RelativeLayout):
         self.tiles_coordinates = []
         self.pre_fill_tiles_coordinates()
         self.generate_tiles_coordinates()
-
+        # self.pause_widget.opacity = 0
         self.state_game_over = False
 
     def is_desktop(self):
@@ -295,19 +306,30 @@ class MainWidget(RelativeLayout):
             x_2, y_2 = self.transform(xmax, line_y)
             self.horizontal_lines[_].points = [x_1, y_1, x_2, y_2]
 
+    def update_pause_button_txt(self):
+        """
+        ...
+        """
+        if self.pause_state == False:
+            self.pause_button_txt = "P A U S E"
+        if self.pause_state == True:
+            self.pause_button_txt = "R E S U M E"
+
     def speed_update(self):
         "In this function we increase the speed of the game."
-        actual_speed = self.SPEED
-        if self.current_y_loop == 85:
-            actual_speed += 0.1
-        elif self.current_y_loop == 150:
-            actual_speed += 0.1
-        elif self.current_y_loop == 400:
-            actual_speed += 0.15
-        elif self.current_y_loop == 750:
-            actual_speed += 0.2
-        elif self.current_y_loop == 1000:
-            actual_speed += 0.15
+        actual_speed = 0.4
+
+        if self.current_y_loop <= 79:
+            actual_speed += 0.075
+        elif self.current_y_loop <= 99:
+            actual_speed += 0.075
+        elif self.current_y_loop <= 149:
+            actual_speed += 0.075
+        elif self.current_y_loop <= 499:
+            actual_speed += 0.05
+        elif self.current_y_loop <= 799:
+            actual_speed += 0.045
+
         return actual_speed
 
     def update(self, _dt):
@@ -320,35 +342,54 @@ class MainWidget(RelativeLayout):
         Here we also handle the behavior of the game when it is playing and when it's not;
         in other words, when we are in a game over state and when we are not.
         """
+
         # Updating the different graphical components of the game, such as the vertical and
         # horizontal lines the tiles and the ship.
+
         time_factor = _dt * 60
-        speed = self.SPEED
         self.update_vertical_lines()
         self.update_horizontal_lines()
         self.update_tiles()
         self.update_ship()
 
-        if not self.state_game_over and self.state_game_has_started:
+        # pause button behavior
+        if not self.state_game_over:
+            self.pause_button.disabled = False
+            self.pause_button.opacity = 1
+
+        if not self.state_game_has_started:
+            self.pause_button.opacity = 0
+            self.pause_button.disabled = True
+            # setting the pause widget opacity to 0 at startup
+            self.pause_widget.opacity = 0
+
+        if self.state_game_over:
+            self.pause_button.opacity = 0
+            self.pause_button.disabled = True
+
+        # updating the game
+        if (
+            not self.state_game_over
+            and self.state_game_has_started
+            and not self.pause_state
+        ):
             self.game_is_playing_state = True
-            speed_y = speed * self.height / 100
+            speed_y = self.SPEED * self.height / 100
             self.current_offset_y += speed_y * time_factor
 
             spacing_y = self.H_LINES_SPACING * self.height
             while self.current_offset_y >= spacing_y:
                 self.current_offset_y -= spacing_y
                 self.current_y_loop += 1
-                self.score_txt = "S  C  O  R  E :  " + str(self.current_y_loop)
+                self.score_txt = "S C O R E :  " + str(self.current_y_loop)
                 if self.current_y_loop >= 70:
-                    speed = self.speed_update()
+                    self.SPEED = self.speed_update()
                 self.generate_tiles_coordinates()
-                print("actual speed: " + str(speed))
-                print("loop : " + str(self.current_y_loop))
+                # print("actual speed: " + str(self.SPEED))
+                # print("loop : " + str(self.current_y_loop))
 
             speed_x = self.current_speed_x * self.width / 100
             self.current_offset_x += speed_x * time_factor
-            if self.current_y_loop == 900:
-                speed_x += 0.15
 
         # checking if we are in a game over state, and if the ship hasgone out of the track
         # handling the behavior of the game
@@ -359,17 +400,37 @@ class MainWidget(RelativeLayout):
         if not self.check_ship_collision() and not self.state_game_over:
             self.game_is_playing_state = False
             self.state_game_over = True
-            self.menu_widget.opacity = 0.5
+            self.menu_widget.opacity = 1
             self.menu_title = "G  A  M  E    O  V  E  R"
             self.menu_button_title = "R E S T A R T"
 
             # PLaying the different songs related to the game over state
-
             self.sound_music1.stop()
             self.sound_gameover_impact.play()
             self.sound_gameover_voice.play()
+            Clock.schedule_once(self.play_game_over_voice_sound, 3)
+            # print("GAME OVER")
 
-    def play_game_over_voice_sound(self):
+    def on_pause_button_pressed(self):
+        "..."
+        self.pause_state = not self.pause_state
+        # print(f" pause state : {self.pause_state}")
+        if self.pause_state:
+            self.game_is_playing_state = False
+            self.SPEED = 0
+            self.update_pause_button_txt()
+            self.sound_music1.stop()
+            self.pause_widget.opacity = 0.9
+        elif not self.pause_state and not self.state_game_over:
+            self.game_is_playing_state = True
+            self.SPEED = self.speed_update()
+            self.update_pause_button_txt()
+            self.pause_widget.opacity = 0
+            self.sound_music1.play()
+        else:
+            pass
+
+    def play_game_over_voice_sound(self, dt):
         "a function that plays the game over voice when we are in a game over state"
         if not self.state_game_over:
             self.sound_gameover_voice.play()
@@ -383,7 +444,6 @@ class MainWidget(RelativeLayout):
         It also reset all the variables in the game, such as the self.state_game_has_started is set
         to True, the opacity of the menu widget is set to 0 and the main theme of the game is played
         """
-        # print("Button")
         if self.state_game_over:
             self.sound_gameover_voice.stop()
             self.sound_gameover_impact.stop()
@@ -396,13 +456,50 @@ class MainWidget(RelativeLayout):
         self.menu_widget.opacity = 0
 
 
+# the GameWindow class
 class GameWindow(Screen):
-    "The screen that cary's the MainWidget interface"
+    "The screen that carries the MainWidget interface"
+
+    main_widget = ObjectProperty()
+    home_button = ObjectProperty()
 
     def __init__(self, **kw):
         super().__init__(**kw)
+        Clock.schedule_interval(self.on_progress, 1.0 / 60)
+
+    def on_progress(self, _dt):
+        "..."
+        if self.main_widget.game_is_playing_state:
+            self.home_button.opacity = 0
+            self.home_button_disabled = True
+        else:
+            self.home_button.opacity = 1
+            self.home_button.disabled = False
 
 
+# the pause Widget class
+class PauseWidget(RelativeLayout):
+    pass
+
+
+# the HomeWindow class
+class HomeWindow(Screen):
+    "The first screen displayed!"
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def exit(self, *args):
+        "Implementing an exit function for the game"
+        App.get_running_app().stop()
+        Window.close()
+
+    # the Pause Widget class
+    # class PauseWidget(RelativeLayout):
+    "..."
+
+
+# the HomeButton class
 class HomeButton(Button):
     "A simple button"
 
@@ -410,6 +507,12 @@ class HomeButton(Button):
         super().__init__(**kwargs)
 
 
+# The PauseButton class
+class PauseButton(Button):
+    "A simple button to pause the game"
+
+
+# the WindowManager class
 class WindowManager(ScreenManager):
     "..."
 
@@ -419,6 +522,7 @@ class WindowManager(ScreenManager):
         self.transition = transition
 
 
+# The App
 class GalaxyApp(App):
     """The main app class"""
 

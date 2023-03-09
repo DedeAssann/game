@@ -7,11 +7,12 @@
 
 #: set menu_title "G  A  L  A  X  Y"
 #: set home_button_title "P  L  A  Y"
+#: set pause_widget_title " R  E  S  U  M  E "
 #: set settings_button_title "S  E  T  T  I  N  G  S"
 #: set return_settings_button_title "H  O  M  E"
 
 
-# The ScreenManager object that manages the screen
+# The manager of the screen
 
 WindowManager:
     HomeWindow:
@@ -19,7 +20,13 @@ WindowManager:
     SettingsWindow:
 
 
-# defining the Screen that will manage the game Widget
+# Window manager
+
+<WindowManager>:
+
+# defining the Screens
+
+# the game window
 
 <GameWindow>:
     name: "game_screen"
@@ -31,20 +38,104 @@ WindowManager:
         id: home_button
         on_press:
             app.root.current = "home_screen"
-        disabled:
-            main_widget.game_is_playing_state
 
-    
-<HomeButton>:
-    id: home_button
-    color: 0 , .3 , .55 , 1
-    font_size: dp(20)
-    font_name: "fonts/Eurostile.ttf"
-    text: return_settings_button_title
-    pos_hint: { "right": 1, "top": 1}
-    size_hint: .18, .08
-    background_color: .8, .5, 1, .08
-    
+
+# home window
+
+<HomeWindow>:
+    name: "home_screen"
+    canvas:
+        Rectangle:
+            size: self.size
+            source: "bg1.jpg"
+    ExitButton:
+        id: exit_button
+        on_release: root.exit()
+    Label:
+        font_size: dp(60)
+        font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+        text: menu_title
+        pos_hint: {"center_x": .5, "center_y": .6}
+    Button:
+        canvas.before:
+            Color:
+                rgba: .2, .7, 1, .25
+            Line:
+                width: dp(2)
+                rectangle: self.x, self.y, self.width, self.height
+        font_size: dp(25)
+        font_name: "fonts/Eurostile.ttf"
+        text: home_button_title
+        pos_hint: { "center_x": .5, "center_y": .3}
+        size_hint: .2, .1
+        on_press:
+            app.root.current = "game_screen"
+        background_color: .8, .5, 1, .2
+    Button:
+        canvas.before:
+            Color:
+                rgba: .2, .7, 1, .25
+            Line:
+                width: dp(2)
+                rectangle: self.x, self.y, self.width, self.height
+        font_size: dp(25)
+        font_name: "fonts/Eurostile.ttf"
+        text: settings_button_title
+        pos_hint: { "right": 1, "top": 1}
+        size_hint: .18, .08
+        on_press: 
+            app.root.current = "settings_screen"
+            #app.main_widget.pause_widget.opacity = 0
+        background_color: .8, .5, 1, .2
+
+# settins window
+
+<SettingsWindow@Screen>:
+    name: "settings_screen"
+    canvas:
+        Rectangle:
+            size: self.size
+            source: "bg1.jpg"
+    Label:
+        text: "S E T T I N G S"
+        font_name: "fonts/Lcd.ttf"
+        font_size: dp(180)
+        pos_hint: {"center_x": .5, "top": 1}
+        color: 1, 1, 1, .15
+    Button:
+        canvas.before:
+            Color:
+                rgba: .2, .7, 1, .25
+            Line:
+                width: dp(2)
+                rectangle: self.x, self.y, self.width, self.height
+        font_size: dp(25)
+        font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+        text: return_settings_button_title
+        pos_hint: { "right": .18, "top": 1}
+        size_hint: .18, .08
+        on_press:
+            app.root.current = "home_screen"
+        background_color: .8, .5, 1, .2
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint: 1, .70
+        RelativeLayout:
+            pos_hint: {'right': 1, 'top': 1}
+            size_hint: 1, .45
+        GridLayout:
+            rows:2
+            cols:4
+            spacing: dp(15)
+            Button_1:                                                                                                
+            Button_2:                                                                                                
+            Button_3:                                                                                                                                
+            Button_4:                                                                                                                                
+            Button_5:                
+            Button_6:                                                                                                
+            Button_7:                                                                                                                                
+            Button_8:                                                                                                                                
+
 
 # the game widget
 
@@ -54,74 +145,246 @@ WindowManager:
             size: self.size
             source: "bg1.jpg"
     menu_widget: menu_widget
+    pause_widget: pause_widget
+    pause_button: pause_button
     perspective_point_x: self.width/2
     perspective_point_y: self.height*0.75
+    PauseWidget:
+        id: pause_widget
+    PauseButton:
+        id: pause_button
+        text: root.pause_button_txt
+        on_press:
+            root.on_pause_button_pressed()
     MenuWidget:
         id: menu_widget
     Label:
         id: score
         text: root.score_txt
-        font_size: dp(25)
+        font_size: dp(32)
         font_name: "fonts/Lcd.ttf"
         size_hint: .2, .2
         pos_hint: {"x": 0, "top": 1}
 
 
+# the pause widget
 
-# defining the menu window, which can be considered has the home page
-
-<HomeWindow@Screen>:
-    name: "home_screen"
-    canvas:
+<PauseWidget>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .8
         Rectangle:
             size: self.size
-            source: "bg1.jpg"
     Label:
-        font_size: dp(60)
+        font_size: dp(90)
         font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
-        text: menu_title
-        pos_hint: {"center_x": .5, "center_y": .6}
-    Button:
-        font_size: dp(30)
-        font_name: "fonts/Eurostile.ttf"
-        text: home_button_title
-        pos_hint: { "center_x": .5, "center_y": .3}
-        size_hint: .2, .1
-        on_press:
-            app.root.current = "game_screen"
-        background_color: .8, .5, 1, .2
-    Button:
-        font_size: dp(20)
-        font_name: "fonts/Eurostile.ttf"
-        text: settings_button_title
-        pos_hint: { "right": 1, "top": 1}
-        size_hint: .18, .08
-        on_press: 
-            app.root.current = "settings_screen"
-        background_color: .8, .5, 1, .2
+        text: pause_widget_title
+        pos_hint: {"center_x": 0.5, "center_y": .75}
+
+# The Home Button
+
+<HomeButton>:
+    canvas.before:
+        Color:
+            rgba: .2, .7, 1, .25
+        Line:
+            width: dp(2)
+            rectangle: self.x, self.y, self.width, self.height
+    font_size: dp(30)
+    font_name: "fonts/Eurostile.ttf"
+    text: return_settings_button_title
+    pos_hint: { "right": 1, "top": 1}
+    size_hint: .18, .08
+    background_color: .8, .5, 1, .08
 
 
-<SettingsWindow@Screen>:
-    name: "settings_screen"
-    canvas:
-        Rectangle:
-            size: self.size
-            source: "bg1.jpg"
-    Label:
-        text: "S E T T I N G S"#root.parent.settings_button_title
-        font_name: "fonts/Lcd.ttf"
-        font_size: dp(180)
-        pos_hint: {"center_x": .5, "top": 1}
-        color: 1, 1, 1, 0.15
-    Button:
-        font_size: dp(20)
-        font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
-        text: return_settings_button_title
-        pos_hint: { "right": .18, "top": 1}
-        size_hint: .18, .08
-        on_press:
-            app.root.current = "home_screen"
-        background_color: .8, .5, 1, .2
+# The Exit button
+
+<ExitButton@Button>:
+    canvas.before:
+        Color:
+            rgba: .2, .7, 1, .25
+        Line:
+            width: dp(2)
+            rectangle: self.x, self.y, self.width, self.height
+    font_size: dp(30)
+    font_name: "fonts/Eurostile.ttf"
+    text: "E X I T"
+    pos_hint: { "right": .18, "top": 1}
+    size_hint: .18, .08
+    background_color: .8, .5, 1, .08
 
 
-<WindowManager>:
+# The Pause Button
+
+<PauseButton>:
+    id: pause_button
+    canvas.before:
+        Color:
+            rgba: .2, .7, 1, .25
+        Line:
+            width: dp(2)
+            rectangle: self.x, self.y, self.width, self.height
+    font_name: "fonts/Eurostile.ttf"
+    font_size: dp(30)
+    pos_hint: {"right": .18, "top": 1}
+    size_hint: .18, .08
+    background_color: .8, .5, 1, .08
+    disabled: True
+
+# Creation of all the settings page buttons
+# Managing all the buttons on the settings page
+
+# first button
+
+<Button_1@Button>:
+    canvas.before:
+        Color:
+            rgba: .2, .7, 1, .5
+        Line:
+            width: dp(2)
+            rectangle: self.x, self.y, self.width, self.height
+    font_size: dp(20)
+    font_name: "fonts/Eurostile.ttf"
+    text: "S C O R E"
+    pos_hint: { "right": 1, "top": 1}
+    size_hint: .15, .06
+    on_press: 
+        #app.root.current = "settings_screen"
+    background_color: .8, .5, 1, .2
+
+# second button
+
+<Button_2@Button>:
+    canvas.before:
+        Color:
+            rgba: .2, .7, 1, .5
+        Line:
+            width: dp(2)
+            rectangle: self.x, self.y, self.width, self.height
+    font_size: dp(20)
+    font_name: "fonts/Eurostile.ttf"
+    text: "Button 2"
+    pos_hint: { "right": 1, "top": 1}
+    size_hint: .15, .06
+    on_press: 
+        #app.root.current = "settings_screen"
+    background_color: .8, .5, 1, .2
+
+# third button
+
+<Button_3@Button>:
+    canvas.before:
+        Color:
+            rgba: .2, .7, 1, .5
+        Line:
+            width: dp(2)
+            rectangle: self.x, self.y, self.width, self.height
+    font_size: dp(20)
+    font_name: "fonts/Eurostile.ttf"
+    text: "Button 3"
+    pos_hint: { "right": 1, "top": 1}
+    size_hint: .15, .06
+    on_press: 
+        #app.root.current = "settings_screen"
+    background_color: .8, .5, 1, .2
+
+# fourth button
+
+<Button_4@Button>:
+    canvas.before:
+        Color:
+            rgba: .2, .7, 1, .5
+        Line:
+            width: dp(2)
+            rectangle: self.x, self.y, self.width, self.height
+    font_size: dp(20)
+    font_name: "fonts/Eurostile.ttf"
+    text: "Button 4"
+    pos_hint: { "right": 1, "top": 1}
+    size_hint: .15, .06
+    on_press: 
+        #app.root.current = "settings_screen"
+    background_color: .8, .5, 1, .2
+
+# fifth button
+
+<Button_5@Button>:
+    canvas.before:
+        Color:
+            rgba: .2, .7, 1, .5
+        Line:
+            width: dp(2)
+            rectangle: self.x, self.y, self.width, self.height
+    font_size: dp(20)
+    font_name: "fonts/Eurostile.ttf"
+    text: "Button 5"
+    pos_hint: { "right": 1, "top": 1}
+    size_hint: .15, .06
+    on_press: 
+        #app.root.current = "settings_screen"
+    background_color: .8, .5, 1, .2
+
+# sixth button
+
+<Button_6@Button>:
+    canvas.before:
+        Color:
+            rgba: .2, .7, 1, .5
+        Line:
+            width: dp(2)
+            rectangle: self.x, self.y, self.width, self.height
+    font_size: dp(20)
+    font_name: "fonts/Eurostile.ttf"
+    text: "Button 6"
+    pos_hint: { "right": 1, "top": 1}
+    size_hint: .15, .06
+    on_press: 
+        #app.root.current = "settings_screen"
+    background_color: .8, .5, 1, .2
+
+# seventh button
+
+<Button_7@Button>:
+    canvas.before:
+        Color:
+            rgba: .2, .7, 1, .5
+        Line:
+            width: dp(2)
+            rectangle: self.x, self.y, self.width, self.height
+    font_size: dp(20)
+    font_name: "fonts/Eurostile.ttf"
+    text: "Button 7"
+    pos_hint: { "right": 1, "top": 1}
+    size_hint: .15, .06
+    on_press: 
+        #app.root.current = "settings_screen"
+    background_color: .8, .5, 1, .2
+
+# eighth button
+
+<Button_8@Button>:
+    canvas.before:
+        Color:
+            rgba: .2, .7, 1, .5
+        Line:
+            width: dp(2)
+            rectangle: self.x, self.y, self.width, self.height
+    font_size: dp(20)
+    font_name: "fonts/Eurostile.ttf"
+    text: "Button 8"
+    pos_hint: { "right": 1, "top": 1}
+    size_hint: .15, .06
+    on_press: 
+        #app.root.current = "settings_screen"
+    background_color: .8, .5, 1, .2
+
+
+# ...
+
+# 
+# 
+# 
+# 
+
+# Let's work!

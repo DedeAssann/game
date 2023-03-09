@@ -9,7 +9,7 @@ def init_audio(self):
     "Methode pour initialiser les differentes musicques ou composantes audio du jeu"
     self.sound_begin = SoundLoader.load("audio/begin.wav")
     self.sound_galaxy = SoundLoader.load("audio/galaxy.wav")
-    self.sound_gameover_impact = SoundLoader.load("audio/gameover_impart.wav")
+    self.sound_gameover_impact = SoundLoader.load("audio/gameover_impact.wav")
     self.sound_gameover_voice = SoundLoader.load("audio/gameover_voice.wav")
     self.sound_music1 = SoundLoader.load("audio/music1.wav")
     self.sound_restart = SoundLoader.load("audio/restart.wav")

@@ -11,10 +11,16 @@
         text: root.parent.menu_title
         pos_hint: { "center_x": .5, "center_y": .75}
     Button:
+        canvas.before:
+            Color:
+                rgba: .2, .7, 1, .15
+            Line:
+                width: dp(2)
+                rectangle: self.x, self.y, self.width, self.height
         font_size: dp(30)
         font_name: 'fonts/Eurostile.ttf'
         text: root.parent.menu_button_title
         pos_hint: { "center_x": .5, "center_y": .3}
         size_hint: .18, .08
         on_press: root.parent.on_menu_button_pressed()
-        background_color: .8, .5, 1, .2
+        background_color: 0, .05, .2, .2
