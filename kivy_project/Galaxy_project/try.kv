@@ -1,7 +1,10 @@
 #: import Screen kivy.uix.screenmanager
 #: import ScreenManager kivy.uix.screenmanager
+#: import AnchorLayout kivy.uix.anchorlayout
+#: import randint random
+##: import Image kivy.uix.image
 
-##: set display_text "ASSANN"
+
 WindowManager:
     MainWindow:
     SecondWindow:
@@ -9,13 +12,19 @@ WindowManager:
 
 # The main Window
 
-<MainWindow@Screen>:
+<MainWindow>:
     name: "main"
     canvas.before:
         Color:
             rgba: 0, 0, 0, .8
+        #BorderImage:
+        #    border: 10, 10, 10, 10
+        #    texture: root.background_image.texture
+        #    pos: self.pos
+        #    size: self.size
         Rectangle:
             size: self.size
+            source: "bg1.jpg"
     Label:
         font_size: dp(60)
         font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
@@ -46,44 +55,64 @@ WindowManager:
 
     BoxLayout:
         orientation: 'vertical'
-        size_hint: 1, .98
-        RelativeLayout:
+        size_hint: 1, 1
+        #RelativeLayout:
+        #    canvas.before:
+        #        Color:
+        #            rgba: 0, 0, 0, 1
+        #        Rectangle:
+        #            size: self.size
+        #    pos_hint: {'right': 1, 'top': 1}
+        #    size_hint: 1, .45
+        AnchorLayout:
+            anchor_x: "left"
+            anchor_y: "top"
+            size_hint: 1, .45
+            pos_hint: {"center_x": .5, "top": 1}
             canvas.before:
+                Color:
+                    rgba: 0.2, 1, 1, 1
+                Line:
+                    width: dp(3)
+                    rectangle: self.x, self.y, self.width, self.height
                 Color:
                     rgba: 0, 0, 0, 1
                 Rectangle:
                     size: self.size
-            pos_hint: {'right': 1, 'top': 1}
-            size_hint: 1, .15
             Button:
+                anchor_x: "x"
+                anchor_y: "top"
                 canvas.before:
                     Color:
-                        rgba: .2, .7, 1, .25
+                        #rgba: .2, .7, 1, .25
+                        rgba: 1, 0, 0, 1
                     Line:
                         width: dp(2)
                         rectangle: self.x, self.y, self.width, self.height
                 text: "G O  B A C K"
-                pos_hint: { "right": 0.25, "center_y": 1}
-                size_hint: 0.25, 0.5
+                #pos_hint: { "x": .22, "top": 1}
+                size_hint: 0.22, 0.15
                 on_press:
                     app.root.current = "main"
-                    root.manager.transition.direction = "right"
+                    root.manager.transition.direction = "right"            
+            #anchor_x: "center"
+            #anchor_y: "center"
             Label:
-                canvas:
-                    Color:
-                        rgba: 0.1, 1, 1, 1
-                    Line:
-                        width: dp(2)
-                        rectangle: self.x, self.y, self.width, self.height                        
+                #canvas:
+                #    Color:
+                #        rgba: 0.1, 1, 1, 1
+                #    Line:
+                #        width: dp(2)
+                #        rectangle: self.x, self.y, self.width, self.height                        
                 text: root.display_text
-                font_size: dp(33)
-                pos_hint: {"x": 0, "center_y":.40}
-                size_hint: 1, .7
+                font_size: dp(25)
+                #pos_hint: {"x": 0, "center_y": 0}
+                size_hint: 1, .67
             Label:
-                font_size: dp(40)
+                font_size: dp(17)
                 text:'Settings Page'
-                pos_hint: {"center_x": .5, "center_y": 1}
-                size_hint: .5, .5
+                #pos_hint: {"center_x": .5, "center_y": 1}
+                size_hint: 1, .16
         GridLayout:
             rows:2
             cols:4
@@ -95,6 +124,12 @@ WindowManager:
                     Line:
                         width: dp(2)
                         rectangle: self.x, self.y, self.width, self.height
+                text_to_display: 
+                    """
+                    S C O R E : Your score is 100
+                    Best Score is 100
+                    """
+                on_press: root.on_button_pressed(self.text_to_display)
             Button_2:
                 canvas.before:
                     Color:
@@ -102,6 +137,7 @@ WindowManager:
                     Line:
                         width: dp(2)
                         rectangle: self.x, self.y, self.width, self.height
+                on_press: root.on_button_pressed(self.text)
             Button_3:
                 canvas.before:
                     Color:
@@ -109,6 +145,7 @@ WindowManager:
                     Line:
                         width: dp(2)
                         rectangle: self.x, self.y, self.width, self.height
+                on_press: root.on_button_pressed(self.text)
             Button_4:
                 canvas.before:
                     Color:
@@ -116,6 +153,7 @@ WindowManager:
                     Line:
                         width: dp(2)
                         rectangle: self.x, self.y, self.width, self.height
+                on_press: root.on_button_pressed(self.text)
             Button_5:
                 canvas.before:
                     Color:
@@ -123,6 +161,7 @@ WindowManager:
                     Line:
                         width: dp(2)
                         rectangle: self.x, self.y, self.width, self.height
+                on_press: root.on_button_pressed(self.text)
             Button_6:
                 canvas.before:
                     Color:
@@ -130,6 +169,7 @@ WindowManager:
                     Line:
                         width: dp(2)
                         rectangle: self.x, self.y, self.width, self.height
+                on_press: root.on_button_pressed(self.text)
             Button_7:
                 canvas.before:
                     Color:
@@ -137,6 +177,7 @@ WindowManager:
                     Line:
                         width: dp(2)
                         rectangle: self.x, self.y, self.width, self.height
+                on_press: root.on_button_pressed(self.text)
             Button_8:
                 canvas.before:
                     Color:
@@ -144,6 +185,7 @@ WindowManager:
                     Line:
                         width: dp(2)
                         rectangle: self.x, self.y, self.width, self.height
+                on_press: root.on_button_pressed(self.text)
 
 
 # the window manager ...
@@ -162,8 +204,8 @@ WindowManager:
     text: "Button 1"
     pos_hint: { "right": 1, "top": 1}
     size_hint: .18, .08   
-    on_press: 
-        #
+    #on_press: 
+    #    #
     background_color: .8, .5, 1, .2
 
 # second button
@@ -174,8 +216,8 @@ WindowManager:
     text: "Button 2"
     pos_hint: { "right": 1, "top": 1}
     size_hint: .18, .08
-    on_press: 
-        display_text = "B"
+    #on_press: 
+    #    display_text = "B"
     background_color: .8, .5, 1, .2
 
 # third button
@@ -186,8 +228,8 @@ WindowManager:
     text: "Button 3"
     pos_hint: { "right": 1, "top": 1}
     size_hint: .18, .08
-    on_press: 
-        display_text = "C"
+    #on_press: 
+    #    display_text = "C"
     background_color: .8, .5, 1, .2
 
 # fourth button
@@ -198,8 +240,8 @@ WindowManager:
     text: "Button 4"
     pos_hint: { "right": 1, "top": 1}
     size_hint: .18, .08
-    on_press: 
-        display_text = "D"
+    #on_press: 
+    #    display_text = "D"
     background_color: .8, .5, 1, .2
 
 # fifth button
@@ -210,8 +252,8 @@ WindowManager:
     text: "Button 5"
     pos_hint: { "right": 1, "top": 1}
     size_hint: .18, .08
-    on_press: 
-        display_text = "E"
+    #on_press: 
+    #    display_text = "E"
     background_color: .8, .5, 1, .2
 
 # sixth button
@@ -222,8 +264,8 @@ WindowManager:
     text: "Button 6"
     pos_hint: { "right": 1, "top": 1}
     size_hint: .18, .08
-    on_press: 
-        display_text = "F"
+    #on_press: 
+    #    display_text = "F"
     background_color: .8, .5, 1, .2
 
 # seventh button
@@ -234,8 +276,8 @@ WindowManager:
     text: "Button 7"
     pos_hint: { "right": 1, "top": 1}
     size_hint: .18, .08
-    on_press: 
-        display_text = "G"
+    #on_press: 
+    #    display_text = "G"
     background_color: .8, .5, 1, .2
 
 # eighth button
@@ -246,6 +288,6 @@ WindowManager:
     text: "Button 8"
     pos_hint: { "right": 1, "top": 1}
     size_hint: .18, .08
-    on_press: 
-        display_text = "H"
+    #on_press: 
+    #    display_text = "H"
     background_color: .8, .5, 1, .2

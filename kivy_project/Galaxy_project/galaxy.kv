@@ -1,6 +1,8 @@
 # importing the necessary modules
 
 #: import Screen kivy.uix.screenmanager
+#: import AnchorLayout kivy.uix.anchorlayout
+#: import PageLayout kivy.uix.pagelayout
 #: import menu menu
 
 # defining the different needed variables
@@ -10,7 +12,7 @@
 #: set pause_widget_title " R  E  S  U  M  E "
 #: set settings_button_title "S  E  T  T  I  N  G  S"
 #: set return_settings_button_title "H  O  M  E"
-
+#: set _bw dp(3)
 
 # The manager of the screen
 
@@ -102,31 +104,47 @@ WindowManager:
         font_size: dp(180)
         pos_hint: {"center_x": .5, "top": 1}
         color: 1, 1, 1, .15
-    Button:
+    AnchorLayout:
+        anchor_x: "left"
+        anchor_y: "top"
+        #size_hint: 1, .49
+        pos_hint: {"center_x": .5, "top": 1}
         canvas.before:
             Color:
-                rgba: .2, .7, 1, .25
+                rgba: 0.2, 1, 1, 1
             Line:
                 width: dp(2)
                 rectangle: self.x, self.y, self.width, self.height
-        font_size: dp(25)
-        font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
-        text: return_settings_button_title
-        pos_hint: { "right": .18, "top": 1}
-        size_hint: .18, .08
-        on_press:
-            app.root.current = "home_screen"
-        background_color: .8, .5, 1, .2
+        Button:
+            canvas.before:
+                Color:
+                    rgba: .2, .7, 1, .25
+                Line:
+                    width: dp(2)
+                    rectangle: self.x, self.y, self.width, self.height
+            font_size: dp(25)
+            font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+            text: return_settings_button_title
+            pos_hint: { "right": .18, "top": .99}
+            size_hint: .18, .08
+            on_press:
+                app.root.current = "home_screen"
+            background_color: .8, .5, 1, .2
+        RelativeLayout:
+            size_hint: 1, .5
+            pos_hint: {"right": 1, "top": .5}
+            PageLayout:
+                ...
     BoxLayout:
         orientation: 'vertical'
-        size_hint: 1, .70
-        RelativeLayout:
-            pos_hint: {'right': 1, 'top': 1}
-            size_hint: 1, .45
+        size_hint: 1, .40
+        #RelativeLayout:
+        #    pos_hint: {'right': 1, 'top': 1}
+        #    size_hint: 1, .45
         GridLayout:
             rows:2
             cols:4
-            spacing: dp(15)
+            spacing: dp(20)
             Button_1:                                                                                                
             Button_2:                                                                                                
             Button_3:                                                                                                                                
@@ -242,7 +260,7 @@ WindowManager:
         Color:
             rgba: .2, .7, 1, .5
         Line:
-            width: dp(2)
+            width: _bw
             rectangle: self.x, self.y, self.width, self.height
     font_size: dp(20)
     font_name: "fonts/Eurostile.ttf"
@@ -260,7 +278,7 @@ WindowManager:
         Color:
             rgba: .2, .7, 1, .5
         Line:
-            width: dp(2)
+            width: _bw
             rectangle: self.x, self.y, self.width, self.height
     font_size: dp(20)
     font_name: "fonts/Eurostile.ttf"
@@ -278,7 +296,7 @@ WindowManager:
         Color:
             rgba: .2, .7, 1, .5
         Line:
-            width: dp(2)
+            width: _bw
             rectangle: self.x, self.y, self.width, self.height
     font_size: dp(20)
     font_name: "fonts/Eurostile.ttf"
@@ -296,7 +314,7 @@ WindowManager:
         Color:
             rgba: .2, .7, 1, .5
         Line:
-            width: dp(2)
+            width: _bw
             rectangle: self.x, self.y, self.width, self.height
     font_size: dp(20)
     font_name: "fonts/Eurostile.ttf"
@@ -314,7 +332,7 @@ WindowManager:
         Color:
             rgba: .2, .7, 1, .5
         Line:
-            width: dp(2)
+            width: _bw
             rectangle: self.x, self.y, self.width, self.height
     font_size: dp(20)
     font_name: "fonts/Eurostile.ttf"
@@ -332,7 +350,7 @@ WindowManager:
         Color:
             rgba: .2, .7, 1, .5
         Line:
-            width: dp(2)
+            width: _bw
             rectangle: self.x, self.y, self.width, self.height
     font_size: dp(20)
     font_name: "fonts/Eurostile.ttf"
@@ -350,7 +368,7 @@ WindowManager:
         Color:
             rgba: .2, .7, 1, .5
         Line:
-            width: dp(2)
+            width: _bw
             rectangle: self.x, self.y, self.width, self.height
     font_size: dp(20)
     font_name: "fonts/Eurostile.ttf"
@@ -368,7 +386,7 @@ WindowManager:
         Color:
             rgba: .2, .7, 1, .5
         Line:
-            width: dp(2)
+            width: _bw
             rectangle: self.x, self.y, self.width, self.height
     font_size: dp(20)
     font_name: "fonts/Eurostile.ttf"
@@ -382,9 +400,9 @@ WindowManager:
 
 # ...
 
-# 
-# 
-# 
+# So for now, I have to create many widgets to add to the page layout
+# And then I'll link the functionnality in them to the game components and controls
+# So we'll have a complete settings page
 # 
 
 # Let's work!

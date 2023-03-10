@@ -26,6 +26,28 @@ Config.set("graphics", "multisamples", "0")
 # 2nd part of the project
 
 
+# ...
+class PageLayoutExample(PageLayout):
+    "..."
+
+    def on_touch_down(self, touch):
+        print(self.page)
+        self.page = 2
+
+        _h = self.height / 2
+        if touch.pos[0] < _h:
+            if self.page == 0:
+                self.page = 0
+            else:
+                self.page -= 1
+        elif touch.pos[1] > _h:
+            self.page += 1
+        else:
+            pass
+        super().on_touch_down(touch)
+        print(self.page)
+
+
 class WidgetExample(GridLayout):
     my_text = StringProperty("1")
     count = 1
