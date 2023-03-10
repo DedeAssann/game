@@ -8,13 +8,15 @@
 ##: import user_controls user_controls
 
 # defining the different needed variables
-
+#: import score main_widget
 #: set menu_title "G  A  L  A  X  Y"
 #: set home_button_title "P  L  A  Y"
 #: set pause_widget_title " R  E  S  U  M  E "
 #: set settings_button_title "S  E  T  T  I  N  G  S"
 #: set return_settings_button_title "H  O  M  E"
 #: set _bw dp(3)
+##: set score MainWidget.score
+#: set best_score MainWidget.best_score
 
 # The manager of the screen
 
@@ -181,8 +183,8 @@ WindowManager:
             rgba: 0, 0, 0, .5
         Rectangle:
             size: self.size
-    score: root.parent.parent.parent.manager.game_window.main_widget.score
-    best_score: app.main_widget.best_score
+    score: score
+    best_score: best_score
     Label:
         text: " S  C  O  R  E " # + str(root.score)
         font_name: "fonts/Eurostile.ttf"
