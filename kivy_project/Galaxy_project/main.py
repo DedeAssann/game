@@ -29,12 +29,14 @@ from kivy.properties import (
     Clock,
 )
 from kivy.uix.relativelayout import RelativeLayout
+from kivy.uix.pagelayout import PageLayout
 from kivy.uix.screenmanager import Screen, ScreenManager, NoTransition
 from kivy.uix.button import Button
 from kivy.lang.builder import Builder
 
 # loading another .kv file...
 Builder.load_file("menu.kv")
+# Builder.load_file("user_controls.kv")
 
 
 class MainWidget(RelativeLayout):
@@ -76,7 +78,6 @@ class MainWidget(RelativeLayout):
     best_score_txt = StringProperty(best_score)
     menu_title = StringProperty("G   A   L   A   X   Y")
     menu_button_title = StringProperty("S T A R T")
-    # pause_widget_title = StringProperty()
     settings_button_title = StringProperty(" S  E  T  T  I  N  G  S")
     pause_button_txt = StringProperty("P A U S E")
 
@@ -520,6 +521,29 @@ class WindowManager(ScreenManager):
         super().__init__(**kwargs)
         transition = NoTransition(duration=1)
         self.transition = transition
+
+
+# the page layout example class
+class PageLayoutExample(PageLayout):
+    score_widget = ObjectProperty()
+
+    def on_touch_down(self, touch):
+        print(self.page)
+        self.page = 2
+
+        _h = self.height / 2
+        if touch.pos[0] < _h:
+            if self.page == 0:
+                self.page = 0
+            else:
+                self.page -= 1
+        elif touch.pos[1] > _h:
+            self.page += 1
+        else:
+            pass
+
+        super().on_touch_down(touch)
+        print(self.page)
 
 
 # The App

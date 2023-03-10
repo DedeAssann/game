@@ -3,7 +3,9 @@
 #: import Screen kivy.uix.screenmanager
 #: import AnchorLayout kivy.uix.anchorlayout
 #: import PageLayout kivy.uix.pagelayout
+
 #: import menu menu
+##: import user_controls user_controls
 
 # defining the different needed variables
 
@@ -17,9 +19,15 @@
 # The manager of the screen
 
 WindowManager:
+    game_window: game_window
+    home_window: home_window
+    settings_window: settings_window
     HomeWindow:
+        id: home_window
     GameWindow:
+        id: game_window
     SettingsWindow:
+        id:settings_window
 
 
 # Window manager
@@ -107,34 +115,30 @@ WindowManager:
     AnchorLayout:
         anchor_x: "left"
         anchor_y: "top"
-        #size_hint: 1, .49
+        size_hint: 1, .6
         pos_hint: {"center_x": .5, "top": 1}
         canvas.before:
             Color:
-                rgba: 0.2, 1, 1, 1
+                rgba: 0.2, 1, 1, .3
+            Line:
+                width: dp(2.5)
+                rectangle: self.x, self.y, self.width, self.height
+        PageLayoutExample:
+    Button:
+        canvas.before:
+            Color:
+                rgba: .2, .7, 1, .25
             Line:
                 width: dp(2)
                 rectangle: self.x, self.y, self.width, self.height
-        Button:
-            canvas.before:
-                Color:
-                    rgba: .2, .7, 1, .25
-                Line:
-                    width: dp(2)
-                    rectangle: self.x, self.y, self.width, self.height
-            font_size: dp(25)
-            font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
-            text: return_settings_button_title
-            pos_hint: { "right": .18, "top": .99}
-            size_hint: .18, .08
-            on_press:
-                app.root.current = "home_screen"
-            background_color: .8, .5, 1, .2
-        RelativeLayout:
-            size_hint: 1, .5
-            pos_hint: {"right": 1, "top": .5}
-            PageLayout:
-                ...
+        font_size: dp(25)
+        font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+        text: return_settings_button_title
+        pos_hint: { "right": .18, "top": .99}
+        size_hint: .18, .08
+        on_press:
+            app.root.current = "home_screen"
+        background_color: .8, .5, 1, .2              
     BoxLayout:
         orientation: 'vertical'
         size_hint: 1, .40
@@ -156,6 +160,35 @@ WindowManager:
 
 
 # the game widget
+
+<PageLayoutExample>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .47
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    size_hint: 1, 1
+    pos_hint: {"center_x": .5, "top": 1}
+    score_widget: score_widget
+    ScoreWidget:
+        id: score_widget
+
+# the score widget
+<ScoreWidget@RelativeLayout>:
+    canvas.before:    
+        Color:
+            rgba: 0, 0, 0, .5
+        Rectangle:
+            size: self.size
+    score: root.parent.parent.parent.manager.game_window.main_widget.score
+    best_score: app.main_widget.best_score
+    Label:
+        text: " S  C  O  R  E " # + str(root.score)
+        font_name: "fonts/Eurostile.ttf"
+        font_size: dp(40)
+        pos_hint: {"center_x": .5, "top": 1}
+        size_hint: 1, .5
 
 <MainWidget>:
     canvas.before:
