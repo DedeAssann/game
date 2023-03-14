@@ -13,7 +13,11 @@ from kivy.config import Config
 Config.set("graphics", "width", "1200")
 Config.set("graphics", "height", "650")
 
-from kivy.core.window import Window
+# Config.set("graphics", "fullscreen", 1)
+# Config.set("graphics", "width", 1320)
+# Config.set("graphics", "height", 700)
+
+from kivy.core.window import Window, Keyboard
 
 import random
 from kivy import platform
@@ -29,14 +33,14 @@ from kivy.properties import (
     Clock,
 )
 from kivy.uix.relativelayout import RelativeLayout
-from kivy.uix.pagelayout import PageLayout
+
 from kivy.uix.screenmanager import Screen, ScreenManager, NoTransition
 from kivy.uix.button import Button
 from kivy.lang.builder import Builder
 
 # loading another .kv file...
 Builder.load_file("menu.kv")
-# Builder.load_file("user_controls.kv")
+Builder.load_file("pagelayoutexample.kv")
 
 
 class MainWidget(RelativeLayout):
@@ -122,6 +126,7 @@ class MainWidget(RelativeLayout):
         self.init_tiles()
         self.init_ship()
         self.reset_game()
+        self.speed_update()
 
         if self.is_desktop():
             self._keyboard = Window.request_keyboard(self.keyboard_closed, self)
@@ -130,6 +135,9 @@ class MainWidget(RelativeLayout):
 
         Clock.schedule_interval(self.update, 1.0 / 60.0)
         self.sound_galaxy.play()
+        Config.set("graphics", "fullscreen", 1)
+        Config.set("graphics", "width", 1320)
+        Config.set("graphics", "height", 700)
 
     def reset_game(self):
         "Here we reset the main variables of the game, so we can restart the game."
@@ -311,9 +319,9 @@ class MainWidget(RelativeLayout):
         """
         ...
         """
-        if self.pause_state == False:
+        if self.pause_state is False:
             self.pause_button_txt = "P A U S E"
-        if self.pause_state == True:
+        if self.pause_state is True:
             self.pause_button_txt = "R E S U M E"
 
     def speed_update(self):
@@ -401,7 +409,7 @@ class MainWidget(RelativeLayout):
         if not self.check_ship_collision() and not self.state_game_over:
             self.game_is_playing_state = False
             self.state_game_over = True
-            self.menu_widget.opacity = 1
+            self.menu_widget.opacity = 0.8
             self.menu_title = "G  A  M  E    O  V  E  R"
             self.menu_button_title = "R E S T A R T"
 
@@ -417,11 +425,12 @@ class MainWidget(RelativeLayout):
         self.pause_state = not self.pause_state
         # print(f" pause state : {self.pause_state}")
         if self.pause_state:
+
             self.game_is_playing_state = False
             self.SPEED = 0
             self.update_pause_button_txt()
             self.sound_music1.stop()
-            self.pause_widget.opacity = 0.9
+            self.pause_widget.opacity = 0.7
         elif not self.pause_state and not self.state_game_over:
             self.game_is_playing_state = True
             self.SPEED = self.speed_update()
@@ -480,6 +489,7 @@ class GameWindow(Screen):
 
 # the pause Widget class
 class PauseWidget(RelativeLayout):
+    "..."
     pass
 
 
@@ -494,10 +504,6 @@ class HomeWindow(Screen):
         "Implementing an exit function for the game"
         App.get_running_app().stop()
         Window.close()
-
-    # the Pause Widget class
-    # class PauseWidget(RelativeLayout):
-    "..."
 
 
 # the HomeButton class
@@ -523,32 +529,16 @@ class WindowManager(ScreenManager):
         self.transition = transition
 
 
-# the page layout example class
-class PageLayoutExample(PageLayout):
-    score_widget = ObjectProperty()
-
-    def on_touch_down(self, touch):
-        print(self.page)
-        self.page = 2
-
-        _h = self.height / 2
-        if touch.pos[0] < _h:
-            if self.page == 0:
-                self.page = 0
-            else:
-                self.page -= 1
-        elif touch.pos[1] > _h:
-            self.page += 1
-        else:
-            pass
-
-        super().on_touch_down(touch)
-        print(self.page)
-
-
 # The App
 class GalaxyApp(App):
     """The main app class"""
+
+    def get_fullscreen(self, keycode, **kwargs):
+        for keycode in Keyboard.keycodes:
+            if keycode == "f11":
+                Config.set("graphics", "fullscreen", 1)
+                Config.set("graphics", "width", 1320)
+                Config.set("graphics", "height", 700)
 
 
 GalaxyApp().run()

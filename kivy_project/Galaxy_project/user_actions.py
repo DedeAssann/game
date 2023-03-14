@@ -20,7 +20,7 @@ def on_keyboard_down(self, keyboard, keycode, text, modifiers):
     return True
 
 
-def on_keyboard_up(self, keyboard, keycode):
+def on_keyboard_up(self, _keyboard, keycode):
     self.current_speed_x = 0
     return True
 

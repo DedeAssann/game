@@ -1,0 +1,140 @@
+#The widgets for the settings page
+
+
+# The page layout for displaying the settings page infos
+
+<SettingsWidget>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .2
+        Rectangle:
+            size: self.size
+            pos: self.pos
+            source: "bg1.jpg"
+    size_hint: 1, 1
+    pos_hint: {"right": 1, "center_y": 1}
+    first_widget: first
+    score_widget: score
+    volume_widget: song
+    display_widget: display
+    level_widget: level
+    last_widget: last
+    FirstWidget:
+        id: first
+    ScoreWidget:
+        id: score
+    SongWidget:
+        id: song
+    DisplayWidget:
+        id: display
+    LevelWidget:
+        id: level
+    LastWidget:
+        id: last
+
+
+# the first widget
+<FirstWidget@RelativeLayout>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .2
+        Rectangle:
+            size: self.size
+            #pos: self.pos
+        #Color:
+        #    rgba: .2, .7, 1, .5
+        #Line:
+        #    width: _bw
+        #    rectangle: self.x, self.y, self.width, self.height
+    pos_hint: {"center_x": .5, "top": 1}
+    Label:
+        text:' S  E  T  T  I  N  G  S '
+        font_size: dp(50)
+        font_name: "fonts/Lcd.ttf"
+        pos_hint: {"center_x": .5, "center_y": .85}
+        size_hint: 1, .8
+
+
+# the score widget
+
+<ScoreWidget@RelativeLayout>:    
+    canvas.before:    
+        Color:
+            rgba: .15, .25, .99, 1
+        Rectangle:
+            size: self.size
+    size_hint: 1, 1
+    pos_hint: {"center_x": .5, "top": 1}
+    Label:
+        text: " S  C  O  R  E "   #score_txt #best_score
+        font_name: "fonts/Eurostile.ttf"
+        font_size: dp(50)
+        pos_hint: {"center_x": .5, "top": 1}
+        size_hint: 1, .5
+
+
+# The song widget
+
+<SongWidget@RelativeLayout>:    
+    canvas.before:
+        Color:
+            rgba: .15, .25, .99, 1
+        Rectangle:
+            size: self.size
+    #song: song
+    #music: music
+    #volume: volume
+    Label:
+        text: " V   O  L  U  M  E "
+        font_name: "fonts/Eurostile.ttf"
+        font_size: dp(50)
+        pos_hint: {"center_x": .5, "top": 1}
+        size_hint: 1, .5
+
+
+# The display widget
+
+
+<DisplayWidget@RelativeLayout>:
+    canvas.before:
+        Color:
+            rgba: .15, .25, .99, 1
+        Rectangle:
+            size: self.size
+    Label:
+        text:'D I S P L A Y  S E T T I N G S'
+        font_size: dp(50)
+        font_name: "fonts/Lcd.ttf"
+        pos_hint: {"center_x": .5, "center_y": .5}
+        size_hint: 1, .8
+
+# The level widget
+
+
+<LevelWidget@RelativeLayout>:
+    canvas.before:
+        Color:
+            rgba: 1, .25, .99, 1
+        Rectangle:
+            size: self.size
+    Label:
+        text:' L  E  V  E  L '
+        font_size: dp(50)
+        font_name: "fonts/Lcd.ttf"
+        pos_hint: {"center_x": .5, "center_y": .5}
+        size_hint: 1, .8
+
+<LastWidget@RelativeLayout>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, 1
+        Rectangle:
+            size: self.size
+    Label:
+        text:' L A S T   S E T T I N G S'
+        font_size: dp(50)
+        font_name: "fonts/Lcd.ttf"
+        pos_hint: {"center_x": .5, "center_y": .5}
+        size_hint: 1, .8
+
+#...
