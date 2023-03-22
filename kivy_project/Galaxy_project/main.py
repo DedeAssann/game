@@ -7,17 +7,19 @@ Ce jeu consiste a deplacer un spaceship sur un plan, et suivre le chemin trace d
 
 # pylint: disable = wrong-import-order, no-name-in-module, import-outside-toplevel, wrong-import-position
 
+# config section
+import os
+from kivy.uix.settings import *
+
+os.environ["KCFG_GRAPHICS_FULLSCREEN"] = "auto"
 from kivy.config import Config
 
 # configuring the screen which is gonna be opened by kivy
 Config.set("graphics", "width", "1200")
 Config.set("graphics", "height", "650")
+Config.set("graphics", "resizable", "1")
 
-# Config.set("graphics", "fullscreen", 1)
-# Config.set("graphics", "width", 1320)
-# Config.set("graphics", "height", 700)
-
-from kivy.core.window import Window, Keyboard
+from kivy.core.window import Window
 
 import random
 from kivy import platform
@@ -78,8 +80,8 @@ class MainWidget(RelativeLayout):
     score = NumericProperty(0)
     best_score = NumericProperty(0)
 
-    score_txt = StringProperty(score)
-    best_score_txt = StringProperty(best_score)
+    score_txt = StringProperty()
+    best_score_txt = StringProperty()
     menu_title = StringProperty("G   A   L   A   X   Y")
     menu_button_title = StringProperty("S T A R T")
     settings_button_title = StringProperty(" S  E  T  T  I  N  G  S")
@@ -135,9 +137,9 @@ class MainWidget(RelativeLayout):
 
         Clock.schedule_interval(self.update, 1.0 / 60.0)
         self.sound_galaxy.play()
-        Config.set("graphics", "fullscreen", 1)
-        Config.set("graphics", "width", 1320)
-        Config.set("graphics", "height", 700)
+        # Config.set("graphics", "fullscreen", 1)
+        # Config.set("graphics", "width", 1320)
+        # Config.set("graphics", "height", 700)
 
     def reset_game(self):
         "Here we reset the main variables of the game, so we can restart the game."
@@ -412,6 +414,7 @@ class MainWidget(RelativeLayout):
             self.menu_widget.opacity = 0.8
             self.menu_title = "G  A  M  E    O  V  E  R"
             self.menu_button_title = "R E S T A R T"
+            self.score = self.current_y_loop
 
             # PLaying the different songs related to the game over state
             self.sound_music1.stop()
@@ -533,12 +536,7 @@ class WindowManager(ScreenManager):
 class GalaxyApp(App):
     """The main app class"""
 
-    def get_fullscreen(self, keycode, **kwargs):
-        for keycode in Keyboard.keycodes:
-            if keycode == "f11":
-                Config.set("graphics", "fullscreen", 1)
-                Config.set("graphics", "width", 1320)
-                Config.set("graphics", "height", 700)
+    use_kivy_settings = True
 
 
 GalaxyApp().run()

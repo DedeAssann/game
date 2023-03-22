@@ -34,16 +34,16 @@ WindowManager:
     name: "game_screen"
     main_widget: main_widget
     home_button: home_button
-    fullscreen: fullscreen
+    #fullscreen: fullscreen
     MainWidget:
         id: main_widget
     HomeButton:
         id: home_button
         on_press:
             app.root.current = "home_screen"
-    FullScreenButton:
-        id: fullscreen
-        on_press: app.get_fullscreen("f11")
+    #FullScreenButton:
+    #    id: fullscreen
+    #    on_press: app.get_fullscreen("f11")
 
 
 # home window

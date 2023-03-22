@@ -1,0 +1,13 @@
+[
+  {
+    "type": "title",
+    "title": "Test Application"
+  },
+  {
+    "type": "options",
+    "title": "My First Key",
+    "desc": "...",
+    "sec": "...",
+    "options": ["1", "2", "3"]
+  }
+]

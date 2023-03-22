@@ -1,0 +1,29 @@
+
+ScreenManager:
+    MyFirstScreen:
+        id: f_screen
+
+
+<MyFirstScreen@Screen>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .5
+        Rectangle:
+            size: self.size
+            source: "spidey.jpg"
+    MyWidget:
+        id: my_widget
+
+
+<MyWidget@RelativeLayout>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .5
+        Rectangle:
+            size: self.size
+            source: "spidey.jpg"
+    size_hint: 1, 1
+    pos_hint: {"center_x": .5, "center_y": 1}
+    Label:
+        text:' Hiiiii'
+        pos_hint: {'center_x': .5, 'top': .87}
