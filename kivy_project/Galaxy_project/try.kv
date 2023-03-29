@@ -2,292 +2,1100 @@
 #: import ScreenManager kivy.uix.screenmanager
 #: import AnchorLayout kivy.uix.anchorlayout
 #: import randint random
-##: import Image kivy.uix.image
+#: import Clock kivy.properties.Clock
 
+#: set l_txt_size dp(25)
+#: set L_txt_size dp(25)
+#: set h_size dp(30)
+#: set H_size dp(40)
+#: set _bc (.180, .525, .757, .3)
 
 WindowManager:
     MainWindow:
-    SecondWindow:
+    FirstWindow:
 
 
-# The main Window
+#First Window
+
+<FirstWindow>:
+    name: "first"
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .8
+        Rectangle:
+            size: self.size
+    Label:
+        text:'Welcome'
+    GridLayout:
+        cols: 2
+        Button:
+            pos_hint: {"center_x": .5, "top": 1}
+            size: dp(30), dp(20)
+            text: "Main Page"
+            font_size: dp(25)
+            on_press: root.manager.current = "main"
+        Button:
+            id: my_sexy_btn
+            text: "My sexy Button"
+            font_size: dp(32)
+            background_color: 0, 0, 0, 1
+            on_press: self.text = "Ouuchhh!!! More gently please!"
+            on_release: self.text = "Ahhhhhh"
+    
+
+
+# Main Window
 
 <MainWindow>:
     name: "main"
     canvas.before:
         Color:
-            rgba: 0, 0, 0, .8
-        #BorderImage:
-        #    border: 10, 10, 10, 10
-        #    texture: root.background_image.texture
-        #    pos: self.pos
-        #    size: self.size
+            rgba: 0, 0, 0, .3
+        Rectangle:
+            size: self.size
+    main_widget: main_widget
+    MainWidget:
+        id: main_widget
+
+
+<MainWidget>:
+    padding: dp(5)
+    canvas.before:
+        Color:
+            rgba: .2, .5, .9, 1
         Rectangle:
             size: self.size
             source: "bg1.jpg"
-    Label:
-        font_size: dp(60)
-        font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
-        text: "M E N U  P A G E"
-        pos_hint: {"center_x": .5, "center_y": .65}
-    Button:
+    GridLayout:
         canvas.before:
             Color:
-                rgba: .2, .7, 1, 1
+                rgba: 1, 1, 1, .085
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        canvas:
+            Color:
+                rgba: .282, .694, .882, .8
             Line:
-                width: dp(2)
+                width: dp(1)
                 rectangle: self.x, self.y, self.width, self.height
-        font_size: dp(30)
-        font_name: "fonts/Eurostile.ttf"
-        text: "S E T T I N G S"
-        pos_hint: { "center_x": .5, "center_y": .3}
-        size_hint: .3, .1
-        on_press:
-            app.root.current = "second"
-            root.manager.transition.direction = "left"
-        background_color: 1, .5, 1, 1
-
-
-# Second Window
-
-<SecondWindow>:
-    name: "second"
-
-    BoxLayout:
-        orientation: 'vertical'
-        size_hint: 1, 1
-        #RelativeLayout:
-        #    canvas.before:
-        #        Color:
-        #            rgba: 0, 0, 0, 1
-        #        Rectangle:
-        #            size: self.size
-        #    pos_hint: {'right': 1, 'top': 1}
-        #    size_hint: 1, .45
-        AnchorLayout:
-            anchor_x: "left"
-            anchor_y: "top"
-            size_hint: 1, .45
+        cols: 3
+        size_hint: 1, .08
+        pos_hint: {"left": 1, "top": 1}
+        MyCustomButton:
+            pos_hint: {"right": .15, "top": 1}
+            size_hint: .15, 1
+            text: "E x i t"
+            font_size: dp(22)
+            font_name: "fonts/Eurostile.ttf"
+            on_press:
+                app.get_running_app().stop()
+        Label:
+            text:' S  E  T  T  I  N  G  S '
+            font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
             pos_hint: {"center_x": .5, "top": 1}
-            canvas.before:
-                Color:
-                    rgba: 0.2, 1, 1, 1
-                Line:
-                    width: dp(3)
-                    rectangle: self.x, self.y, self.width, self.height
-                Color:
-                    rgba: 0, 0, 0, 1
-                Rectangle:
-                    size: self.size
-            Button:
-                anchor_x: "x"
-                anchor_y: "top"
-                canvas.before:
-                    Color:
-                        #rgba: .2, .7, 1, .25
-                        rgba: 1, 0, 0, 1
-                    Line:
-                        width: dp(2)
-                        rectangle: self.x, self.y, self.width, self.height
-                text: "G O  B A C K"
-                #pos_hint: { "x": .22, "top": 1}
-                size_hint: 0.22, 0.15
-                on_press:
-                    app.root.current = "main"
-                    root.manager.transition.direction = "right"            
-            #anchor_x: "center"
-            #anchor_y: "center"
+            size_hint: .7, 1
+            font_size: dp(35)
+        MyCustomButton:
+            pos_hint: {"right": 1, "top": 1}
+            size_hint: .15, 1
+            text: "H o m e"
+            font_size: dp(22)
+            font_name: "fonts/Eurostile.ttf"
+            on_press: root.parent.manager.current = "first"
+    ScrollView:
+        pos_hint: {"left": 1, "top": .9}
+        stack: stack
+        StackWidget:
+            id: stack
+            size_hint: 1, None
+            height: self.minimum_height
+
+
+
+<StackWidget>:
+    id: stack
+    orientation: "lr-tb"
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .4
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    l_1: l_1
+    l_2: l_2
+    l_3: l_3
+    l_4: l_4
+    l_5: l_5
+    l_6: l_6
+    l_7: l_7
+    l_8: l_8
+    l_9: l_9
+    l_10: l_10
+    l_11: l_11
+    l_12: l_12
+    Label:
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, .099
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        canvas:
+            Color:
+                rgba: .282, .694, .882, .8
+            Line:
+                width: dp(1)
+                rectangle: self.x, self.y, self.width, self.height
+        text: "Display Settings"
+        font_size: L_txt_size
+        font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+        size_hint: 1, .035
+    L1:
+        id: l_1
+    L2:
+        id: l_2
+    L3:
+        id: l_3
+    Label:
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, .099
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        canvas:
+            Color:
+                rgba: .282, .694, .882, .8
+            Line:
+                width: dp(1)
+                rectangle: self.x, self.y, self.width, self.height
+        text: "Sound Settings"
+        font_size: L_txt_size
+        font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+        size_hint: 1, .035
+    L4:
+        id: l_4
+    L5:
+        id: l_5
+    L6:
+        id: l_6
+    L8:
+        id: l_8
+    Label:
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, .099
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        canvas:
+            Color:
+                rgba: .282, .694, .882, .8
+            Line:
+                width: dp(1)
+                rectangle: self.x, self.y, self.width, self.height
+        text: "Personnal"
+        font_size: L_txt_size
+        font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+        size_hint: 1, .035
+    L7:
+        id: l_7
+    L9:
+        id: l_9
+    L10:
+        id: l_10
+    L11:
+        id: l_11
+    L12:
+        id: l_12
+
+# ...
+
+<L1@RelativeLayout>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .2
+        Rectangle:
+            size: self.size
+    size_hint: 1, None
+    pos_hint: None, None
+    Label:
+        text: "F u l l S c r e e n"
+        size_hint: .3, 1
+        pos_hint: {"left": 1, "top":1}
+        font_name: "fonts/Eurostile.ttf"
+        font_size: l_txt_size
+    CheckBox:
+        id: fullscreen_btn
+        pos_hint: {"right": .975, "top": 1}
+        size_hint: .21, 1
+        sensitivity: "handle"
+        color: 0, 1, 0, 1
+        width: dp(100)
+        height: dp(100)
+
+#...
+
+<L2>:
+    id: l_2
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .2
+        Rectangle:
+            #pos: self.pos
+            size: self.size
+    size_hint: 1, None
+    pos_hint: None, None
+    l2_btn1: l2_btn1
+    l2_btn2: l2_btn2
+    l2_lbl: l2_lbl
+    Label:
+        text: "F P S   L i m i t"
+        size_hint: .3, 1
+        pos_hint: {"left": 1, "top":1}
+        font_size: l_txt_size
+        font_name: "fonts/Eurostile.ttf"
+    GridLayout:
+        cols: 3
+        pos_hint: {"right": .985, "top": 1}
+        size_hint: .225, 1
+        MyCustomButton:
+            id: l2_btn1
+            text: " - "
+            size_hint: None, None
+            size: dp(40), dp(60)
+            pos_hint: {"left": .4, "top": 1}
+            font_size: dp(48)
+            font_name: "fonts/Lcd.ttf"
+            on_press: root.inc_fps_limit("-")
+        Label:
+            id: l2_lbl
+            text: root.fps_limit
+            size_hint: .5, 1
+            pos_hint: {"center_x": .3, "top": 1}
+            font_name: "fonts/Lcd.ttf"
+            font_size: l_txt_size
+        MyCustomButton:
+            id: l2_btn2
+            text: " + "
+            size_hint: None, None
+            size: dp(40), dp(60)
+            pos_hint: {"right": .6, "top": 1}
+            font_size: dp(32)
+            font_name: "fonts/Lcd.ttf"
+            on_press: root.inc_fps_limit("+")
+
+
+        
+
+#...
+
+<L3>:
+    id: l_3
+    l_2: root.parent.l_2
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .2
+        Rectangle:
+            size: self.size
+    size_hint: 1, None
+    pos_hint: None, None
+    Label:
+        text: "C u r r e n t   F P S \n        L e v e l"
+        size_hint: .3, 1
+        pos_hint: {"left": 1, "top":1}
+        font_size: l_txt_size
+        font_name: "fonts/Eurostile.ttf"
+    GridLayout:
+        cols: 3
+        pos_hint: {"right": .985, "top": 1}
+        size_hint: .225, 1
+        MyCustomButton:
+            id: l3_btn1
+            text: " - "
+            size_hint: None, None
+            size: dp(40), dp(60)
+            pos_hint: {"left": .4, "top": 1}
+            font_size: dp(48)
+            font_name: "fonts/Lcd.ttf"
+            on_press: root.inc_cur_fps_limit("-", root.l_2)
+        Label:
+            id: l3_lbl
+            text: root.cur_fps_limit
+            size_hint: .5, 1
+            pos_hint: {"center_x": .3, "top": 1}
+            font_name: "fonts/Lcd.ttf"
+            font_size: l_txt_size
+        MyCustomButton:
+            id: l3_btn2
+            text: " + "
+            size_hint: None, None
+            size: dp(40), dp(60)
+            pos_hint: {"right": .6, "top": 1}
+            font_size: dp(32)
+            font_name: "fonts/Lcd.ttf"
+            on_press: root.inc_cur_fps_limit("+", root.l_2)
+
+# ...
+
+<L4@RelativeLayout>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .2
+        Rectangle:
+            size: self.size
+    size_hint: 1, None
+    pos_hint: None, None
+    Label:
+        text: "S o n g"
+        size_hint: .3, 1
+        pos_hint: {"left": 1, "top":1}
+        font_size: l_txt_size
+        font_name: "fonts/Eurostile.ttf"
+    CheckBox:
+        id: song_check
+        pos_hint: {"right": .675, "top": 1}
+        size_hint: .21, 1
+        sensitivity: "handle"
+        color: 0, 1, 0, 1
+        width: dp(100)
+        height: dp(100)
+    Slider:
+        id: song_volume
+        size_hint: .275, .5
+        pos_hint: {"right": .99, "top": .5}
+        min: 0
+        max: 100
+        value: 0
+        step: 1
+        background_width: dp(10)
+        backghround_color: .875, .475, 1, 1
+        cursor_size: dp(2), dp(10)
+        value_track: True
+        value_track_color: .2, .6, 1, 1
+        value_track_width: dp(1.5)
+        sensitivity: "all"
+        orientation: "horizontal"
+        disabled: not song_check.active
+    Label:
+        text: "V O L U M E :   " + str(round(song_volume.value))
+        pos_hint: {"right": .99, "top": 1}
+        size_hint: .245, .5
+        font_size: l_txt_size
+        font_name: "fonts/Lcd.ttf"
+
+
+#...    
+
+<L5@RelativeLayout>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .2
+        Rectangle:
+            #pos: self.pos
+            size: self.size
+    size_hint: 1, None
+    pos_hint: None, None
+    Label:
+        text: "M u s i c"
+        size_hint: .3, 1
+        pos_hint: {"left": 1, "top":1}
+        font_size: l_txt_size
+        font_name: "fonts/Eurostile.ttf"
+    CheckBox:
+        id: music_check
+        pos_hint: {"right": .675, "top": 1}
+        size_hint: .21, 1
+        sensitivity: "handle"
+        color: 0, 1, 0, 1
+        width: dp(100)
+        height: dp(100)
+    Slider:
+        id: music_volume
+        size_hint: .275, .5
+        pos_hint: {"right": .99, "top": .5}
+        min: 0
+        max: 100
+        value: 0
+        step: 1
+        background_width: dp(10)
+        backghround_color: .875, .475, 1, 1
+        cursor_size: dp(2), dp(10)
+        value_track: True
+        value_track_color: .2, .6, 1, 1
+        value_track_width: dp(1.5)
+        sensitivity: "all"
+        orientation: "horizontal"
+        disabled: not music_check.active
+    Label:
+        text: "V O L U M E :   " + str(round(music_volume.value))
+        pos_hint: {"right": .99, "top": 1}
+        size_hint: .245, .5
+        font_size: l_txt_size
+        font_name: "fonts/Lcd.ttf"
+
+#...
+
+<L6@RelativeLayout>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .2
+        Rectangle:
+            size: self.size
+    size_hint: 1, None
+    pos_hint: None, None
+    Label:
+        text: "S F X"
+        size_hint: .3, 1
+        pos_hint: {"left": 1, "top":1}
+        font_size: l_txt_size
+        font_name: "fonts/Eurostile.ttf"
+    CheckBox:
+        id: sfx_check
+        pos_hint: {"right": .675, "top": 1}
+        size_hint: .21, 1
+        sensitivity: "handle"
+        color: 0, 1, 0, 1
+        width: dp(100)
+        height: dp(100)
+    Slider:
+        id: sfx_volume
+        size_hint: .275, .5
+        pos_hint: {"right": .99, "top": .5}
+        text: "Volume : "
+        min: 0
+        max: 100
+        value: 0
+        step: 1
+        background_width: dp(10)
+        backghround_color: .875, .475, 1, 1
+        cursor_size: dp(2), dp(10)
+        value_track: True
+        value_track_color: .2, .6, 1, 1
+        value_track_width: dp(1.5)
+        sensitivity: "all"
+        orientation: "horizontal"
+        disabled: not sfx_check.active
+    Label:
+        text: "V O L U M E :   " + str(round(sfx_volume.value))
+        pos_hint: {"right": .99, "top": 1}
+        size_hint: .245, .5
+        font_size: l_txt_size
+        font_name: "fonts/Lcd.ttf"
+
+#...
+
+<L7@RelativeLayout>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .2
+        Rectangle:
+            size: self.size
+    size_hint: 1, None
+    pos_hint: None, None
+    Label:
+        text: "H i s t o r y"
+        size_hint: .3, 1
+        pos_hint: {"left": 1, "top":1}
+        font_size: l_txt_size
+        font_name: "fonts/Eurostile.ttf"
+    MyCustomButton:
+        text: "|   S c o r e s   |"
+        color: .2, .7, 1, 1
+        pos_hint: {"right": .99, "top": .85}
+        size_hint: .25, .5
+        font_size: dp(22)
+        font_name: "fonts/Eurostile.ttf"
+        on_press: root.parent.show_scores()
+    
+
+        
+
+#...
+
+<L8>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .2
+        Rectangle:
+            size: self.size
+    size_hint: 1, None
+    pos_hint: None, None
+    my_slider: my_slider
+    my_label: my_label
+    Label:
+        text: "L e v e l"
+        size_hint: .3, 1
+        pos_hint: {"left": 1, "top":1}
+        font_size: l_txt_size
+        font_name: "fonts/Eurostile.ttf"
+    Label:
+        id: my_label
+        text: root.text_to_display
+        font_name: "fonts/Lcd.ttf"
+        font_size: l_txt_size
+        size_hint: .25, .5
+        pos_hint: {"right": .99, "top": 1}
+    Slider:
+        id: my_slider
+        min: 0
+        max: 3
+        value: 0
+        step: 1
+        background_width: dp(10)
+        backghround_color: .875, .475, 1, 1
+        cursor_size: dp(2), dp(10)
+        value_track: True
+        value_track_color: .2, .6, 1,  1
+        value_track_width: dp(1.5)
+        sensitivity: "all"
+        orientation: "horizontal"
+        size_hint: .275, .5
+        pos_hint: {"right": .99, "top": .5}
+        text_to_display: root.get_label_text(1.0/60)
+
+    
+    
+
+#...
+
+<L9@RelativeLayout>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .2
+        Rectangle:
+            #pos: self.pos
+            size: self.size
+    size_hint: 1, None
+    pos_hint: None, None
+    Label:
+        text: "I n f o s"
+        size_hint: .3, 1
+        pos_hint: {"left": 1, "top":1}
+        font_size: l_txt_size
+        font_name: "fonts/Eurostile.ttf"
+    MyCustomButton:
+        text: "|   I n f o s   |"
+        color: 1, 1, 0, 1
+        pos_hint: {"right": .99, "top": .85}
+        size_hint: .25, .5
+        font_size: dp(22)
+        font_name: "fonts/Eurostile.ttf"
+        on_press: root.parent.show_infos()
+
+
+<Infos>:
+    canvas.before:
+        Color:
+            rgba: .180, .525, .757, .75
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    background_color: .180, .7, 1, .95 #1, 1, 1, .5
+    title: "|   I n f o s   |"
+    title_align: "center"
+    title_size: H_size
+    title_font: "fonts/Eurostile.ttf"
+    title_color: 1, 1, 0, 1  #.1, .3, .85, .5
+    pos_hint: {"center_x": .5, "center_y": .5}
+    content:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, .085
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    canvas:
+        Color:
+            rgba: .282, .694, .882, .8
+        Line:
+            width: dp(1)
+            rectangle: self.x, self.y, self.width, self.height
+
+#...
+
+<L10@RelativeLayout>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .2
+        Rectangle:
+            size: self.size
+    size_hint: 1, None
+    pos_hint: None, None
+    Label:
+        text: "A b o u t"
+        size_hint: .3, 1
+        pos_hint: {"left": 1, "top":1}
+        font_size: l_txt_size
+        font_name: "fonts/Eurostile.ttf"
+    MyCustomButton:
+        text: "|   A b o u t   U s   |"
+        color: 0, 0, 1, 1
+        pos_hint: {"right": .99, "top": .85}
+        size_hint: .25, .5
+        font_size: dp(22)
+        font_name: "fonts/Eurostile.ttf"
+        on_press: root.parent.show_about()
+    
+<About>:
+    canvas.before:
+        Color:
+            rgba: .180, .525, .757, .75
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    background_color: .180, .7, 1, .95 #1, 1, 1, .5
+    title: "|   A b o u t  U s   |"
+    title_align: "center"
+    title_size: H_size
+    title_font: "fonts/Eurostile.ttf"
+    title_color: 0, 0, 1, 1   #.1, .3, .85, .5
+    pos_hint: {"center_x": .5, "center_y": .5}
+    content:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, .085
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    canvas:
+        Color:
+            rgba: .282, .694, .882, .8
+        Line:
+            width: dp(1)
+            rectangle: self.x, self.y, self.width, self.height
+
+#...
+
+<L11@RelativeLayout>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .2
+        Rectangle:
+            size: self.size
+    size_hint: 1, None
+    pos_hint: None, None
+    Label:
+        text: "C o n n e c t"
+        size_hint: .3, 1
+        pos_hint: {"left": 1, "top":1}
+        font_size: l_txt_size
+        font_name: "fonts/Eurostile.ttf"
+    MyCustomButton:
+        text: "C o n n e c t   t o\n            U s !"
+        color: 0, 1, 0, 1
+        pos_hint: {"right": .99, "top": .85}
+        size_hint: .25, .5
+        font_size: dp(22)
+        font_name: "fonts/Eurostile.ttf"
+        on_press: root.parent.show_connect()
+
+
+<Connect>:
+    canvas.before:
+        Color:
+            rgba: .180, .525, .757, .75
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    background_color: .180, .7, 1, .95 #1, 1, 1, .5
+    title: "|   C o n n e c t   |"
+    title_align: "center"
+    title_size: H_size
+    title_font: "fonts/Eurostile.ttf"
+    title_color: 0, 1, 0, 1  #.1, .3, .85, .5
+    pos_hint: {"center_x": .5, "center_y": .5}
+    content:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, .085
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    canvas:
+        Color:
+            rgba: .282, .694, .882, .8
+        Line:
+            width: dp(1)
+            rectangle: self.x, self.y, self.width, self.height
+
+#...
+
+<L12@RelativeLayout>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .2
+        Rectangle:
+            size: self.size
+    size_hint: 1, None
+    pos_hint: None, None
+
+#...
+
+<Score>:
+    canvas.before:
+        Color:
+            rgba: .180, .525, .757, .75
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    background_color: .180, .7, 1, .95 #1, 1, 1, .5
+    title: "|   S C O R E S   |"
+    title_align: "center"
+    title_size: H_size
+    title_font: "fonts/Eurostile.ttf"
+    title_color: .2, .7, 1, 1  #.1, .3, .85, .5
+    pos_hint: {"center_x": .5, "center_y": .5}
+    reset_btn: reset_btn
+    content:
+    opacity: 1
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, .085
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    canvas:
+        Color:
+            rgba: .282, .694, .882, .8
+        Line:
+            width: dp(1)
+            rectangle: self.x, self.y, self.width, self.height
+    RelativeLayout:
+        BoxLayout:
+            orientation: "vertical"
+            size_hint: 1, .75
+            pos_hint: {"center_x": .5, "top": .99}
             Label:
-                #canvas:
-                #    Color:
-                #        rgba: 0.1, 1, 1, 1
-                #    Line:
-                #        width: dp(2)
-                #        rectangle: self.x, self.y, self.width, self.height                        
-                text: root.display_text
-                font_size: dp(25)
-                #pos_hint: {"x": 0, "center_y": 0}
-                size_hint: 1, .67
+                text: root.score
+                size_hint: 1, .3
+                font_size: dp(28)
+                pos_hint: {"center_x": .5, "top": .99}
             Label:
-                font_size: dp(17)
-                text:'Settings Page'
-                #pos_hint: {"center_x": .5, "center_y": 1}
-                size_hint: 1, .16
+                text: root.best_score
+                size_hint: 1,.3
+                font_size: dp(28)
+                pos_hint: {"center_x": .5, "top": .75}
         GridLayout:
-            rows:2
-            cols:4
-            spacing: dp(15)
-            Button_1:
-                canvas.before:
-                    Color:
-                        rgba: .2, .7, 1, .25
-                    Line:
-                        width: dp(2)
-                        rectangle: self.x, self.y, self.width, self.height
-                text_to_display: 
-                    """
-                    S C O R E : Your score is 100
-                    Best Score is 100
-                    """
-                on_press: root.on_button_pressed(self.text_to_display)
-            Button_2:
-                canvas.before:
-                    Color:
-                        rgba: .2, .7, 1, .25
-                    Line:
-                        width: dp(2)
-                        rectangle: self.x, self.y, self.width, self.height
-                on_press: root.on_button_pressed(self.text)
-            Button_3:
-                canvas.before:
-                    Color:
-                        rgba: .2, .7, 1, .25
-                    Line:
-                        width: dp(2)
-                        rectangle: self.x, self.y, self.width, self.height
-                on_press: root.on_button_pressed(self.text)
-            Button_4:
-                canvas.before:
-                    Color:
-                        rgba: .2, .7, 1, .25
-                    Line:
-                        width: dp(2)
-                        rectangle: self.x, self.y, self.width, self.height
-                on_press: root.on_button_pressed(self.text)
-            Button_5:
-                canvas.before:
-                    Color:
-                        rgba: .2, .7, 1, .5
-                    Line:
-                        width: dp(2)
-                        rectangle: self.x, self.y, self.width, self.height
-                on_press: root.on_button_pressed(self.text)
-            Button_6:
-                canvas.before:
-                    Color:
-                        rgba: .2, .7, 1, .5
-                    Line:
-                        width: dp(2)
-                        rectangle: self.x, self.y, self.width, self.height
-                on_press: root.on_button_pressed(self.text)
-            Button_7:
-                canvas.before:
-                    Color:
-                        rgba: .2, .7, 1, .5
-                    Line:
-                        width: dp(2)
-                        rectangle: self.x, self.y, self.width, self.height
-                on_press: root.on_button_pressed(self.text)
-            Button_8:
-                canvas.before:
-                    Color:
-                        rgba: .2, .7, 1, .5
-                    Line:
-                        width: dp(2)
-                        rectangle: self.x, self.y, self.width, self.height
-                on_press: root.on_button_pressed(self.text)
+            cols: 2
+            padding: dp(2)
+            spacing: dp(5)
+            pos_hint: {"center_x": .5, "top": .18}
+            size_hint: .70, .12
+            MyCustomButton:
+                text: "C l o s e"
+                on_press: root.dismiss(1.0/60)
+            MyCustomButton:
+                id: reset_btn
+                text: "R e s e t"
+                on_press: root.reset_score(1.0/60)
+    
 
+#...
 
-# the window manager ...
+<MyCustomButton@Button>:
+    id: custom_btn
+    canvas:
+        Color:
+            rgba: .282, .694, .882, .8
+        Line:
+            width: dp(1)
+            rectangle: self.x, self.y, self.width, self.height
+    text: "My Pretty Button"
+    size_hint: .3, .5
+    background_color: _bc
+    background_width: dp(40)
+    border: 
 
+<FirstWidget>:
+    canvas.before:
+        Color:
+            rgba: .2, .5, .9, .6
+        Rectangle:
+            size: self.size
+            source: "bg1.jpg"
+    
 <WindowManager@ScreenManager>:
 
+# The main Window
 
-
-#Managing all the buttons on the second page
-
-# first button
-
-<Button_1@Button>:
-    font_size: dp(20)
-    font_name: "fonts/Eurostile.ttf"
-    text: "Button 1"
-    pos_hint: { "right": 1, "top": 1}
-    size_hint: .18, .08   
-    #on_press: 
-    #    #
-    background_color: .8, .5, 1, .2
-
-# second button
-
-<Button_2@Button>:
-    font_size: dp(20)
-    font_name: "fonts/Eurostile.ttf"
-    text: "Button 2"
-    pos_hint: { "right": 1, "top": 1}
-    size_hint: .18, .08
-    #on_press: 
-    #    display_text = "B"
-    background_color: .8, .5, 1, .2
-
-# third button
-
-<Button_3@Button>:
-    font_size: dp(20)
-    font_name: "fonts/Eurostile.ttf"
-    text: "Button 3"
-    pos_hint: { "right": 1, "top": 1}
-    size_hint: .18, .08
-    #on_press: 
-    #    display_text = "C"
-    background_color: .8, .5, 1, .2
-
-# fourth button
-
-<Button_4@Button>:
-    font_size: dp(20)
-    font_name: "fonts/Eurostile.ttf"
-    text: "Button 4"
-    pos_hint: { "right": 1, "top": 1}
-    size_hint: .18, .08
-    #on_press: 
-    #    display_text = "D"
-    background_color: .8, .5, 1, .2
-
-# fifth button
-
-<Button_5@Button>:
-    font_size: dp(20)
-    font_name: "fonts/Eurostile.ttf"
-    text: "Button 5"
-    pos_hint: { "right": 1, "top": 1}
-    size_hint: .18, .08
-    #on_press: 
-    #    display_text = "E"
-    background_color: .8, .5, 1, .2
-
-# sixth button
-
-<Button_6@Button>:
-    font_size: dp(20)
-    font_name: "fonts/Eurostile.ttf"
-    text: "Button 6"
-    pos_hint: { "right": 1, "top": 1}
-    size_hint: .18, .08
-    #on_press: 
-    #    display_text = "F"
-    background_color: .8, .5, 1, .2
-
-# seventh button
-
-<Button_7@Button>:
-    font_size: dp(20)
-    font_name: "fonts/Eurostile.ttf"
-    text: "Button 7"
-    pos_hint: { "right": 1, "top": 1}
-    size_hint: .18, .08
-    #on_press: 
-    #    display_text = "G"
-    background_color: .8, .5, 1, .2
-
-# eighth button
-
-<Button_8@Button>:
-    font_size: dp(20)
-    font_name: "fonts/Eurostile.ttf"
-    text: "Button 8"
-    pos_hint: { "right": 1, "top": 1}
-    size_hint: .18, .08
-    #on_press: 
-    #    display_text = "H"
-    background_color: .8, .5, 1, .2
+#<MainWindow>:
+#    name: "main"
+#    canvas.before:
+#        Color:
+#            rgba: 0, 0, 0, .8
+#        #BorderImage:
+#        #    border: 10, 10, 10, 10
+#        #    texture: root.background_image.texture
+#        #    pos: self.pos
+#        #    size: self.size
+#        Rectangle:
+#            size: self.size
+#            source: "bg1.jpg"
+#    Label:
+#        font_size: dp(60)
+#        font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+#        text: "M E N U  P A G E"
+#        pos_hint: {"center_x": .5, "center_y": .65}
+#    Button:
+#        canvas.before:
+#            Color:
+#                rgba: .2, .7, 1, 1
+#            Line:
+#                width: dp(2)
+#                rectangle: self.x, self.y, self.width, self.height
+#        font_size: dp(30)
+#        font_name: "fonts/Eurostile.ttf"
+#        text: "S E T T I N G S"
+#        pos_hint: { "center_x": .5, "center_y": .3}
+#        size_hint: .3, .1
+#        on_press:
+#            app.root.current = "second"
+#            root.manager.transition.direction = "left"
+#        background_color: 1, .5, 1, 1
+#
+#
+## Second Window
+#
+#<SecondWindow>:
+#    name: "second"
+#
+#    BoxLayout:
+#        orientation: 'vertical'
+#        size_hint: 1, 1
+#        #RelativeLayout:
+#        #    canvas.before:
+#        #        Color:
+#        #            rgba: 0, 0, 0, 1
+#        #        Rectangle:
+#        #            size: self.size
+#        #    pos_hint: {'right': 1, 'top': 1}
+#        #    size_hint: 1, .45
+#        AnchorLayout:
+#            anchor_x: "left"
+#            anchor_y: "top"
+#            size_hint: 1, .45
+#            pos_hint: {"center_x": .5, "top": 1}
+#            canvas.before:
+#                Color:
+#                    rgba: 0.2, 1, 1, 1
+#                Line:
+#                    width: dp(3)
+#                    rectangle: self.x, self.y, self.width, self.height
+#                Color:
+#                    rgba: 0, 0, 0, 1
+#                Rectangle:
+#                    size: self.size
+#            Button:
+#                anchor_x: "x"
+#                anchor_y: "top"
+#                canvas.before:
+#                    Color:
+#                        #rgba: .2, .7, 1, .25
+#                        rgba: 1, 0, 0, 1
+#                    Line:
+#                        width: dp(2)
+#                        rectangle: self.x, self.y, self.width, self.height
+#                text: "G O  B A C K"
+#                #pos_hint: { "x": .22, "top": 1}
+#                size_hint: 0.22, 0.15
+#                on_press:
+#                    app.root.current = "main"
+#                    root.manager.transition.direction = "right"            
+#            #anchor_x: "center"
+#            #anchor_y: "center"
+#            Label:
+#                #canvas:
+#                #    Color:
+#                #        rgba: 0.1, 1, 1, 1
+#                #    Line:
+#                #        width: dp(2)
+#                #        rectangle: self.x, self.y, self.width, self.height                        
+#                text: root.display_text
+#                font_size: dp(25)
+#                #pos_hint: {"x": 0, "center_y": 0}
+#                size_hint: 1, .67
+#            Label:
+#                font_size: dp(17)
+#                text:'Settings Page'
+#                #pos_hint: {"center_x": .5, "center_y": 1}
+#                size_hint: 1, .16
+#        GridLayout:
+#            rows:2
+#            cols:4
+#            spacing: dp(15)
+#            Button_1:
+#                canvas.before:
+#                    Color:
+#                        rgba: .2, .7, 1, .25
+#                    Line:
+#                        width: dp(2)
+#                        rectangle: self.x, self.y, self.width, self.height
+#                text_to_display: 
+#                    """
+#                    S C O R E : Your score is 100
+#                    Best Score is 100
+#                    """
+#                on_press: root.on_button_pressed(self.text_to_display)
+#            Button_2:
+#                canvas.before:
+#                    Color:
+#                        rgba: .2, .7, 1, .25
+#                    Line:
+#                        width: dp(2)
+#                        rectangle: self.x, self.y, self.width, self.height
+#                on_press: root.on_button_pressed(self.text)
+#            Button_3:
+#                canvas.before:
+#                    Color:
+#                        rgba: .2, .7, 1, .25
+#                    Line:
+#                        width: dp(2)
+#                        rectangle: self.x, self.y, self.width, self.height
+#                on_press: root.on_button_pressed(self.text)
+#            Button_4:
+#                canvas.before:
+#                    Color:
+#                        rgba: .2, .7, 1, .25
+#                    Line:
+#                        width: dp(2)
+#                        rectangle: self.x, self.y, self.width, self.height
+#                on_press: root.on_button_pressed(self.text)
+#            Button_5:
+#                canvas.before:
+#                    Color:
+#                        rgba: .2, .7, 1, .5
+#                    Line:
+#                        width: dp(2)
+#                        rectangle: self.x, self.y, self.width, self.height
+#                on_press: root.on_button_pressed(self.text)
+#            Button_6:
+#                canvas.before:
+#                    Color:
+#                        rgba: .2, .7, 1, .5
+#                    Line:
+#                        width: dp(2)
+#                        rectangle: self.x, self.y, self.width, self.height
+#                on_press: root.on_button_pressed(self.text)
+#            Button_7:
+#                canvas.before:
+#                    Color:
+#                        rgba: .2, .7, 1, .5
+#                    Line:
+#                        width: dp(2)
+#                        rectangle: self.x, self.y, self.width, self.height
+#                on_press: root.on_button_pressed(self.text)
+#            Button_8:
+#                canvas.before:
+#                    Color:
+#                        rgba: .2, .7, 1, .5
+#                    Line:
+#                        width: dp(2)
+#                        rectangle: self.x, self.y, self.width, self.height
+#                on_press: root.on_button_pressed(self.text)
+#
+#
+## the window manager ...
+#
+#
+#
+#
+##Managing all the buttons on the second page
+#
+## first button
+#
+#<Button_1@Button>:
+#    font_size: dp(20)
+#    font_name: "fonts/Eurostile.ttf"
+#    text: "Button 1"
+#    pos_hint: { "right": 1, "top": 1}
+#    size_hint: .18, .08   
+#    #on_press: 
+#    #    #
+#    background_color: .8, .5, 1, .2
+#
+## second button
+#
+#<Button_2@Button>:
+#    font_size: dp(20)
+#    font_name: "fonts/Eurostile.ttf"
+#    text: "Button 2"
+#    pos_hint: { "right": 1, "top": 1}
+#    size_hint: .18, .08
+#    #on_press: 
+#    #    display_text = "B"
+#    background_color: .8, .5, 1, .2
+#
+## third button
+#
+#<Button_3@Button>:
+#    font_size: dp(20)
+#    font_name: "fonts/Eurostile.ttf"
+#    text: "Button 3"
+#    pos_hint: { "right": 1, "top": 1}
+#    size_hint: .18, .08
+#    #on_press: 
+#    #    display_text = "C"
+#    background_color: .8, .5, 1, .2
+#
+## fourth button
+#
+#<Button_4@Button>:
+#    font_size: dp(20)
+#    font_name: "fonts/Eurostile.ttf"
+#    text: "Button 4"
+#    pos_hint: { "right": 1, "top": 1}
+#    size_hint: .18, .08
+#    #on_press: 
+#    #    display_text = "D"
+#    background_color: .8, .5, 1, .2
+#
+## fifth button
+#
+#<Button_5@Button>:
+#    font_size: dp(20)
+#    font_name: "fonts/Eurostile.ttf"
+#    text: "Button 5"
+#    pos_hint: { "right": 1, "top": 1}
+#    size_hint: .18, .08
+#    #on_press: 
+#    #    display_text = "E"
+#    background_color: .8, .5, 1, .2
+#
+## sixth button
+#
+#<Button_6@Button>:
+#    font_size: dp(20)
+#    font_name: "fonts/Eurostile.ttf"
+#    text: "Button 6"
+#    pos_hint: { "right": 1, "top": 1}
+#    size_hint: .18, .08
+#    #on_press: 
+#    #    display_text = "F"
+#    background_color: .8, .5, 1, .2
+#
+## seventh button
+#
+#<Button_7@Button>:
+#    font_size: dp(20)
+#    font_name: "fonts/Eurostile.ttf"
+#    text: "Button 7"
+#    pos_hint: { "right": 1, "top": 1}
+#    size_hint: .18, .08
+#    #on_press: 
+#    #    display_text = "G"
+#    background_color: .8, .5, 1, .2
+#
+## eighth button
+#
+#<Button_8@Button>:
+#    font_size: dp(20)
+#    font_name: "fonts/Eurostile.ttf"
+#    text: "Button 8"
+#    pos_hint: { "right": 1, "top": 1}
+#    size_hint: .18, .08
+#    #on_press: 
+#    #    display_text = "H"
+#    background_color: .8, .5, 1, .2
+#

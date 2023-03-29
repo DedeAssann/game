@@ -506,7 +506,6 @@ class HomeWindow(Screen):
     def exit(self, *args):
         "Implementing an exit function for the game"
         App.get_running_app().stop()
-        Window.close()
 
 
 # the HomeButton class
