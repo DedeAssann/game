@@ -1,17 +1,9 @@
-# pylint: disable= no-name-in-module, unused-import, wrong-import-position, wrong-import-order
+"""
+My Settings Module
+"""
 
-from kivy.config import Config
+# pylint: disable= no-name-in-module, unused-import, wrong-import-position
 
-Config.set("graphics", "width", "1200")
-Config.set("graphics", "height", "650")
-Config.set("graphics", "resizable", True)
-Config.write()
-
-from kivy.core.window import Window
-
-Window.allow_screensaver = True
-
-from kivy.app import App
 import cProfile
 from kivy.uix.slider import Slider
 from kivy.properties import (
@@ -23,17 +15,12 @@ from kivy.properties import (
 )
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.popup import Popup
-from kivy.metrics import dp
-from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
-from kivy.uix.label import Label
 from kivy.uix.dropdown import DropDown
 from kivy.uix.stacklayout import StackLayout
 from kivy.uix.screenmanager import Screen, NoTransition
 from kivy.storage.jsonstore import JsonStore
-import re
 
-store = JsonStore("myapp.json")
 
 btn1 = Button(
     text="60 fps",
@@ -58,83 +45,13 @@ btn3 = Button(
 )
 
 
-class FloatInput(TextInput):
-    "..."
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-    pat = re.compile("[^0-9]")
-
-    def insert_text(self, substring, from_undo=False):
-        pat = self.pat
-        if "." in self.text:
-            s = re.sub(pat, "", substring)
-        else:
-            s = ".".join(re.sub(pat, "", s) for s in substring.split(".", 1))
-        return super().insert_text(s, from_undo=from_undo)
-
-
-class StringInput(TextInput):
-    "..."
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-    _values = re.compile("[0-9]")
-
-    def insert_text(self, substring, from_undo=False):
-        _values = self._values
-        if "." in self.text:
-            s = re.sub(_values, "", substring)
-        else:
-            s = ".".join(re.sub(_values, "", s) for s in substring.split(".", 1))
-        return super().insert_text(s, from_undo=from_undo)
-
-
 class Infos(Popup):
     "..."
 
     def __init__(self, **kwargs):
         "..."
         super().__init__(**kwargs)
-        self.size_hint = (0.825, 0.825)
-        self.input_name.text = TryApp.store.get("Name of User")["value"]
-        self.input_age.text = TryApp.store.get("Age of User")["value"]
-        self.input_mail.text = TryApp.store.get("Mail of User")["value"]
-
-    def w_infos(self):
-        "Write infos in the storage file about the user name"
-        TryApp.store.put("Name of User", name="Name", value=self.input_name.text)
-        TryApp.store.put("Age of User", name="Age", value=self.input_age.text)
-        TryApp.store.put("Mail of User", name="Mail", value=self.input_mail.text)
-
-    def on_submit(self):
-        "..."
-        if self.lbl1.opacity == 1:
-            pass
-        else:
-            self.w_infos()
-            self.input_name.opacity = 0
-            self.input_age.opacity = 0
-            self.input_mail.opacity = 0
-            self.lbl1.text = TryApp.store.get("Name of User")["value"]
-            self.lbl2.text = TryApp.store.get("Age of User")["value"]
-            self.lbl3.text = TryApp.store.get("Mail of User")["value"]
-            self.lbl1.opacity = 1
-            self.lbl2.opacity = 1
-            self.lbl3.opacity = 1
-
-    def modify(self):
-        if self.input_name.opacity == 1:
-            pass
-        else:
-            self.lbl1.opacity = 0
-            self.lbl2.opacity = 0
-            self.lbl3.opacity = 0
-            self.input_name.opacity = 1
-            self.input_age.opacity = 1
-            self.input_mail.opacity = 1
+        self.size_hint = (0.8, 0.8)
 
 
 class About(Popup):
@@ -322,17 +239,6 @@ class MainWidget(RelativeLayout):
     "..."
 
 
-class FirstWidget(RelativeLayout):
-    "..."
-
-
-class FirstWindow(Screen):
-    "..."
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-
 class MainWindow(Screen):
     "..."
 
@@ -340,47 +246,3 @@ class MainWindow(Screen):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
-
-class TryApp(App):
-    "..."
-    use_kivy_settings = False
-    title = "|   M y   G a l a x y   S e t t i n g s   D e m o   |"
-    store = store
-
-    def on_key_down(self, touch):
-        for key in Window.keycodes:
-            if key == "escape":
-                pass
-
-    def open_settings(self, *largs):
-        pass
-
-    def on_start(self):
-        self.profile = cProfile.Profile()
-        self.profile.enable()
-
-    def on_stop(self):
-        self.profile.disable()
-        self.profile.dump_stats("tryapp.profile")
-
-    def on_pause(self):
-        return True
-
-    def on_resume(self):
-        pass
-
-
-TryApp().run()
-
-
-# class SecondWindow(Screen):
-#    display_text = StringProperty("Hiii !")
-#
-#    def __init__(self, **kwargs):
-#        super().__init__(**kwargs)
-#
-#    def on_button_pressed(self, letter: str):
-#        self.display_text = letter
-
-# ***https://www.youtube.com/watch?v=5JOaTtcg1tE&t=18s***

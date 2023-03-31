@@ -9,15 +9,16 @@ Ce jeu consiste a deplacer un spaceship sur un plan, et suivre le chemin trace d
 
 # config section
 import os
-from kivy.uix.settings import *
 
-os.environ["KCFG_GRAPHICS_FULLSCREEN"] = "auto"
+# from kivy.uix.settings import *
+
+# os.environ["KCFG_GRAPHICS_FULLSCREEN"] = "auto"
 from kivy.config import Config
 
 # configuring the screen which is gonna be opened by kivy
 Config.set("graphics", "width", "1200")
 Config.set("graphics", "height", "650")
-Config.set("graphics", "resizable", "1")
+Config.set("graphics", "resizable", 1)
 
 from kivy.core.window import Window
 
@@ -137,9 +138,6 @@ class MainWidget(RelativeLayout):
 
         Clock.schedule_interval(self.update, 1.0 / 60.0)
         self.sound_galaxy.play()
-        # Config.set("graphics", "fullscreen", 1)
-        # Config.set("graphics", "width", 1320)
-        # Config.set("graphics", "height", 700)
 
     def reset_game(self):
         "Here we reset the main variables of the game, so we can restart the game."
@@ -328,20 +326,20 @@ class MainWidget(RelativeLayout):
 
     def speed_update(self):
         "In this function we increase the speed of the game."
-        actual_speed = 0.4
+        # actual_speed = 0.4
 
-        if self.current_y_loop <= 79:
-            actual_speed += 0.075
-        elif self.current_y_loop <= 99:
-            actual_speed += 0.075
-        elif self.current_y_loop <= 149:
-            actual_speed += 0.075
-        elif self.current_y_loop <= 499:
-            actual_speed += 0.05
-        elif self.current_y_loop <= 799:
-            actual_speed += 0.045
+        if self.current_y_loop == 99:
+            self.SPEED += 0.075
+        elif self.current_y_loop == 159:
+            self.SPEED += 0.075
+        elif self.current_y_loop == 249:
+            self.SPEED += 0.075
+        elif self.current_y_loop == 499:
+            self.SPEED += 0.05
+        elif self.current_y_loop == 799:
+            self.SPEED += 0.045
 
-        return actual_speed
+        # return
 
     def update(self, _dt):
         """
@@ -393,11 +391,11 @@ class MainWidget(RelativeLayout):
                 self.current_offset_y -= spacing_y
                 self.current_y_loop += 1
                 self.score_txt = "S C O R E :  " + str(self.current_y_loop)
-                if self.current_y_loop >= 70:
-                    self.SPEED = self.speed_update()
+                if self.current_y_loop >= 79:
+                    self.speed_update()
                 self.generate_tiles_coordinates()
-                # print("actual speed: " + str(self.SPEED))
-                # print("loop : " + str(self.current_y_loop))
+                print("actual speed: " + str(self.SPEED))
+                print("loop : " + str(self.current_y_loop))
 
             speed_x = self.current_speed_x * self.width / 100
             self.current_offset_x += speed_x * time_factor
@@ -535,7 +533,7 @@ class WindowManager(ScreenManager):
 class GalaxyApp(App):
     """The main app class"""
 
-    use_kivy_settings = True
+    use_kivy_settings = False
 
 
 GalaxyApp().run()
