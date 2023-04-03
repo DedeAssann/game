@@ -16,7 +16,7 @@ def init_audio(self):
 
     self.sound_begin.volume = 0.25
     self.sound_galaxy.volume = 0.25
-    self.sound_gameover_impact.volume = 0.99
-    self.sound_gameover_voice.volume = 0.25
+    self.sound_gameover_impact.volume = 0.45
+    self.sound_gameover_voice.volume = 0.75
     self.sound_music1.volume = 1
     self.sound_restart.volume = 0.25

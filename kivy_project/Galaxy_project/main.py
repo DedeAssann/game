@@ -418,7 +418,7 @@ class MainWidget(RelativeLayout):
             self.sound_music1.stop()
             self.sound_gameover_impact.play()
             self.sound_gameover_voice.play()
-            Clock.schedule_once(self.play_game_over_voice_sound, 3)
+            Clock.schedule_once(self.play_game_over_voice_sound, 0)
             # print("GAME OVER")
 
     def on_pause_button_pressed(self):
@@ -443,7 +443,7 @@ class MainWidget(RelativeLayout):
 
     def play_game_over_voice_sound(self, dt):
         "a function that plays the game over voice when we are in a game over state"
-        if not self.state_game_over:
+        if self.state_game_over:
             self.sound_gameover_voice.play()
 
     def on_menu_button_pressed(self):
