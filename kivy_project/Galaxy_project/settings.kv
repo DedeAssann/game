@@ -1,0 +1,875 @@
+
+#: import randint random
+#: import DampedScrollEffect kivy.effects.dampedscroll
+
+#: set l_txt_size dp(25)
+#: set L_txt_size dp(25)
+#: set h_size dp(30)
+#: set H_size dp(40)
+#: set _bc (.180, .525, .757, .3)
+#: set _Bc (.2, .6, 1, 1)
+
+
+<SettingsWidget>:
+    padding: dp(5)
+    pos: root.pos
+    size: root.size
+    home_btn: home_btn
+    stack: stack
+    canvas.before:
+        Color:
+            rgba: .2, .5, .9, 1
+        Rectangle:
+            size: self.size
+            source: "bg1.jpg"
+    GridLayout:
+        canvas:
+            Color:
+                rgba: .282, .694, .882, .8
+            Line:
+                width: dp(1)
+                rectangle: self.x, self.y, self.width, self.height
+        cols: 3
+        size_hint: 1, .08
+        pos_hint: {"left": 1, "top": 1}
+        MyCustomButton:
+            pos_hint: {"right": .15, "top": 1}
+            size_hint: .15, 1
+            text: "E x i t"
+            font_size: dp(22)
+            font_name: "fonts/Eurostile.ttf"
+            on_press:
+                app.get_running_app().stop()
+        BackgroundLabel:
+            text:' S  E  T  T  I  N  G  S '
+            size: self.texture_size
+            bold: True
+            italic: True
+            halign: "justify"
+            valign: "middle"
+            font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+            pos_hint: {"center_x": .5, "top": 1}
+            size_hint: .7, 1
+            font_size: dp(45)
+        MyCustomButton:
+            id: home_btn
+            pos_hint: {"right": 1, "top": 1}
+            size_hint: .15, 1
+            text: "H o m e"
+            font_size: dp(22)
+            font_name: "fonts/Eurostile.ttf"
+            on_press: root.parent.manager.current = "home_screen"
+    ScrollView:
+        pos_hint: {"left": 1, "top": .9}
+        stack: stack
+        do_scroll_x: False
+        do_scroll_y: True
+        always_overscoll: True
+        bar_width: dp(5)
+        bar_color: _bc
+        smooth_scroll_end: dp(8)
+        scroll_wheel_distance: dp(45)
+        StackWidget:
+            id: stack
+            size_hint: 1, None
+            height: self.minimum_height
+
+
+
+<StackWidget>:
+    id: stack
+    orientation: "lr-tb"
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, 0
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    l_1: l_1
+    l_2: l_2
+    l_3: l_3
+    l_4: l_4
+    l_5: l_5
+    l_6: l_6
+    l_7: l_7
+    l_8: l_8
+    l_9: l_9
+    l_10: l_10
+    l_11: l_11
+    l_12: l_12
+    Label:
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, .099
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        canvas:
+            Color:
+                rgba: .282, .694, .882, .8
+            Line:
+                width: dp(1)
+                rectangle: self.x, self.y, self.width, self.height
+        text: "Display Settings"
+        font_size: L_txt_size
+        font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+        size_hint: 1, .035
+    L1:
+        id: l_1
+    L2:
+        id: l_2
+    L3:
+        id: l_3
+    Label:
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, .099
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        canvas:
+            Color:
+                rgba: .282, .694, .882, .8
+            Line:
+                width: dp(1)
+                rectangle: self.x, self.y, self.width, self.height
+        text: "Sound Settings"
+        font_size: L_txt_size
+        font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+        size_hint: 1, .035
+    L4:
+        id: l_4
+    L5:
+        id: l_5
+    L6:
+        id: l_6
+    L8:
+        id: l_8
+    Label:
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, .099
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        canvas:
+            Color:
+                rgba: .282, .694, .882, .8
+            Line:
+                width: dp(1)
+                rectangle: self.x, self.y, self.width, self.height
+        text: "Personnal"
+        font_size: L_txt_size
+        font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+        size_hint: 1, .035
+    L7:
+        id: l_7
+    L9:
+        id: l_9
+    L10:
+        id: l_10
+    L11:
+        id: l_11
+    L12:
+        id: l_12
+
+# The layouts
+
+
+<L1@RelativeLayout>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .2
+        Rectangle:
+            size: self.size
+    size_hint: 1, None
+    pos_hint: None, None
+    fullscreen_btn: fullscreen_btn
+    Label:
+        text: "F u l l S c r e e n"
+        size_hint: .3, 1
+        pos_hint: {"left": 1, "top":1}
+        font_name: "fonts/Eurostile.ttf"
+        font_size: l_txt_size
+    MyCustomCheckBox:
+        id: fullscreen_btn
+        pos_hint: {"right": .975, "top": 1}
+        active: False
+        on_active: root.parent.get_fullscreen(["KCFG_GRAPHICS_FULLSCREEN", "auto"])
+
+
+<L2>:
+    id: l_2
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .2
+        Rectangle:
+            #pos: self.pos
+            size: self.size
+    size_hint: 1, None
+    pos_hint: None, None
+    l2_btn1: l2_btn1
+    l2_btn2: l2_btn2
+    l2_lbl: l2_lbl
+    Label:
+        text: "F P S   L i m i t"
+        size_hint: .3, 1
+        pos_hint: {"left": 1, "top":1}
+        font_size: l_txt_size
+        font_name: "fonts/Eurostile.ttf"
+    GridLayout:
+        cols: 3
+        pos_hint: {"right": .985, "top": 1}
+        size_hint: .225, 1
+        MyCustomButton:
+            id: l2_btn1
+            text: " - "
+            size_hint: None, None
+            size: dp(40), dp(60)
+            pos_hint: {"left": .4, "top": 1}
+            font_size: dp(48)
+            font_name: "fonts/Lcd.ttf"
+            on_press: root.inc_fps_limit("-")
+        Label:
+            id: l2_lbl
+            text: root.fps_limit
+            size_hint: .5, 1
+            pos_hint: {"center_x": .3, "top": 1}
+            font_name: "fonts/Lcd.ttf"
+            font_size: l_txt_size
+        MyCustomButton:
+            id: l2_btn2
+            text: " + "
+            size_hint: None, None
+            size: dp(40), dp(60)
+            pos_hint: {"right": .6, "top": 1}
+            font_size: dp(45)
+            font_name: "fonts/Lcd.ttf"
+            on_press: root.inc_fps_limit("+")
+
+
+        
+
+
+<L3>:
+    id: l_3
+    l_2: root.parent.l_2
+    l3_lbl: l3_lbl
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .2
+        Rectangle:
+            size: self.size
+    size_hint: 1, None
+    pos_hint: None, None
+    Label:
+        text: "C u r r e n t   F P S \n        L e v e l"
+        size_hint: .3, 1
+        pos_hint: {"left": 1, "top":1}
+        font_size: l_txt_size
+        font_name: "fonts/Eurostile.ttf"
+    GridLayout:
+        cols: 3
+        pos_hint: {"right": .985, "top": 1}
+        size_hint: .225, 1
+        MyCustomButton:
+            id: l3_btn1
+            text: " - "
+            size_hint: None, None
+            size: dp(40), dp(60)
+            pos_hint: {"left": .4, "top": 1}
+            font_size: dp(48)
+            font_name: "fonts/Lcd.ttf"
+            on_press: root.inc_cur_fps_limit("-", root.l_2)
+        Label:
+            id: l3_lbl
+            text: root.cur_fps_limit
+            size_hint: .5, 1
+            pos_hint: {"center_x": .3, "top": 1}
+            font_name: "fonts/Lcd.ttf"
+            font_size: l_txt_size
+        MyCustomButton:
+            id: l3_btn2
+            text: " + "
+            size_hint: None, None
+            size: dp(40), dp(60)
+            pos_hint: {"right": .6, "top": 1}
+            font_size: dp(45)
+            font_name: "fonts/Lcd.ttf"
+            on_press: root.inc_cur_fps_limit("+", root.l_2)
+
+
+<L4@RelativeLayout>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .2
+        Rectangle:
+            size: self.size
+    size_hint: 1, None
+    pos_hint: None, None
+    Label:
+        text: "S o n g"
+        size_hint: .3, 1
+        pos_hint: {"left": 1, "top":1}
+        font_size: l_txt_size
+        font_name: "fonts/Eurostile.ttf"
+    MyCustomCheckBox:
+        id: song_check
+        pos_hint: {"right": .675, "top": 1}
+        on_press: app.store.put("Song State", name="Song State", value=self.active)
+        active: app.store.get("Song State")["value"]
+    MyCustomSlider:
+        id: song_volume
+        pos_hint: {"right": .99, "top": .5}
+        max: 100
+        value: app.store.get("Song Volume")["value"]
+        disabled: not song_check.active
+        on_touch_up: app.store.put("Song Volume", name="Song Volume", value=self.value)
+    Label:
+        text: "V O L U M E :   " + str(round(song_volume.value))
+        pos_hint: {"right": .99, "top": 1}
+        size_hint: .245, .5
+        font_size: l_txt_size
+        font_name: "fonts/Lcd.ttf"
+   
+
+<L5@RelativeLayout>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .2
+        Rectangle:
+            #pos: self.pos
+            size: self.size
+    size_hint: 1, None
+    pos_hint: None, None
+    Label:
+        text: "M u s i c"
+        size_hint: .3, 1
+        pos_hint: {"left": 1, "top":1}
+        font_size: l_txt_size
+        font_name: "fonts/Eurostile.ttf"
+    MyCustomCheckBox:
+        id: music_check
+        pos_hint: {"right": .675, "top": 1}
+        on_press: app.store.put("Music State", name="Music State", value=self.active)
+        active: app.store.get("Music State")["value"]
+    MyCustomSlider:
+        id: music_volume
+        pos_hint: {"right": .99, "top": .5}
+        max: 100
+        value: app.store.get("Music Volume")["value"]
+        disabled: not music_check.active
+        on_touch_up: app.store.put("Music Volume", name="Music Volume", value=self.value)
+    Label:
+        text: "V O L U M E :   " + str(round(music_volume.value))
+        pos_hint: {"right": .99, "top": 1}
+        size_hint: .245, .5
+        font_size: l_txt_size
+        font_name: "fonts/Lcd.ttf"
+
+
+<L6@RelativeLayout>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .2
+        Rectangle:
+            size: self.size
+    size_hint: 1, None
+    pos_hint: None, None
+    Label:
+        text: "S F X"
+        size_hint: .3, 1
+        pos_hint: {"left": 1, "top":1}
+        font_size: l_txt_size
+        font_name: "fonts/Eurostile.ttf"
+    MyCustomCheckBox:
+        id: sfx_check
+        pos_hint: {"right": .675, "top": 1}
+        on_press: app.store.put("SFX State", name="SFX State", value=self.active)
+        active: app.store.get("SFX State")["value"]
+    MyCustomSlider:
+        id: sfx_volume
+        pos_hint: {"right": .99, "top": .5}
+        max: 100
+        disabled: not sfx_check.active
+        value: app.store.get("SFX Volume")["value"]
+        on_touch_up: app.store.put("SFX Volume", name="SFX Volume", value=self.value)
+    Label:
+        text: "V O L U M E :   " + str(round(sfx_volume.value))
+        pos_hint: {"right": .99, "top": 1}
+        size_hint: .245, .5
+        font_size: l_txt_size
+        font_name: "fonts/Lcd.ttf"
+
+
+<L7@RelativeLayout>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .2
+        Rectangle:
+            size: self.size
+    size_hint: 1, None
+    pos_hint: None, None
+    Label:
+        text: "H i s t o r y"
+        size_hint: .3, 1
+        pos_hint: {"left": 1, "top":1}
+        font_size: l_txt_size
+        font_name: "fonts/Eurostile.ttf"
+    MyCustomButton:
+        text: "|   S c o r e s   |"
+        color: .2, .7, 1, 1
+        pos_hint: {"right": .99, "top": .85}
+        size_hint: .25, .5
+        font_size: dp(22)
+        font_name: "fonts/Eurostile.ttf"
+        on_press: root.parent.show_scores()
+
+
+<L8>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .2
+        Rectangle:
+            size: self.size
+    size_hint: 1, None
+    pos_hint: None, None
+    my_slider: my_slider
+    my_label: my_label
+    Label:
+        text: "L e v e l"
+        size_hint: .3, 1
+        pos_hint: {"left": 1, "top":1}
+        font_size: l_txt_size
+        font_name: "fonts/Eurostile.ttf"
+    Label:
+        id: my_label
+        text: root.text_to_display
+        font_name: "fonts/Lcd.ttf"
+        font_size: l_txt_size
+        size_hint: .25, .5
+        pos_hint: {"right": .975, "top": 1}
+    MyCustomSlider:
+        id: my_slider
+        max: 3
+        value: app.store.get("Level")["value"]
+        pos_hint: {"right": .99, "top": .5}
+        on_touch_up: app.store.put("Level", name="Level", value=self.value)
+
+
+<L9@RelativeLayout>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .2
+        Rectangle:
+            #pos: self.pos
+            size: self.size
+    size_hint: 1, None
+    pos_hint: None, None
+    Label:
+        text: "I n f o s"
+        size_hint: .3, 1
+        pos_hint: {"left": 1, "top":1}
+        font_size: l_txt_size
+        font_name: "fonts/Eurostile.ttf"
+    MyCustomButton:
+        text: "|   I n f o s   |"
+        color: 1, 1, 0, 1
+        pos_hint: {"right": .99, "top": .85}
+        size_hint: .25, .5
+        font_size: dp(22)
+        font_name: "fonts/Eurostile.ttf"
+        on_press: root.parent.show_infos()
+
+
+<L10@RelativeLayout>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .2
+        Rectangle:
+            size: self.size
+    size_hint: 1, None
+    pos_hint: None, None
+    Label:
+        text: "A b o u t"
+        size_hint: .3, 1
+        pos_hint: {"left": 1, "top":1}
+        font_size: l_txt_size
+        font_name: "fonts/Eurostile.ttf"
+    MyCustomButton:
+        text: "|   A b o u t   U s   |"
+        color: 0, 0, 1, 1
+        pos_hint: {"right": .99, "top": .85}
+        size_hint: .25, .5
+        font_size: dp(22)
+        font_name: "fonts/Eurostile.ttf"
+        on_press: root.parent.show_about()
+
+
+<L11@RelativeLayout>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .2
+        Rectangle:
+            size: self.size
+    size_hint: 1, None
+    pos_hint: None, None
+    Label:
+        text: "C o n n e c t"
+        size_hint: .3, 1
+        pos_hint: {"left": 1, "top":1}
+        font_size: l_txt_size
+        font_name: "fonts/Eurostile.ttf"
+    MyCustomButton:
+        text: "C o n n e c t   t o\n            U s !"
+        color: 0, 1, 0, 1
+        pos_hint: {"right": .99, "top": .85}
+        size_hint: .25, .5
+        font_size: dp(22)
+        font_name: "fonts/Eurostile.ttf"
+        on_press: root.parent.show_connect()
+
+
+<L12@RelativeLayout>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .2
+        Rectangle:
+            size: self.size
+    size_hint: 1, None
+    pos_hint: None, None
+
+# My Popups
+
+<About>:
+    canvas.before:
+        Color:
+            rgba: .180, .525, .757, .75
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    background_color: .180, .7, 1, .95 #1, 1, 1, .5
+    title: "|   A b o u t  U s   |"
+    title_align: "center"
+    title_size: H_size
+    title_font: "fonts/Eurostile.ttf"
+    title_color: 0, 0, 1, 1   #.1, .3, .85, .5
+    pos_hint: {"center_x": .5, "center_y": .5}
+    content:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, .085
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    canvas:
+        Color:
+            rgba: .282, .694, .882, .8
+        Line:
+            width: dp(1)
+            rectangle: self.x, self.y, self.width, self.height
+
+<Connect>:
+    canvas.before:
+        Color:
+            rgba: .180, .525, .757, .75
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    background_color: .180, .7, 1, .95 #1, 1, 1, .5
+    title: "|   C o n n e c t   |"
+    title_align: "center"
+    title_size: H_size
+    title_font: "fonts/Eurostile.ttf"
+    title_color: 0, 1, 0, 1  #.1, .3, .85, .5
+    pos_hint: {"center_x": .5, "center_y": .5}
+    content:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, .085
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    canvas:
+        Color:
+            rgba: .282, .694, .882, .8
+        Line:
+            width: dp(1)
+            rectangle: self.x, self.y, self.width, self.height
+
+<Infos>:
+    canvas.before:
+        Color:
+            rgba: .180, .525, .757, .75
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    background_color: .180, .7, 1, .95 
+    title: "|   I n f o s   |"
+    title_align: "center"
+    title_size: H_size
+    title_font: "fonts/Eurostile.ttf"
+    title_color: .2, .7, 1, 1  #.184, .525, .749, .8
+    pos_hint: {"center_x": .5, "center_y": .5}
+    input_name: input_name
+    input_age: input_age
+    input_mail: input_mail
+    submit_btn: submit_btn
+    lbl1: lbl1
+    lbl2: lbl2
+    lbl3: lbl3
+    content:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, .085
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    canvas:
+        Color:
+            rgba: .282, .694, .882, .8  #1, 1, 0, 1
+        Line:
+            width: dp(1)
+            rectangle: self.x, self.y, self.width, self.height
+    RelativeLayout:
+        pos_hint: {"center_x": .5, "center_y": .5}
+        size_hint: .825, .825
+        RelativeLayout:
+            pos_hint: {"right": .9125, "top": 1}
+            size_hint: .825, .295
+            Label:
+                text: "| Y o u r  N a m e |"
+                pos_hint: {"x": .0875, "top": .95}
+                size_hint: .1, .8
+                font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+                font_size: h_size
+            StringInput:
+                id: input_name
+                text:
+                pos_hint: {"right": .99, "top": .79}
+                size_hint: .5, .585
+                opacity: 0
+            Label:
+                id: lbl1
+                background_color: .184, .525, .749, .8
+                color: _Bc
+                text: input_name.text
+                pos_hint: {"right": 0.99, "top": 0.79}
+                font_name: "fonts/Eurostile.ttf"
+                font_size: dp(36.5)
+                size_hint: .5, .6
+                opacity: 1
+        RelativeLayout:
+            pos_hint: {"right": .9125, "top": .715}
+            size_hint: .825, .295
+            Label:
+                text: "|   Y o u r   A g e   |"
+                pos_hint: {"x": .0875, "top": .95}
+                size_hint: .1, .8
+                font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+                font_size: h_size
+            FloatInput:
+                id: input_age
+                text: 
+                pos_hint: {"right": .99, "top": .79}
+                size_hint: .5, .585
+                opacity: 0
+            Label:
+                id: lbl2
+                background_color: .184, .525, .749, .8
+                color: _Bc
+                text: input_age.text
+                pos_hint: {"right": 0.99, "top": 0.79}
+                font_name: "fonts/Eurostile.ttf"
+                font_size: dp(36.5)
+                size_hint: .5, .6
+                opacity: 1
+        RelativeLayout:
+            pos_hint: {"right": .9125, "top": .43}
+            size_hint: .825, .295
+            Label:
+                text: "|      E - m a i l      |"
+                pos_hint: {"x": .0875, "top": .95}
+                size_hint: .1, .8
+                font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+                font_size: h_size
+            TextInput:
+                id: input_mail
+                text:
+                pos_hint: {"right": .99, "top": .79}
+                font_name: "fonts/Eurostile.ttf"
+                font_size: dp(36.5)
+                size_hint: .5, .585
+                multiline: False
+                background_color: .184, .525, .749, .8
+                background_width: dp(18)
+                cursor_width: dp(3)
+                cursor_height: dp(10)
+                cursor_color: 0, 0, 0, 1
+                opacity: 0
+            Label:
+                id: lbl3
+                background_color: .184, .525, .749, .8
+                text: input_mail.text
+                color: _Bc
+                pos_hint: {"right": 0.99, "top": 0.79}
+                font_name: "fonts/Eurostile.ttf"
+                font_size: dp(36.5)
+                size_hint: .5, .6
+                opacity: 1
+        GridLayout:
+            cols: 3
+            padding: dp(2)
+            spacing: dp(5)
+            pos_hint: {"center_x": .5, "top": .145}
+            size_hint: .70, .12
+            MyCustomButton:
+                text: "C l o s e"
+                on_press: root.dismiss()
+            MyCustomButton:
+                id: submit_btn
+                text: "|  S u b m i t  |"
+                on_press: root.on_submit()
+            MyCustomButton:
+                id: modif_btn
+                text: "|  M o d i f y  |"
+                on_press: root.modify()
+            
+
+
+            
+
+<Score>:
+    canvas.before:
+        Color:
+            rgba: .180, .525, .757, .75
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    background_color: .180, .7, 1, .95 #1, 1, 1, .5
+    title: "|   S C O R E S   |"
+    title_align: "center"
+    title_size: H_size
+    title_font: "fonts/Eurostile.ttf"
+    title_color: .2, .7, 1, 1  #.1, .3, .85, .5
+    pos_hint: {"center_x": .5, "center_y": .5}
+    reset_btn: reset_btn
+    content:
+    opacity: 1
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, .085
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    canvas:
+        Color:
+            rgba: .282, .694, .882, .8
+        Line:
+            width: dp(1)
+            rectangle: self.x, self.y, self.width, self.height
+    RelativeLayout:
+        BoxLayout:
+            orientation: "vertical"
+            size_hint: 1, .75
+            pos_hint: {"center_x": .5, "top": .99}
+            Label:
+                text: root.score
+                size_hint: 1, .3
+                font_size: dp(35)
+                font_name: "fonts/Eurostile.ttf"
+                pos_hint: {"center_x": .5, "top": .99}
+            Label:
+                text: root.best_score
+                size_hint: 1,.3
+                font_size: dp(35)
+                font_name: "fonts/Eurostile.ttf"
+                pos_hint: {"center_x": .5, "top": .75}
+        GridLayout:
+            cols: 2
+            padding: dp(2)
+            spacing: dp(5)
+            pos_hint: {"center_x": .5, "top": .18}
+            size_hint: .70, .12
+            MyCustomButton:
+                text: "C l o s e"
+                on_press: root.dismiss(1.0/60)
+            MyCustomButton:
+                id: reset_btn
+                text: "R e s e t"
+                on_press: root.reset_score(1.0/60)
+    
+
+# My Custom Widgets
+
+<BackgroundColor@Widget>:
+    backghround_color: 1, 1, 1, 1
+    canvas.before:
+        Color:
+            rgba: root.backghround_color
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<BackgroundLabel@Label+BackgroundColor>:
+    backghround_color: 0, 0, 0, 0
+
+<StringInput>:
+    font_name: "fonts/Eurostile.ttf"
+    font_size: dp(36.5)
+    size_hint: .1, .375
+    multiline: False
+    background_color: .184, .525, .749
+    background_width: dp(18)
+    cursor_width: dp(3)
+    cursor_height: dp(10)
+    cursor_color: 0, 0, 0, 1
+
+<FloatInput>:
+    font_name: "fonts/Eurostile.ttf"
+    font_size: dp(36.5)
+    size_hint: .1, .375
+    multiline: False
+    background_color: .184, .525, .749, .8
+    background_width: dp(18)
+    cursor_width: dp(3)
+    cursor_height: dp(10)
+    cursor_color: 0, 0, 0, 1
+
+<MyCustomCheckBox@CheckBox>:
+    size_hint: .21, 1
+    sensitivity: "handle"
+    color: .2, .6, 1, 1
+    width: dp(100)
+    height: dp(100)
+    active: True
+
+<MyCustomSlider@Slider>:
+    size_hint: .275, .5
+    min: 0
+    value: 50
+    step: 1
+    background_width: dp(10)
+    backghround_color: .875, .475, 1, 1
+    cursor_size: dp(2), dp(10)
+    value_track: True
+    value_track_color: .2, .6, 1, 1
+    value_track_width: dp(1.5)
+    sensitivity: "all"
+    orientation: "horizontal"
+
+<MyCustomButton@Button>:
+    id: custom_btn
+    canvas:
+        Color:
+            rgba: .282, .694, .882, .8
+        Line:
+            width: dp(1)
+            rectangle: self.x, self.y, self.width, self.height
+    text: "My Pretty Button"
+    size_hint: .3, .5
+    background_color: _bc
+    background_width: dp(40)
+    border: 
+
+# ...

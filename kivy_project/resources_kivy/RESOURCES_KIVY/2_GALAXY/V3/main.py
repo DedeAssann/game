@@ -5,8 +5,8 @@ from kivy.core.audio import SoundLoader
 from kivy.lang import Builder
 from kivy.uix.relativelayout import RelativeLayout
 
-Config.set('graphics', 'width', '900')
-Config.set('graphics', 'height', '400')
+Config.set("graphics", "width", "900")
+Config.set("graphics", "height", "400")
 
 from kivy import platform
 from kivy.core.window import Window
@@ -18,23 +18,30 @@ from kivy.uix.widget import Widget
 
 Builder.load_file("menu.kv")
 
+
 class MainWidget(RelativeLayout):
     from transforms import transform, transform_2D, transform_perspective
-    from user_actions import keyboard_closed, on_keyboard_up, on_keyboard_down, on_touch_up, on_touch_down
+    from user_actions import (
+        keyboard_closed,
+        on_keyboard_up,
+        on_keyboard_down,
+        on_touch_up,
+        on_touch_down,
+    )
 
     menu_widget = ObjectProperty()
     perspective_point_x = NumericProperty(0)
     perspective_point_y = NumericProperty(0)
 
     V_NB_LINES = 8
-    V_LINES_SPACING = .4  # percentage in screen width
+    V_LINES_SPACING = 0.4  # percentage in screen width
     vertical_lines = []
 
     H_NB_LINES = 15
-    H_LINES_SPACING = .1  # percentage in screen height
+    H_LINES_SPACING = 0.1  # percentage in screen height
     horizontal_lines = []
 
-    SPEED = .8
+    SPEED = 0.8
     current_offset_y = 0
     current_y_loop = 0
 
@@ -46,7 +53,7 @@ class MainWidget(RelativeLayout):
     tiles = []
     tiles_coordinates = []
 
-    SHIP_WIDTH = .1
+    SHIP_WIDTH = 0.1
     SHIP_HEIGHT = 0.035
     SHIP_BASE_Y = 0.04
     ship = None
@@ -93,11 +100,11 @@ class MainWidget(RelativeLayout):
         self.sound_restart = SoundLoader.load("audio/restart.wav")
 
         self.sound_music1.volume = 1
-        self.sound_begin.volume = .25
-        self.sound_galaxy.volume = .25
-        self.sound_gameover_voice.volume = .25
-        self.sound_restart.volume = .25
-        self.sound_gameover_impact.volume = .6
+        self.sound_begin.volume = 0.25
+        self.sound_galaxy.volume = 0.25
+        self.sound_gameover_voice.volume = 0.25
+        self.sound_restart.volume = 0.25
+        self.sound_gameover_impact.volume = 0.6
 
     def reset_game(self):
         self.current_offset_y = 0
@@ -111,7 +118,7 @@ class MainWidget(RelativeLayout):
         self.state_game_over = False
 
     def is_desktop(self):
-        if platform in ('linux', 'windows', 'macosx'):
+        if platform in ("linux", "windows", "macosx"):
             return True
         return False
 
@@ -129,7 +136,7 @@ class MainWidget(RelativeLayout):
         #    2
         #  1   3
         # self.transform
-        self.ship_coordinates[0] = (center_x-ship_half_width, base_y)
+        self.ship_coordinates[0] = (center_x - ship_half_width, base_y)
         self.ship_coordinates[1] = (center_x, base_y + ship_height)
         self.ship_coordinates[2] = (center_x + ship_half_width, base_y)
 
@@ -173,7 +180,7 @@ class MainWidget(RelativeLayout):
 
         # clean the coordinates that are out of the screen
         # ti_y < self.current_y_loop
-        for i in range(len(self.tiles_coordinates)-1, -1, -1):
+        for i in range(len(self.tiles_coordinates) - 1, -1, -1):
             if self.tiles_coordinates[i][1] < self.current_y_loop:
                 del self.tiles_coordinates[i]
 
@@ -215,7 +222,7 @@ class MainWidget(RelativeLayout):
     def init_vertical_lines(self):
         with self.canvas:
             Color(1, 1, 1)
-            #self.line = Line(points=[100, 0, 100, 100])
+            # self.line = Line(points=[100, 0, 100, 100])
             for i in range(0, self.V_NB_LINES):
                 self.vertical_lines.append(Line())
 
@@ -223,12 +230,12 @@ class MainWidget(RelativeLayout):
         central_line_x = self.perspective_point_x
         spacing = self.V_LINES_SPACING * self.width
         offset = index - 0.5
-        line_x = central_line_x + offset*spacing + self.current_offset_x
+        line_x = central_line_x + offset * spacing + self.current_offset_x
         return line_x
 
     def get_line_y_from_index(self, index):
-        spacing_y = self.H_LINES_SPACING*self.height
-        line_y = index*spacing_y-self.current_offset_y
+        spacing_y = self.H_LINES_SPACING * self.height
+        line_y = index * spacing_y - self.current_offset_y
         return line_y
 
     def get_tile_coordinates(self, ti_x, ti_y):
@@ -241,8 +248,12 @@ class MainWidget(RelativeLayout):
         for i in range(0, self.NB_TILES):
             tile = self.tiles[i]
             tile_coordinates = self.tiles_coordinates[i]
-            xmin, ymin = self.get_tile_coordinates(tile_coordinates[0], tile_coordinates[1])
-            xmax, ymax = self.get_tile_coordinates(tile_coordinates[0]+1, tile_coordinates[1]+1)
+            xmin, ymin = self.get_tile_coordinates(
+                tile_coordinates[0], tile_coordinates[1]
+            )
+            xmax, ymax = self.get_tile_coordinates(
+                tile_coordinates[0] + 1, tile_coordinates[1] + 1
+            )
 
             #  2    3
             #
@@ -256,8 +267,8 @@ class MainWidget(RelativeLayout):
 
     def update_vertical_lines(self):
         # -1 0 1 2
-        start_index = -int(self.V_NB_LINES/2)+1
-        for i in range(start_index, start_index+self.V_NB_LINES):
+        start_index = -int(self.V_NB_LINES / 2) + 1
+        for i in range(start_index, start_index + self.V_NB_LINES):
             line_x = self.get_line_x_from_index(i)
 
             x1, y1 = self.transform(line_x, 0)
@@ -272,7 +283,7 @@ class MainWidget(RelativeLayout):
 
     def update_horizontal_lines(self):
         start_index = -int(self.V_NB_LINES / 2) + 1
-        end_index = start_index+self.V_NB_LINES-1
+        end_index = start_index + self.V_NB_LINES - 1
 
         xmin = self.get_line_x_from_index(start_index)
         xmax = self.get_line_x_from_index(end_index)
@@ -284,7 +295,7 @@ class MainWidget(RelativeLayout):
 
     def update(self, dt):
         # print("dt: " + str(dt*60))
-        time_factor = dt*60
+        time_factor = dt * 60
         self.update_vertical_lines()
         self.update_horizontal_lines()
         self.update_tiles()
@@ -300,6 +311,7 @@ class MainWidget(RelativeLayout):
                 self.current_y_loop += 1
                 self.score_txt = "SCORE: " + str(self.current_y_loop)
                 self.generate_tiles_coordinates()
+                print("actual speed: " + str(self.SPEED))
                 print("loop : " + str(self.current_y_loop))
 
             speed_x = self.current_speed_x * self.width / 100
@@ -331,12 +343,8 @@ class MainWidget(RelativeLayout):
         self.menu_widget.opacity = 0
 
 
-
-
 class GalaxyApp(App):
     pass
 
 
 GalaxyApp().run()
-
-

@@ -7,21 +7,19 @@ Ce jeu consiste a deplacer un spaceship sur un plan, et suivre le chemin trace d
 
 # pylint: disable = wrong-import-order, no-name-in-module, import-outside-toplevel, wrong-import-position
 
-# config section
-import os
 
-# from kivy.uix.settings import *
-
-# os.environ["KCFG_GRAPHICS_FULLSCREEN"] = "auto"
 from kivy.config import Config
 
 # configuring the screen which is gonna be opened by kivy
 Config.set("graphics", "width", "1200")
 Config.set("graphics", "height", "650")
-Config.set("graphics", "resizable", 1)
+Config.set("graphics", "resizable", True)
 
 from kivy.core.window import Window
 
+Window.allow_screensaver = True
+
+import cProfile
 import random
 from kivy import platform
 
@@ -36,14 +34,17 @@ from kivy.properties import (
     Clock,
 )
 from kivy.uix.relativelayout import RelativeLayout
-
 from kivy.uix.screenmanager import Screen, ScreenManager, NoTransition
 from kivy.uix.button import Button
 from kivy.lang.builder import Builder
+from kivy.metrics import dp
+from kivy.storage.jsonstore import JsonStore
 
 # loading another .kv file...
 Builder.load_file("menu.kv")
-Builder.load_file("pagelayoutexample.kv")
+Builder.load_file("settings.kv")
+
+store = JsonStore("myapp.json")
 
 
 class MainWidget(RelativeLayout):
@@ -101,11 +102,11 @@ class MainWidget(RelativeLayout):
     H_LINES_SPACING = 0.1  # percentage in screen height
     horizontal_lines = []
 
-    SPEED = 0.4
+    SPEED = None
     current_offset_y = 0
     current_y_loop = 0
 
-    SPEED_X = 3.0
+    SPEED_X = NumericProperty(3.0)
     current_speed_x = 0
     current_offset_x = 0
 
@@ -114,6 +115,8 @@ class MainWidget(RelativeLayout):
     tiles_coordinates = []
 
     ship = None
+
+    fps = NumericProperty(60)
 
     def __init__(self, **kwargs):
         """
@@ -136,7 +139,7 @@ class MainWidget(RelativeLayout):
             self._keyboard.bind(on_key_down=self.on_keyboard_down)
             self._keyboard.bind(on_key_up=self.on_keyboard_up)
 
-        Clock.schedule_interval(self.update, 1.0 / 60.0)
+        Clock.schedule_interval(self.update, 1.0 / self.fps)
         self.sound_galaxy.play()
 
     def reset_game(self):
@@ -150,7 +153,6 @@ class MainWidget(RelativeLayout):
         self.tiles_coordinates = []
         self.pre_fill_tiles_coordinates()
         self.generate_tiles_coordinates()
-        # self.pause_widget.opacity = 0
         self.state_game_over = False
 
     def is_desktop(self):
@@ -328,18 +330,33 @@ class MainWidget(RelativeLayout):
         "In this function we increase the speed of the game."
         # actual_speed = 0.4
 
-        if self.current_y_loop == 99:
+        if self.current_y_loop == 49:
             self.SPEED += 0.075
-        elif self.current_y_loop == 159:
+        elif self.current_y_loop == 99:
             self.SPEED += 0.075
-        elif self.current_y_loop == 249:
-            self.SPEED += 0.075
-        elif self.current_y_loop == 499:
+        elif self.current_y_loop == 149:
             self.SPEED += 0.05
-        elif self.current_y_loop == 799:
-            self.SPEED += 0.045
+        elif self.current_y_loop == 249:
+            self.SPEED += 0.05
+        elif self.current_y_loop == 399:
+            self.SPEED += 0.04
+        elif self.current_y_loop == 549:
+            self.SPEED += 0.04
+        elif self.current_y_loop == 699:
+            self.SPEED += 0.03
+        elif self.current_y_loop == 859:
+            self.SPEED += 0.03
+        elif self.current_y_loop == 1099:
+            self.SPEED += 0.02
 
-        # return
+    def get_speed(self):
+        "..."
+        self.SPEED = (
+            0.3
+            + self.parent.manager.settings_window.settings_widget.stack.l_8.my_slider.value
+            / 10
+        )
+        print(self.SPEED)
 
     def update(self, _dt):
         """
@@ -355,7 +372,12 @@ class MainWidget(RelativeLayout):
         # Updating the different graphical components of the game, such as the vertical and
         # horizontal lines the tiles and the ship.
 
-        time_factor = _dt * 60
+        self.fps = self.parent.manager.get_screen(
+            "settings_screen"
+        ).ids.settings_widget.stack.l_3.max_fps
+        time_factor = _dt * self.fps
+        # print(self.fps)
+        # print(self.SPEED)
         self.update_vertical_lines()
         self.update_horizontal_lines()
         self.update_tiles()
@@ -391,7 +413,7 @@ class MainWidget(RelativeLayout):
                 self.current_offset_y -= spacing_y
                 self.current_y_loop += 1
                 self.score_txt = "S C O R E :  " + str(self.current_y_loop)
-                if self.current_y_loop >= 79:
+                if self.current_y_loop >= 9:
                     self.speed_update()
                 self.generate_tiles_coordinates()
                 print("actual speed: " + str(self.SPEED))
@@ -421,12 +443,15 @@ class MainWidget(RelativeLayout):
             Clock.schedule_once(self.play_game_over_voice_sound, 0)
             # print("GAME OVER")
 
+            # writing the scores
+            score = self.current_y_loop
+            App.get_running_app().write_scores(score)
+
     def on_pause_button_pressed(self):
         "..."
         self.pause_state = not self.pause_state
         # print(f" pause state : {self.pause_state}")
         if self.pause_state:
-
             self.game_is_playing_state = False
             self.SPEED = 0
             self.update_pause_button_txt()
@@ -463,6 +488,7 @@ class MainWidget(RelativeLayout):
             self.sound_begin.play()
         self.sound_music1.play()
         self.reset_game()
+        self.get_speed()
         self.state_game_has_started = True
         self.menu_widget.opacity = 0
 
@@ -482,7 +508,7 @@ class GameWindow(Screen):
         "..."
         if self.main_widget.game_is_playing_state:
             self.home_button.opacity = 0
-            self.home_button_disabled = True
+            self.home_button.disabled = True
         else:
             self.home_button.opacity = 1
             self.home_button.disabled = False
@@ -491,7 +517,6 @@ class GameWindow(Screen):
 # the pause Widget class
 class PauseWidget(RelativeLayout):
     "..."
-    pass
 
 
 # the HomeWindow class
@@ -504,6 +529,16 @@ class HomeWindow(Screen):
     def exit(self, *args):
         "Implementing an exit function for the game"
         App.get_running_app().stop()
+
+
+# The Settings Window
+class SettingsWindow(Screen):
+    "..."
+
+    settings_widget = ObjectProperty()
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
 
 # the HomeButton class
@@ -525,7 +560,7 @@ class WindowManager(ScreenManager):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        transition = NoTransition(duration=1)
+        transition = NoTransition(duration=0)
         self.transition = transition
 
 
@@ -534,6 +569,42 @@ class GalaxyApp(App):
     """The main app class"""
 
     use_kivy_settings = False
+    title = "|             M   y      G   a   l   a   x   y      J   o   u   r   n   e   y              |".upper().ljust(
+        300
+    )
+    store = store
+    profile = cProfile.Profile()
+    icon = "bg1.jpg"
+    name = "G A L A X Y"
+
+    def write_scores(self, score):
+        self.store.put("Score", name="Score", value=score)
+        if score > self.store.get("Best Score")["value"]:
+            best_score = score
+            self.store.put("Best Score", name="Best Score", value=best_score)
+        else:
+            pass
+
+    def on_key_down(self, touch):
+        for key in Window.keycodes:
+            if key == "escape":
+                pass
+
+    def open_settings(self, *largs):
+        pass
+
+    def on_start(self):
+        self.profile.enable()
+
+    def on_stop(self):
+        self.profile.disable()
+        self.profile.dump_stats("tryapp.profile")
+
+    def on_pause(self):
+        return True
+
+    def on_resume(self):
+        pass
 
 
 GalaxyApp().run()
