@@ -225,6 +225,14 @@ class StackWidget(StackLayout):
         "..."
         Connect.open(Connect())
 
+    def override_volume(self, widget_1, widget_2):
+        "..."
+        if widget_1.active is False:
+            widget_2.value = 0
+            App.get_running_app().store.put(
+                widget_2.text, name=widget_2.text, value=widget_2.value
+            )
+
     def get_fullscreen(self, args: list):
         "..."
         if self.l_1.fullscreen_btn.active is True:

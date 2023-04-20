@@ -11,6 +11,7 @@
 #: set pause_widget_title " R  E  S  U  M  E "
 #: set settings_button_title "S  E  T  T  I  N  G  S"
 #: set return_settings_button_title "H  O  M  E"
+#: set _bc (.180, .525, .757, .3)
 #: set _bw dp(3)
 
 
@@ -74,43 +75,27 @@ WindowManager:
         id: exit_button
         on_release: root.exit()
     Label:
-        font_size: dp(60)
+        font_size: dp(80)
         font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
         text: menu_title
-        pos_hint: {"center_x": .5, "center_y": .6}
-    Button:
-        canvas.before:
-            Color:
-                rgba: .2, .7, 1, .25
-            Line:
-                width: dp(2)
-                rectangle: self.x, self.y, self.width, self.height
-        font_size: dp(25)
+        bold: True
+        pos_hint: {"center_x": .5, "top": .999}
+        size_hint: 1, .3
+    MyCustomButton:
+        font_size: dp(35)
         font_name: "fonts/Eurostile.ttf"
         text: home_button_title
         pos_hint: { "center_x": .5, "center_y": .3}
-        size_hint: .2, .1
+        size_hint: .18, .08
         on_press:
             app.root.current = "game_screen"
-        background_color: .8, .5, 1, .2
-    Button:
-        canvas.before:
-            Color:
-                rgba: .2, .7, 1, .25
-            Line:
-                width: dp(2)
-                rectangle: self.x, self.y, self.width, self.height
+    MyCustomButton:
         font_size: dp(25)
         font_name: "fonts/Eurostile.ttf"
         text: settings_button_title
         pos_hint: { "right": 1, "top": 1}
         size_hint: .18, .08
-        on_press: 
-            app.root.current = "settings_screen"
-        background_color: .8, .5, 1, .2
-
-
-
+        on_press: app.root.current = "settings_screen"
 
 # the game widget
 
@@ -136,10 +121,10 @@ WindowManager:
     Label:
         id: score
         text: root.score_txt
-        font_size: dp(32)
+        font_size: dp(36)
         font_name: "fonts/Lcd.ttf"
         size_hint: .2, .2
-        pos_hint: {"x": 0, "top": 1}
+        pos_hint: {"x": .018, "top": 1}
 
 
 # the pause widget
@@ -158,55 +143,49 @@ WindowManager:
 
 # The Home Button
 
-<HomeButton>:
-    canvas.before:
-        Color:
-            rgba: .2, .7, 1, .25
-        Line:
-            width: dp(2)
-            rectangle: self.x, self.y, self.width, self.height
-    font_size: dp(30)
+<HomeButton@MyCustomButton>:
+    font_size: dp(32)
     font_name: "fonts/Eurostile.ttf"
     text: return_settings_button_title
     pos_hint: { "right": 1, "top": 1}
     size_hint: .18, .08
-    background_color: .8, .5, 1, .08
+    #background_color: .8, .5, 1, .08
 
 
 # The Exit button
 
-<ExitButton@Button>:
-    canvas.before:
-        Color:
-            rgba: .2, .7, 1, .25
-        Line:
-            width: dp(2)
-            rectangle: self.x, self.y, self.width, self.height
+<ExitButton@MyCustomButton>:
     font_size: dp(30)
     font_name: "fonts/Eurostile.ttf"
     text: "E X I T"
     pos_hint: { "right": .18, "top": 1}
     size_hint: .18, .08
-    background_color: .8, .5, 1, .08
+    #background_color: .8, .5, 1, .08
 
 
 # The Pause Button
 
-<PauseButton>:
+<PauseButton@MyCustomButton>:
     id: pause_button
-    canvas.before:
-        Color:
-            rgba: .2, .7, 1, .25
-        Line:
-            width: dp(2)
-            rectangle: self.x, self.y, self.width, self.height
     font_name: "fonts/Eurostile.ttf"
     font_size: dp(30)
     pos_hint: {"right": .18, "top": 1}
     size_hint: .18, .075
-    background_color: .8, .5, 1, .08
+    #background_color: .8, .5, 1, .08
     disabled: True
 
 # Creation of all the settings page button
 # Management all the buttons on the settings page
-
+# My Custom Button
+<MyCustomButton@Button>:
+    id: custom_btn
+    canvas:
+        Color:
+            rgba: .282, .694, .882, .8
+        Line:
+            width: dp(1)
+            rectangle: self.x, self.y, self.width, self.height
+    #text: "My Pretty Button"
+    #size_hint: .3, .5
+    background_color: _bc
+    background_width: dp(40)

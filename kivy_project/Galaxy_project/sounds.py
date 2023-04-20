@@ -3,6 +3,7 @@ In this file we ghandle everything about the songs in the game
 """
 
 from kivy.core.audio import SoundLoader
+from kivy.app import App
 
 
 def init_audio(self):
@@ -14,9 +15,21 @@ def init_audio(self):
     self.sound_music1 = SoundLoader.load("audio/music1.wav")
     self.sound_restart = SoundLoader.load("audio/restart.wav")
 
-    self.sound_begin.volume = 0.25
-    self.sound_galaxy.volume = 0.25
-    self.sound_gameover_impact.volume = 0.45
-    self.sound_gameover_voice.volume = 0.75
-    self.sound_music1.volume = 1
-    self.sound_restart.volume = 0.25
+    self.sound_begin.volume = (
+        App.get_running_app().store.get("Sound Volume")["value"] / 100
+    )
+    self.sound_galaxy.volume = (
+        App.get_running_app().store.get("Sound Volume")["value"] / 100
+    )
+    self.sound_gameover_impact.volume = (
+        App.get_running_app().store.get("SFX Volume")["value"] / 100
+    )
+    self.sound_gameover_voice.volume = (
+        App.get_running_app().store.get("SFX Volume")["value"] / 100
+    )
+    self.sound_music1.volume = (
+        App.get_running_app().store.get("Music Volume")["value"] / 100
+    )
+    self.sound_restart.volume = (
+        App.get_running_app().store.get("Sound Volume")["value"] / 100
+    )

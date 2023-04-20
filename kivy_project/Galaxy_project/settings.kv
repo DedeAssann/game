@@ -34,9 +34,9 @@
         pos_hint: {"left": 1, "top": 1}
         MyCustomButton:
             pos_hint: {"right": .15, "top": 1}
-            size_hint: .15, 1
-            text: "E x i t"
-            font_size: dp(22)
+            size_hint: .18, 1
+            text: "E x i t".upper()
+            font_size: dp(30)
             font_name: "fonts/Eurostile.ttf"
             on_press:
                 app.get_running_app().stop()
@@ -54,9 +54,9 @@
         MyCustomButton:
             id: home_btn
             pos_hint: {"right": 1, "top": 1}
-            size_hint: .15, 1
-            text: "H o m e"
-            font_size: dp(22)
+            size_hint: .18, 1
+            text: "H o m e".upper()
+            font_size: dp(30)
             font_name: "fonts/Eurostile.ttf"
             on_press: root.parent.manager.current = "home_screen"
     ScrollView:
@@ -308,7 +308,7 @@
     size_hint: 1, None
     pos_hint: None, None
     Label:
-        text: "S o n g"
+        text: "S o u n d"
         size_hint: .3, 1
         pos_hint: {"left": 1, "top":1}
         font_size: l_txt_size
@@ -316,15 +316,17 @@
     MyCustomCheckBox:
         id: song_check
         pos_hint: {"right": .675, "top": 1}
-        on_press: app.store.put("Song State", name="Song State", value=self.active)
-        active: app.store.get("Song State")["value"]
+        on_press: app.store.put("Sound State", name="Sound State", value=self.active)
+        active: app.store.get("Sound State")["value"]
+        on_press: root.parent.override_volume(self, song_volume)
     MyCustomSlider:
         id: song_volume
+        text: "Sound Volume"
         pos_hint: {"right": .99, "top": .5}
         max: 100
-        value: app.store.get("Song Volume")["value"]
+        value: app.store.get("Sound Volume")["value"]
         disabled: not song_check.active
-        on_touch_up: app.store.put("Song Volume", name="Song Volume", value=self.value)
+        on_touch_up: app.store.put("Sound Volume", name="Sound Volume", value=self.value)
     Label:
         text: "V O L U M E :   " + str(round(song_volume.value))
         pos_hint: {"right": .99, "top": 1}
@@ -353,8 +355,10 @@
         pos_hint: {"right": .675, "top": 1}
         on_press: app.store.put("Music State", name="Music State", value=self.active)
         active: app.store.get("Music State")["value"]
+        on_press: root.parent.override_volume(self, music_volume)
     MyCustomSlider:
         id: music_volume
+        text: "Music Volume"
         pos_hint: {"right": .99, "top": .5}
         max: 100
         value: app.store.get("Music Volume")["value"]
@@ -387,8 +391,10 @@
         pos_hint: {"right": .675, "top": 1}
         on_press: app.store.put("SFX State", name="SFX State", value=self.active)
         active: app.store.get("SFX State")["value"]
+        on_press: root.parent.override_volume(self, sfx_volume)
     MyCustomSlider:
         id: sfx_volume
+        text: "SFX Volume"
         pos_hint: {"right": .99, "top": .5}
         max: 100
         disabled: not sfx_check.active
@@ -540,6 +546,7 @@
     pos_hint: None, None
 
 # My Popups
+
 
 <About>:
     canvas.before:
@@ -870,6 +877,5 @@
     size_hint: .3, .5
     background_color: _bc
     background_width: dp(40)
-    border: 
 
 # ...

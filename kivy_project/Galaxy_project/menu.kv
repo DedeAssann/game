@@ -1,7 +1,7 @@
 <MenuWidget>:
     canvas.before:
         Color:
-            rgba: 0, 0, 0, .7
+            rgba: 0, 0, 0, .9
         Rectangle:
             size: self.size
     Label:
@@ -10,16 +10,16 @@
         text: root.parent.menu_title
         pos_hint: { "center_x": .5, "center_y": .75}
     Button:
-        canvas.before:
+        canvas:
             Color:
-                rgba: .2, .7, 1, .15
+                rgba: .282, .694, .882, .8
             Line:
-                width: dp(2)
+                width: dp(1.2)
                 rectangle: self.x, self.y, self.width, self.height
-        font_size: dp(30)
+        font_size: dp(35)
         font_name: 'fonts/Eurostile.ttf'
         text: root.parent.menu_button_title
         pos_hint: { "center_x": .5, "center_y": .3}
-        size_hint: .18, .08
+        size_hint: .195, .085
         on_press: root.parent.on_menu_button_pressed()
         background_color: 0, .05, .2, .2

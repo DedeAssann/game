@@ -431,7 +431,7 @@ class MainWidget(RelativeLayout):
         if not self.check_ship_collision() and not self.state_game_over:
             self.game_is_playing_state = False
             self.state_game_over = True
-            self.menu_widget.opacity = 0.8
+            self.menu_widget.opacity = 0.9
             self.menu_title = "G  A  M  E    O  V  E  R"
             self.menu_button_title = "R E S T A R T"
             self.score = self.current_y_loop
@@ -539,19 +539,6 @@ class SettingsWindow(Screen):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
-
-# the HomeButton class
-class HomeButton(Button):
-    "A simple button"
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-
-# The PauseButton class
-class PauseButton(Button):
-    "A simple button to pause the game"
 
 
 # the WindowManager class
