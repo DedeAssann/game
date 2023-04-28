@@ -8,6 +8,7 @@ Config.set("graphics", "resizable", True)
 Config.write()
 
 from kivy.core.window import Window
+from translation import TranslatedText
 
 Window.allow_screensaver = True
 
@@ -26,6 +27,7 @@ from kivy.graphics import Rotate, Color, Rectangle, PopMatrix, PushMatrix
 from kivy.uix.popup import Popup
 from kivy.metrics import dp
 from kivy.uix.textinput import TextInput
+from kivy.uix.progressbar import ProgressBar
 from kivy.uix.spinner import Spinner
 from kivy.uix.button import Button
 from kivy.uix.label import Label
@@ -38,13 +40,18 @@ from kivy.uix.screenmanager import Screen, NoTransition
 from kivy.storage.jsonstore import JsonStore
 import re
 
-store = JsonStore("myapp.json")
+store = JsonStore("tryapp.json")
 
 Window.allow_screensaver = True
 
 
 class MyCustomDropDown(DropDown):
-    pass
+    global LANGUAGES
+    LANGUAGES = {"E N G L I S H": "en", "F R A N C A I S": "fr", "E S P A N O L": "es"}
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.LANGUAGES = LANGUAGES
 
 
 class MainButton(Button):
@@ -56,7 +63,7 @@ class MyLayout(FloatLayout):
         super().__init__(**kwargs)
         self.dropdown = MyCustomDropDown()
         self.mainbutton = Button(
-            text="Click here....",
+            text=TranslatedText("Select...").text,
             size_hint=(0.9, 0.9),
             pos_hint={"center_x": 0.5, "top": 0.95},
             bold=True,
@@ -78,30 +85,31 @@ class MyLayout(FloatLayout):
 class FirstWindow(Screen):
     "..."
     first_widget = ObjectProperty()
+    transit_widget = ObjectProperty()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        translator = TranslatedText()
+        self.load_widget = LoadingWidget()
+        self.add_widget(self.load_widget)
 
     def transit_screen(self):
         self.first_widget.opacity = 0
-        self.transit_widget.opacity = 1
-        Clock.schedule_once(self.change_screen, 8)
-
-    def change_screen(self, dt):
-        self.manager.current = "second"
+        self.transit_widget = TransitionWidget()
+        self.add_widget(self.transit_widget)
 
 
 class SecondWidget(RelativeLayout):
-    wlcm_text = (
+    wlcm_text = TranslatedText(
         "W e l c o m e\n\n".center(1).upper()
         + "t o  y o u r  {}, C a p t a i n  {}.\n\n".format(
             "G a l a x y  J o u r n e y", "D E D E"
         )
         + "L e t ' s  b e g i n  w i t h  h o w  t o  g u i d e  y o u r\n\ns t a r s h i p  t h r o u g h o u t  t h e  G A L A X Y .\n\nA s  w e  b e g i n ,  c o n s i d e r\n\na g r e e i n g  t o  t h e  U s e r  L i c e n s e ."
-    )
+    ).text
 
     def on_parent(self, widget, parent):
-        anim = Animation(opacity=0, duration=23)
+        anim = Animation(opacity=0, duration=15)
         anim.bind(
             on_complete=lambda *args: setattr(self.parent.third_widget, "opacity", 1.0)
         )
@@ -143,16 +151,44 @@ class SyncLabel(Label):
             Rotate(angle=angle, origin=self.center)
 
     def start_animation(self):
-        for _ in range(5):
-            self.anim = Animation(angle=360, duration=5)
+        for _ in range(2):
+            self.anim = Animation(angle=360, duration=3)
             self.anim += Animation(size=(600, 100), duration=3)
             self.anim += Animation(
                 size=(self.texture_size[0] + dp(10), self.texture_size[1] + dp(5)),
                 duration=3,
             )
-            self.anim += Animation(size=(600, 100), duration=5)
+            self.anim += Animation(size=(600, 100), duration=3)
             self.anim.repeat = True
         self.anim.start(self)
+
+
+class LoadingWidget(RelativeLayout):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.progress = ProgressBar(
+            max=100,
+            value=20,
+            pos_hint={"center": (0.5, 0.2)},
+            size_hint=(0.4, 0.5),
+            width=dp(200),
+        )
+        self.add_widget(self.progress)
+        self.label = Label(
+            text="W  E  L  C  O  M  E",
+            font_name="kivy_project/Galaxy_project/fonts/Sackers-Gothic-Std-Light.ttf",
+            font_size=dp(80),
+            underline=True,
+            pos_hint={"center": (0.5, 0.8)},
+            size_hint=(0.5, 0.4),
+            color=(0.458, 0.866, 0.866, 1),
+        )
+        self.add_widget(self.label)
+
+    def on_parent(self, widget, parent):
+        anim = Animation(value=100, duration=10)
+        anim.bind(on_complete=lambda *args: setattr(self, "opacity", 0))
+        anim.start(self.progress)
 
 
 class TransitionWidget(RelativeLayout):
@@ -162,12 +198,14 @@ class TransitionWidget(RelativeLayout):
         self.add_widget(self.sync)
         self.sync.start_animation()
 
-    def on_enter(self):
-        # self.opacity = 1
-        Clock.schedule_once(self.animate, 2)
+    def on_parent(self, widget, parent):
+        Clock.schedule_once(self.animate, 10)
 
     def animate(self, *args):
         anim = Animation(opacity=0, duration=1)
+        anim.bind(
+            on_complete=lambda *args: setattr(self.parent.manager, "current", "second")
+        )
         anim.start(self)
 
 
@@ -178,11 +216,22 @@ class SecondWindow(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+    def add_screens(self):
+        self.second_widget = SecondWidget()
+        self.add_widget(self.second_widget)
+
+    def on_enter(self):
+        self.add_screens()
+
 
 class TryApp(App):
     "..."
     use_kivy_settings = False
     title = "|   M y   G a l a x y   S e t t i n g s   D e m o   |"
+    store = store
+
+    def translate(self):
+        pass
 
     def on_key_down(self, touch):
         for key in Window.keycodes:

@@ -21,13 +21,12 @@ WindowManager:
 
 <FirstWindow>:
     name: "first"
-    transit_widget: transit_widget
+    load_widget: load_widget
     first_widget: first_widget
     FirstWidget:
         id: first_widget
-    TransitionWidget:
-        id: transit_widget
-        opacity: 0
+    LoadingWidget:
+        id: load_widget
     
 
 <FirstWidget@RelativeLayout>:
@@ -134,9 +133,26 @@ WindowManager:
 <L3@MyCustomRelativeLayout>:
     MyCustomLabel:
         text:'E - m a i l  :'.upper()
-    StringInput:
+    TextInput:
         id: mail
         text:''
+        canvas.after:
+            Color:
+                rgba: .458, .866, .866, 1
+            Line:
+                width: dp(.5)
+                rectangle: self.x, self.y, self.width, self.height
+        font_name: "kivy_project/Galaxy_project/fonts/Eurostile.ttf"
+        font_size: dp(47.5)
+        size_hint: .5, .65
+        pos_hint: {"x": .55, "top": .75}
+        multiline: False
+        background_color: (0, 0, 0, 0)
+        foreground_color: (1, 1, 1, 1)
+        color: .458, .866, .866, 1
+        cursor_width: dp(3)
+        cursor_height: dp(10)
+        cursor_color: 1, 1, 1, 1
 <L4@MyCustomRelativeLayout>:
     MyCustomLabel:
         text:'a g e  :'.upper()
@@ -153,9 +169,26 @@ WindowManager:
 <L6@MyCustomRelativeLayout>:
     MyCustomLabel:
         text: "u s e r n a m e  :".upper()
-    StringInput:
+    TextInput:
         id: username
         text: ""
+        canvas.after:
+            Color:
+                rgba: .458, .866, .866, 1
+            Line:
+                width: dp(.5)
+                rectangle: self.x, self.y, self.width, self.height
+        font_name: "kivy_project/Galaxy_project/fonts/Eurostile.ttf"
+        font_size: dp(47.5)
+        size_hint: .5, .65
+        pos_hint: {"x": .55, "top": .75}
+        multiline: False
+        background_color: (0, 0, 0, 0)
+        foreground_color: (1, 1, 1, 1)
+        color: .458, .866, .866, 1
+        cursor_width: dp(3)
+        cursor_height: dp(10)
+        cursor_color: 1, 1, 1, 1
 
 
 <MyLayout>:
@@ -186,12 +219,6 @@ WindowManager:
     padding: dp(20)
     spacing: dp(50)
     Button:
-        #canvas:
-        #    Color:
-        #        rgba: .458, .866, .866, 1
-        #    Line:
-        #        width: dp(1)
-        #        rectangle: self.x, self.y, self.width, self.height
         background_color: 0, 0, 0, .65
         color: .458, .866, .866, 1
         text: "E N G L I S H"
@@ -200,14 +227,10 @@ WindowManager:
         font_size: dp(35)
         size_hint_y: None
         height: dp(70)
-        on_release: root.select(self.text)
+        on_release:
+            root.select(self.text)
+            app.store.put("Language", name="Language", value=root.LANGUAGES[self.text])
     Button:
-        #canvas:
-        #    Color:
-        #        rgba: .458, .866, .866, 1
-        #    Line:
-        #        width: dp(1)
-        #        rectangle: self.x, self.y, self.width, self.height
         background_color: 0, 0, 0, .65
         color: .458, .866, .866, 1
         text: "F R A N C A I S"
@@ -216,14 +239,10 @@ WindowManager:
         font_size: dp(35)
         size_hint_y: None
         height: dp(70)
-        on_release: root.select(self.text)
+        on_release:
+            root.select(self.text)
+            app.store.put("Language", name="Language", value=root.LANGUAGES[self.text])
     Button:
-        #canvas:
-        #    Color:
-        #        rgba: .458, .866, .866, 1
-        #    Line:
-        #        width: dp(1)
-        #        rectangle: self.x, self.y, self.width, self.height
         background_color: 0, 0, 0, .65
         color: .458, .866, .866, 1
         text: "E S P A N O L"
@@ -232,7 +251,9 @@ WindowManager:
         font_size: dp(35)
         size_hint_y: None
         height: dp(70)
-        on_release: root.select(self.text)
+        on_release:
+            root.select(self.text)
+            app.store.put("Language", name="Language", value=root.LANGUAGES[self.text])
 
 <StringInput>:
     canvas.after:
@@ -275,10 +296,11 @@ WindowManager:
 # Second Window && stuff...
 <SecondWindow>:
     name: "second"
-    second_widget: second_widget
+    canvas.before:
+        Rectangle:
+            size: self.size
+            source: "kivy_project\Galaxy_project\galaxy_images\planet1.jpg"
     third_widget: third_widget
-    SecondWidget:
-        id: second_widget
     ThirdWidget:
         id: third_widget
 
@@ -313,10 +335,10 @@ WindowManager:
             height: self.texture_size[1]
 
 <ThirdWidget>:
-    canvas.before:
-        Rectangle:
-            size: self.size
-            source: "kivy_project\Galaxy_project\galaxy_images\planet1.jpg"
+    #canvas.before:
+    #    Rectangle:
+    #        size: self.size
+    #        source: "kivy_project\Galaxy_project\galaxy_images\planet1.jpg"
     scroll_eula: root.scroll_eula
     opacity: 0
     ScrollView:
@@ -389,7 +411,13 @@ WindowManager:
         Rectangle:
             size: self.size
             source: "kivy_project\Galaxy_project\galaxy_images\planet1.jpg"
-    
+
+
+<LoadingWidget>:
+    canvas.before:
+        Rectangle:
+            size: self.size
+            source: "kivy_project\Galaxy_project\galaxy_images\planet1.jpg"
 
 
 <SyncLabel>:
@@ -400,17 +428,15 @@ WindowManager:
             width: dp(2)
             rectangle: self.x, self.y, self.width, self.height
     text: "S Y N C H R O N I Z I N G . . ."
-    font_size: dp(30)
+    font_size: dp(40)
+    bold: True
     size_hint: None, None
     size: self.texture_size[0] + dp(10), self.texture_size[1] + dp(5)
     pos_hint: {"center":(.5, .5)}
     canvas.before:
-        #PushMatrix
         Rotate:
             angle: self.angle
             origin: self.center
-    canvas.after:
-        #PopMatrix
 
 
 ##First Window & it's Widget
