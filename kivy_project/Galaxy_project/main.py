@@ -35,6 +35,7 @@ from kivy.properties import (
 )
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.screenmanager import Screen, ScreenManager, NoTransition
+from kivy.uix.image import Image
 from kivy.uix.button import Button
 from kivy.lang.builder import Builder
 from kivy.metrics import dp
@@ -58,6 +59,8 @@ class MainWidget(RelativeLayout):
         keyboard_closed,
         on_keyboard_up,
         on_keyboard_down,
+        on_touch_up,
+        on_touch_down,
     )
     from sounds import init_audio
     from ship import (
@@ -102,7 +105,7 @@ class MainWidget(RelativeLayout):
     H_LINES_SPACING = 0.1  # percentage in screen height
     horizontal_lines = []
 
-    SPEED = None
+    SPEED = 0.3
     current_offset_y = 0
     current_y_loop = 0
 
@@ -134,10 +137,14 @@ class MainWidget(RelativeLayout):
         self.reset_game()
         self.speed_update()
 
-        if self.is_desktop():
+        if App.get_running_app().is_desktop():
             self._keyboard = Window.request_keyboard(self.keyboard_closed, self)
             self._keyboard.bind(on_key_down=self.on_keyboard_down)
             self._keyboard.bind(on_key_up=self.on_keyboard_up)
+        else:
+            self._keyboard = Window.request_keyboard(self.keyboard_closed, self)
+            self._keyboard.bind(on_key_down=self.on_touch_down)
+            self._keyboard.bind(on_key_up=self.on_touch_up)
 
         Clock.schedule_interval(self.update, 1.0 / self.fps)
         self.sound_galaxy.play()
@@ -154,14 +161,6 @@ class MainWidget(RelativeLayout):
         self.pre_fill_tiles_coordinates()
         self.generate_tiles_coordinates()
         self.state_game_over = False
-
-    def is_desktop(self):
-        """
-        Methode pour tester le systeme d'exploitation de l'appareil sur lequel est lance le jeu.
-        """
-        if platform in ("linux", "win", "macosx"):
-            return True
-        return False
 
     def init_tiles(self):
         """
@@ -453,13 +452,15 @@ class MainWidget(RelativeLayout):
         # print(f" pause state : {self.pause_state}")
         if self.pause_state:
             self.game_is_playing_state = False
+            global actual_speed
+            actual_speed = self.SPEED
             self.SPEED = 0
             self.update_pause_button_txt()
             self.sound_music1.stop()
             self.pause_widget.opacity = 0.7
         elif not self.pause_state and not self.state_game_over:
             self.game_is_playing_state = True
-            self.SPEED = self.speed_update()
+            self.SPEED = actual_speed
             self.update_pause_button_txt()
             self.pause_widget.opacity = 0
             self.sound_music1.play()
@@ -525,6 +526,13 @@ class HomeWindow(Screen):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.starship = Image(
+            source="spaceship_models\spaceship6_edited.png",
+            pos_hint={"center_x": 0.5, "center_y": 0.5},
+            size_hint=(0.45, 0.4),
+            allow_stretch=True,
+        )
+        # self.add_widget(self.starship)
 
     def exit(self, *args):
         "Implementing an exit function for the game"
@@ -561,7 +569,7 @@ class GalaxyApp(App):
     )
     store = store
     profile = cProfile.Profile()
-    icon = "bg1.jpg"
+    icon = "galaxy_images/download.jpg"
     name = "G A L A X Y"
 
     def write_scores(self, score):
@@ -572,15 +580,23 @@ class GalaxyApp(App):
         else:
             pass
 
-    def on_key_down(self, touch):
-        for key in Window.keycodes:
-            if key == "escape":
-                pass
+    def on_key_down(self, keyboard, keycode, text, modifiers):
+        if keycode[1] == "escape":
+            pass
+
+    def is_desktop(self):
+        """
+        Methode pour tester le systeme d'exploitation de l'appareil sur lequel est lance le jeu.
+        """
+        if platform in ("linux", "win", "macosx"):
+            return True
+        return False
 
     def open_settings(self, *largs):
         pass
 
     def on_start(self):
+        self.is_desktop()
         self.profile.enable()
 
     def on_stop(self):

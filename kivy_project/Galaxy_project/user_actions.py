@@ -20,20 +20,21 @@ def on_keyboard_down(self, keyboard, keycode, text, modifiers):
     return True
 
 
-def on_keyboard_up(self, _keyboard, keycode):
+def on_keyboard_up(self, keyboard, keycode):
     self.current_speed_x = 0
     return True
 
 
 def on_touch_down(self, touch):
-    # state_game_over = False
-    # state_game_has_started = False
-
     if not self.state_game_over and self.state_game_has_started:
-        if touch.x < self.width / 2:
+        if touch.x < self.width / 2 and self.height * 0.1 < touch.y < self.height * 0.9:
             self.current_speed_x = self.SPEED_X
-        else:
+        elif (
+            touch.x > self.width / 2 and self.height * 0.1 < touch.y < self.height * 0.9
+        ):
             self.current_speed_x = -self.SPEED_X
+        else:
+            pass
     return super(RelativeLayout, self).on_touch_down(touch)
 
 

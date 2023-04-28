@@ -17,11 +17,9 @@
     home_btn: home_btn
     stack: stack
     canvas.before:
-        Color:
-            rgba: .2, .5, .9, 1
         Rectangle:
             size: self.size
-            source: "bg1.jpg"
+            source: "galaxy_images/bg1.jpg"
     GridLayout:
         canvas:
             Color:
@@ -326,7 +324,11 @@
         max: 100
         value: app.store.get("Sound Volume")["value"]
         disabled: not song_check.active
-        on_touch_up: app.store.put("Sound Volume", name="Sound Volume", value=self.value)
+        on_touch_up:
+            app.store.put("Sound Volume", name="Sound Volume", value=self.value)
+            root.parent.parent.parent.parent.manager.game_window.main_widget.sound_begin.volume = app.store.get("Sound Volume")["value"] / 100
+            root.parent.parent.parent.parent.manager.game_window.main_widget.sound_galaxy.volume = app.store.get("Sound Volume")["value"] / 100
+            root.parent.parent.parent.parent.manager.game_window.main_widget.sound_restart.volume = app.store.get("Sound Volume")["value"] / 100
     Label:
         text: "V O L U M E :   " + str(round(song_volume.value))
         pos_hint: {"right": .99, "top": 1}
@@ -363,7 +365,9 @@
         max: 100
         value: app.store.get("Music Volume")["value"]
         disabled: not music_check.active
-        on_touch_up: app.store.put("Music Volume", name="Music Volume", value=self.value)
+        on_touch_up:
+            app.store.put("Music Volume", name="Music Volume", value=self.value)
+            root.parent.parent.parent.parent.manager.game_window.main_widget.sound_music1.volume = app.store.get("Music Volume")["value"] / 100
     Label:
         text: "V O L U M E :   " + str(round(music_volume.value))
         pos_hint: {"right": .99, "top": 1}
@@ -399,7 +403,10 @@
         max: 100
         disabled: not sfx_check.active
         value: app.store.get("SFX Volume")["value"]
-        on_touch_up: app.store.put("SFX Volume", name="SFX Volume", value=self.value)
+        on_touch_up:
+            app.store.put("SFX Volume", name="SFX Volume", value=self.value)
+            root.parent.parent.parent.parent.manager.game_window.main_widget.sound_gameover_impact.volume = app.store.get("SFX Volume")["value"] / 100
+            root.parent.parent.parent.parent.manager.game_window.main_widget.sound_gameover_voice.volume = app.store.get("SFX Volume")["value"] / 100
     Label:
         text: "V O L U M E :   " + str(round(sfx_volume.value))
         pos_hint: {"right": .99, "top": 1}

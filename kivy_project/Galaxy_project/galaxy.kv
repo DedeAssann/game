@@ -38,10 +38,7 @@ WindowManager:
 <SettingsWindow>:
     name: "settings_screen"
     canvas.before:
-        Color:
-            rgba: 0, 0, 0, .3
         Rectangle:
-            #source: "bg1.jpg"
             size: self.size
     opacity: 1
     settings_widget: settings_widget
@@ -67,10 +64,10 @@ WindowManager:
 
 <HomeWindow>:
     name: "home_screen"
-    canvas:
+    canvas.before:
         Rectangle:
             size: self.size
-            source: "bg1.jpg"
+            source: "galaxy_images/download.jpg"
     ExitButton:
         id: exit_button
         on_release: root.exit()
@@ -103,7 +100,7 @@ WindowManager:
     canvas.before:
         Rectangle:
             size: self.size
-            source: "bg1.jpg"
+            source: "galaxy_images/bg1.jpg"
     menu_widget: menu_widget
     pause_widget: pause_widget
     pause_button: pause_button

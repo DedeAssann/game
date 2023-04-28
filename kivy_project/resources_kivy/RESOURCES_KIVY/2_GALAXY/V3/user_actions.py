@@ -6,10 +6,11 @@ def keyboard_closed(self):
     self._keyboard.unbind(on_key_up=self.on_keyboard_up)
     self._keyboard = None
 
+
 def on_keyboard_down(self, keyboard, keycode, text, modifiers):
-    if keycode[1] == 'left':
+    if keycode[1] == "left":
         self.current_speed_x = self.SPEED_X
-    elif keycode[1] == 'right':
+    elif keycode[1] == "right":
         self.current_speed_x = -self.SPEED_X
     return True
 

@@ -22,40 +22,189 @@ from kivy.properties import (
     Clock,
 )
 from kivy.uix.relativelayout import RelativeLayout
+from kivy.graphics import Rotate, Color, Rectangle, PopMatrix, PushMatrix
 from kivy.uix.popup import Popup
 from kivy.metrics import dp
 from kivy.uix.textinput import TextInput
+from kivy.uix.spinner import Spinner
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.dropdown import DropDown
+from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.stacklayout import StackLayout
+from kivy.uix.scrollview import ScrollView
+from kivy.animation import Animation
 from kivy.uix.screenmanager import Screen, NoTransition
 from kivy.storage.jsonstore import JsonStore
 import re
 
 store = JsonStore("myapp.json")
 
-btn1 = Button(
-    text="60 fps",
-    size_hint_y=None,
-    height=50,
-    font_name="fonts/Lcd.ttf",
-    font_size="30dp",
-)
-btn2 = Button(
-    text="80 fps",
-    size_hint_y=None,
-    height=50,
-    font_name="fonts/Lcd.ttf",
-    font_size="30dp",
-)
-btn3 = Button(
-    text="80 fps",
-    size_hint_y=None,
-    height=50,
-    font_name="fonts/Lcd.ttf",
-    font_size="30dp",
-)
+Window.allow_screensaver = True
+
+
+class MyCustomDropDown(DropDown):
+    pass
+
+
+class MainButton(Button):
+    pass
+
+
+class MyLayout(FloatLayout):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.dropdown = MyCustomDropDown()
+        self.mainbutton = Button(
+            text="Click here....",
+            size_hint=(0.9, 0.9),
+            pos_hint={"center_x": 0.5, "top": 0.95},
+            bold=True,
+            font_name="kivy_project/Galaxy_project/fonts/Sackers-Gothic-Std-Light.ttf",
+            font_size=dp(35),
+            background_color=(0, 0, 0, 0),
+            color=(0.458, 0.866, 0.866, 1),
+        )
+        self.add_widget(self.mainbutton)
+        self.mainbutton.bind(on_release=self.dropdown.open)
+        self.dropdown.bind(
+            on_select=lambda instance, x: setattr(self.mainbutton, "text", x)
+        )
+
+    def callback(self, instance, x):
+        print("The chosen mode is: {0}".format(x))
+
+
+class FirstWindow(Screen):
+    "..."
+    first_widget = ObjectProperty()
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def transit_screen(self):
+        self.first_widget.opacity = 0
+        self.transit_widget.opacity = 1
+        Clock.schedule_once(self.change_screen, 8)
+
+    def change_screen(self, dt):
+        self.manager.current = "second"
+
+
+class SecondWidget(RelativeLayout):
+    wlcm_text = (
+        "W e l c o m e\n\n".center(1).upper()
+        + "t o  y o u r  {}, C a p t a i n  {}.\n\n".format(
+            "G a l a x y  J o u r n e y", "D E D E"
+        )
+        + "L e t ' s  b e g i n  w i t h  h o w  t o  g u i d e  y o u r\n\ns t a r s h i p  t h r o u g h o u t  t h e  G A L A X Y .\n\nA s  w e  b e g i n ,  c o n s i d e r\n\na g r e e i n g  t o  t h e  U s e r  L i c e n s e ."
+    )
+
+    def on_parent(self, widget, parent):
+        anim = Animation(opacity=0, duration=23)
+        anim.bind(
+            on_complete=lambda *args: setattr(self.parent.third_widget, "opacity", 1.0)
+        )
+        anim.start(self)
+
+
+class ThirdWidget(RelativeLayout):
+    "..."
+    eula_text = """
+            End-User License Agreement (EULA) for Galaxy Game\n\nGalaxy Game End-User License Agreement
+
+            PLEASE READ THIS AGREEMENT CAREFULLY BEFORE USING THE GALAXY GAME. \nBY INSTALLING, DOWNLOADING, OR OTHERWISE USING THE GAME, YOU AGREE TO BE BOUND BY THE TERMS OF THIS AGREEMENT. IF YOU DO NOT AGREE TO THE TERMS OF THIS AGREEMENT, DO NOT INSTALL, DOWNLOAD, OR USE THE GAME.
+
+            1. License Grant. Subject to the terms of this Agreement, the developer grants you a non-exclusive, non-transferable, limited license to use the Galaxy Game for your personal, non-commercial use.
+
+            2. Restrictions. You may not modify, copy, distribute, sell, or transfer the Galaxy Game or any part of it without the developer's prior written consent.
+
+            3. Ownership. The Galaxy Game is owned by the developer and is protected by copyright and other intellectual property laws. The developer retains all rights, title, and interest in and to the Galaxy Game.
+
+            4. Disclaimer of Warranties. THE GALAXY GAME IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+
+            5. Limitation of Liability. TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT SHALL THE DEVELOPER BE LIABLE FOR ANY SPECIAL, INCIDENTAL, INDIRECT, OR CONSEQUENTIAL DAMAGES WHATSOEVER (INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF BUSINESS PROFITS, BUSINESS INTERRUPTION, LOSS OF BUSINESS INFORMATION, OR ANY OTHER PECUNIARY LOSS) ARISING OUT OF THE USE OF OR INABILITY TO USE THE GALAXY GAME, EVEN IF THE DEVELOPER HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+            6. Governing Law. This Agreement shall be governed by and construed in accordance with the laws of the state of California, without regard to its conflicts of law principles.
+
+            7. Termination. This Agreement shall terminate automatically if you fail to comply with any of the terms and conditions of this Agreement. Upon termination, you must immediately cease all use of the Galaxy Game and destroy all copies of the Galaxy Game in your possession.
+
+            8. Miscellaneous. This Agreement constitutes the entire agreement between you and the developer with respect to the Galaxy Game, and supersedes all prior or contemporaneous communications and proposals, whether oral or written, between you and the developer. If any provision of this Agreement is found to be invalid or unenforceable, the remaining provisions shall remain in full force and effect.
+        """
+
+
+class SyncLabel(Label):
+    angle = NumericProperty(0)
+    anim = ObjectProperty(None)
+
+    def on_angle(self, instance, angle):
+        self.canvas.before.clear()
+        with self.canvas.before:
+            Rotate(angle=angle, origin=self.center)
+
+    def start_animation(self):
+        for _ in range(5):
+            self.anim = Animation(angle=360, duration=5)
+            self.anim += Animation(size=(600, 100), duration=3)
+            self.anim += Animation(
+                size=(self.texture_size[0] + dp(10), self.texture_size[1] + dp(5)),
+                duration=3,
+            )
+            self.anim += Animation(size=(600, 100), duration=5)
+            self.anim.repeat = True
+        self.anim.start(self)
+
+
+class TransitionWidget(RelativeLayout):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.sync = SyncLabel()
+        self.add_widget(self.sync)
+        self.sync.start_animation()
+
+    def on_enter(self):
+        # self.opacity = 1
+        Clock.schedule_once(self.animate, 2)
+
+    def animate(self, *args):
+        anim = Animation(opacity=0, duration=1)
+        anim.start(self)
+
+
+class SecondWindow(Screen):
+    second_widget = ObjectProperty()
+    third_widget = ObjectProperty()
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+
+class TryApp(App):
+    "..."
+    use_kivy_settings = False
+    title = "|   M y   G a l a x y   S e t t i n g s   D e m o   |"
+
+    def on_key_down(self, touch):
+        for key in Window.keycodes:
+            if key == "escape":
+                pass
+
+    def open_settings(self, *largs):
+        pass
+
+    def on_start(self):
+        self.profile = cProfile.Profile()
+        self.profile.enable()
+
+    def on_stop(self):
+        self.profile.disable()
+        self.profile.dump_stats("tryapp.profile")
+
+    def on_pause(self):
+        return True
+
+    def on_resume(self):
+        pass
 
 
 class FloatInput(TextInput):
@@ -92,295 +241,7 @@ class StringInput(TextInput):
         return super().insert_text(s, from_undo=from_undo)
 
 
-class Infos(Popup):
-    "..."
-
-    def __init__(self, **kwargs):
-        "..."
-        super().__init__(**kwargs)
-        self.size_hint = (0.825, 0.825)
-        self.input_name.text = TryApp.store.get("Name of User")["value"]
-        self.input_age.text = TryApp.store.get("Age of User")["value"]
-        self.input_mail.text = TryApp.store.get("Mail of User")["value"]
-
-    def w_infos(self):
-        "Write infos in the storage file about the user name"
-        TryApp.store.put("Name of User", name="Name", value=self.input_name.text)
-        TryApp.store.put("Age of User", name="Age", value=self.input_age.text)
-        TryApp.store.put("Mail of User", name="Mail", value=self.input_mail.text)
-
-    def on_submit(self):
-        "..."
-        if self.lbl1.opacity == 1:
-            pass
-        else:
-            self.w_infos()
-            self.input_name.opacity = 0
-            self.input_age.opacity = 0
-            self.input_mail.opacity = 0
-            self.lbl1.text = TryApp.store.get("Name of User")["value"]
-            self.lbl2.text = TryApp.store.get("Age of User")["value"]
-            self.lbl3.text = TryApp.store.get("Mail of User")["value"]
-            self.lbl1.opacity = 1
-            self.lbl2.opacity = 1
-            self.lbl3.opacity = 1
-
-    def modify(self):
-        if self.input_name.opacity == 1:
-            pass
-        else:
-            self.lbl1.opacity = 0
-            self.lbl2.opacity = 0
-            self.lbl3.opacity = 0
-            self.input_name.opacity = 1
-            self.input_age.opacity = 1
-            self.input_mail.opacity = 1
-
-
-class About(Popup):
-    "..."
-
-    def __init__(self, **kwargs):
-        "..."
-        super().__init__(**kwargs)
-        self.size_hint = (0.8, 0.8)
-
-
-class Connect(Popup):
-    "..."
-
-    def __init__(self, **kwargs):
-        "..."
-        super().__init__(**kwargs)
-        self.size_hint = (0.8, 0.8)
-
-
-class Score(Popup):
-    "..."
-    score_nb = None  # 78
-    best_score_nb = None  # 150
-    reset = False
-    score = StringProperty()
-    best_score = StringProperty()
-    reset_btn = ObjectProperty()
-
-    def __init__(self, **kwargs):
-        "..."
-        super().__init__(**kwargs)
-        self.size_hint = (0.785, 0.785)
-        self.reset_at_close = self.on_dismiss()
-        self.score_nb = TryApp.store.get("Score")["value"]
-        self.best_score_nb = TryApp.store.get("Best Score")["value"]
-        self.score = "Y O U R   S C O R E : " + str(self.score_nb)
-        self.best_score = "B E S T   S C O R E : " + str(self.best_score_nb)
-
-    def on_progress(self):
-        "..."
-        Clock.schedule_interval(self.reset_score, 1.0 / 60.0)
-        Clock.schedule_interval(self.on_dismiss, 1.0 / 60)
-
-    def reset_score(self, _dt=(1.0 / 60)):
-        "..."
-        if self.reset_btn.state == "down":
-            self.reset_at_close = True
-            self.reset = True
-            TryApp.store.put("Score", name="Score", value=0)
-            TryApp.store.put("Best Score", name="Best Score", value=0)
-            self.score_nb = TryApp.store.get("Score")["value"]
-            self.best_score_nb = TryApp.store.get("Best Score")["value"]
-            self.score = "Y O U R   S C O R E : " + str(self.score_nb)
-            self.best_score = "B E S T   S C O R E : " + str(self.best_score_nb)
-
-    def on_dismiss(self, *_dt):
-        "..."
-        if self.disabled is True:
-            self.reset_at_close = self.reset
-            return self.reset_at_close
-
-
-class StackWidget(StackLayout):
-    "..."
-    label_list = []
-    n_widget = NumericProperty(12)
-    score_nb = None
-    best_score_nb = None
-
-    def show_scores(self):
-        "..."
-        if Score.reset is True:
-            Score.open(Score(score_nb=0, best_score_nb=0, reset=False))
-        Score.open(Score())
-
-    def show_infos(self):
-        "..."
-        Infos.open(Infos())
-
-    def show_about(self):
-        "..."
-        About.open(About())
-
-    def show_connect(self):
-        "..."
-        Connect.open(Connect())
-
-    def get_fullscreen(self, args: list):
-        "..."
-        if self.l_1.fullscreen_btn.active is True:
-            Window.fullscreen = "auto"
-        else:
-            Window.fullscreen = 0
-
-
-class L2(RelativeLayout):
-    "..."
-    max_fps = 60
-    fps_limit = StringProperty(str(max_fps))
-
-    def __init__(self, **kwargs):
-        "..."
-        super().__init__(**kwargs)
-
-    def inc_fps_limit(self, value: str):
-        "..."
-        if value == "-":
-            if self.max_fps <= 40:
-                pass
-            else:
-                self.max_fps -= 10
-        elif value == "+":
-            if self.max_fps >= 90:
-                pass
-            else:
-                self.max_fps += 10
-        else:
-            pass
-        self.fps_limit = str(self.max_fps)
-
-        return self.max_fps, self.fps_limit
-
-
-class L3(RelativeLayout):
-    "..."
-    max_fps = 60
-    cur_fps_limit = StringProperty(str(max_fps))
-
-    def __init__(self, **kwargs):
-        "..."
-        super().__init__(**kwargs)
-        Clock.schedule_interval(self.on_progress, 1.0 / 60)
-
-    def on_progress(self, _dt):
-        widget = self.l_2
-        if widget.max_fps <= self.max_fps:
-            self.max_fps = widget.max_fps
-            self.cur_fps_limit = str(self.max_fps)
-        return self.max_fps, self.cur_fps_limit
-
-    def inc_cur_fps_limit(self, value: str, widget):
-        "..."
-        if widget.max_fps <= self.max_fps:
-            self.max_fps = widget.max_fps
-
-        if value == "-":
-            if self.max_fps <= 40:
-                pass
-            else:
-                self.max_fps -= 10
-        elif value == "+":
-            if self.max_fps == widget.max_fps or self.max_fps >= 90:
-                pass
-            else:
-                self.max_fps += 10
-        else:
-            pass
-        self.cur_fps_limit = str(self.max_fps)
-
-        return self.max_fps, self.cur_fps_limit
-
-
-class L8(RelativeLayout):
-    "..."
-    text_to_display = StringProperty("Beginner")
-
-    def __init__(self, **kwargs):
-        "..."
-        super().__init__(**kwargs)
-        Clock.schedule_interval(self.get_label_text, 1.0 / 60)
-
-    def get_label_text(self, _dt):
-        "..."
-        text = {
-            0: "B e g i n n e r",
-            1: "I n t e r m e d i a t e",
-            2: "A d v a n c e d",
-            3: "E x p e r t",
-        }
-        self.text_to_display = text[round(self.my_slider.value)]
-
-
-class MainWidget(RelativeLayout):
-    "..."
-
-
-class FirstWidget(RelativeLayout):
-    "..."
-
-
-class FirstWindow(Screen):
-    "..."
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-
-class MainWindow(Screen):
-    "..."
-
-    main_widget = ObjectProperty()
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-
-class TryApp(App):
-    "..."
-    use_kivy_settings = False
-    title = "|   M y   G a l a x y   S e t t i n g s   D e m o   |"
-    store = store
-
-    def on_key_down(self, touch):
-        for key in Window.keycodes:
-            if key == "escape":
-                pass
-
-    def open_settings(self, *largs):
-        pass
-
-    def on_start(self):
-        self.profile = cProfile.Profile()
-        self.profile.enable()
-
-    def on_stop(self):
-        self.profile.disable()
-        self.profile.dump_stats("tryapp.profile")
-
-    def on_pause(self):
-        return True
-
-    def on_resume(self):
-        pass
-
-
 TryApp().run()
 
-
-# class SecondWindow(Screen):
-#    display_text = StringProperty("Hiii !")
-#
-#    def __init__(self, **kwargs):
-#        super().__init__(**kwargs)
-#
-#    def on_button_pressed(self, letter: str):
-#        self.display_text = letter
 
 # ***https://www.youtube.com/watch?v=5JOaTtcg1tE&t=18s***
