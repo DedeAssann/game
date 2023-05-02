@@ -8,7 +8,8 @@ Config.set("graphics", "resizable", True)
 Config.write()
 
 from kivy.core.window import Window
-from translation import TranslatedText
+
+# from translation import TranslatedText
 
 Window.allow_screensaver = True
 
@@ -23,6 +24,7 @@ from kivy.properties import (
     Clock,
 )
 from kivy.uix.relativelayout import RelativeLayout
+from kivy.uix.boxlayout import BoxLayout
 from kivy.graphics import Rotate, Color, Rectangle, PopMatrix, PushMatrix
 from kivy.uix.popup import Popup
 from kivy.metrics import dp
@@ -36,7 +38,7 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.stacklayout import StackLayout
 from kivy.uix.scrollview import ScrollView
 from kivy.animation import Animation
-from kivy.uix.screenmanager import Screen, NoTransition
+from kivy.uix.screenmanager import Screen, NoTransition, ScreenManager
 from kivy.storage.jsonstore import JsonStore
 import re
 
@@ -45,6 +47,7 @@ store = JsonStore("tryapp.json")
 Window.allow_screensaver = True
 
 
+#
 class MyCustomDropDown(DropDown):
     global LANGUAGES
     LANGUAGES = {"E N G L I S H": "en", "F R A N C A I S": "fr", "E S P A N O L": "es"}
@@ -54,16 +57,18 @@ class MyCustomDropDown(DropDown):
         self.LANGUAGES = LANGUAGES
 
 
+#
 class MainButton(Button):
     pass
 
 
+#
 class MyLayout(FloatLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.dropdown = MyCustomDropDown()
         self.mainbutton = Button(
-            text=TranslatedText("Select...").text,
+            text="Select...",
             size_hint=(0.9, 0.9),
             pos_hint={"center_x": 0.5, "top": 0.95},
             bold=True,
@@ -82,6 +87,7 @@ class MyLayout(FloatLayout):
         print("The chosen mode is: {0}".format(x))
 
 
+#
 class FirstWindow(Screen):
     "..."
     first_widget = ObjectProperty()
@@ -89,7 +95,7 @@ class FirstWindow(Screen):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        translator = TranslatedText()
+        # translator = TranslatedText()
         self.load_widget = LoadingWidget()
         self.add_widget(self.load_widget)
 
@@ -99,14 +105,15 @@ class FirstWindow(Screen):
         self.add_widget(self.transit_widget)
 
 
+#
 class SecondWidget(RelativeLayout):
-    wlcm_text = TranslatedText(
+    wlcm_text = (
         "W e l c o m e\n\n".center(1).upper()
         + "t o  y o u r  {}, C a p t a i n  {}.\n\n".format(
             "G a l a x y  J o u r n e y", "D E D E"
         )
         + "L e t ' s  b e g i n  w i t h  h o w  t o  g u i d e  y o u r\n\ns t a r s h i p  t h r o u g h o u t  t h e  G A L A X Y .\n\nA s  w e  b e g i n ,  c o n s i d e r\n\na g r e e i n g  t o  t h e  U s e r  L i c e n s e ."
-    ).text
+    )
 
     def on_parent(self, widget, parent):
         anim = Animation(opacity=0, duration=15)
@@ -116,6 +123,7 @@ class SecondWidget(RelativeLayout):
         anim.start(self)
 
 
+#
 class ThirdWidget(RelativeLayout):
     "..."
     eula_text = """
@@ -141,6 +149,7 @@ class ThirdWidget(RelativeLayout):
         """
 
 
+#
 class SyncLabel(Label):
     angle = NumericProperty(0)
     anim = ObjectProperty(None)
@@ -163,6 +172,7 @@ class SyncLabel(Label):
         self.anim.start(self)
 
 
+#
 class LoadingWidget(RelativeLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -191,6 +201,7 @@ class LoadingWidget(RelativeLayout):
         anim.start(self.progress)
 
 
+#
 class TransitionWidget(RelativeLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -209,6 +220,36 @@ class TransitionWidget(RelativeLayout):
         anim.start(self)
 
 
+#
+class Tutorial(Screen):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        pre_tuto = PreTutorial()
+        self.pre_tuto = pre_tuto
+
+    def on_enter(self):
+        self.add_widget(self.pre_tuto)
+
+
+#
+class PreTutorial(RelativeLayout):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def on_parent(self, widget, parent):
+        parent.tuto_01.opacity = 0
+        anim = Animation(opacity=0, duration=5)
+        anim.bind(on_complete=lambda *args: setattr(parent.tuto_01, "opacity", 1.0))
+        anim.start(self)
+
+
+#
+class Tutorial01(RelativeLayout):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+
+#
 class SecondWindow(Screen):
     second_widget = ObjectProperty()
     third_widget = ObjectProperty()
@@ -224,6 +265,15 @@ class SecondWindow(Screen):
         self.add_screens()
 
 
+#
+class WindowManager(ScreenManager):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        transition = NoTransition(duration=0)
+        self.transition = transition
+
+
+#
 class TryApp(App):
     "..."
     use_kivy_settings = False
@@ -244,6 +294,7 @@ class TryApp(App):
     def on_start(self):
         self.profile = cProfile.Profile()
         self.profile.enable()
+        self.store = store
 
     def on_stop(self):
         self.profile.disable()
@@ -256,6 +307,7 @@ class TryApp(App):
         pass
 
 
+#
 class FloatInput(TextInput):
     "..."
 
@@ -273,6 +325,7 @@ class FloatInput(TextInput):
         return super().insert_text(s, from_undo=from_undo)
 
 
+#
 class StringInput(TextInput):
     "..."
 

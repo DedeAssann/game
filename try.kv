@@ -2,6 +2,7 @@
 #: import randint random
 #: import DampedScrollEffect kivy.effects.dampedscroll
 #: import StackLayout kivy.uix.stacklayout
+#: import NoTransition kivy.uix.screenmanager
 
 
 #: set l_txt_size dp(25)
@@ -14,10 +15,12 @@
 WindowManager:
     FirstWindow:
     SecondWindow:
+    Tutorial:
 
 
 # The manager
-<WindowManager@ScreenManager>:
+
+<WindowManager>:
 
 <FirstWindow>:
     name: "first"
@@ -30,6 +33,7 @@ WindowManager:
     
 
 <FirstWidget@RelativeLayout>:
+    stack: stack
     canvas.before:
         Rectangle:
             size: self.size
@@ -62,6 +66,7 @@ WindowManager:
         smooth_scroll_end: dp(8)
         scroll_wheel_distance: dp(45)
         StackLayout:
+            id: stack
             canvas.before:
                 Color:
                     rgba: 0, 0, 0, .2
@@ -119,18 +124,23 @@ WindowManager:
 
 
 <L1@MyCustomRelativeLayout>:
+    last_name: last_name
     MyCustomLabel:
         text:'l a s t   n a m e  :'.upper()
     StringInput:
         id: last_name
         text:''
+        on_text_validate: root.parent.l2.first_name.focus = True
 <L2@MyCustomRelativeLayout>:
+    first_name: first_name
     MyCustomLabel:
         text:'f i r s t   n a m e  :'.upper()
     StringInput:
         id: first_name
         text:''
+        on_text_validate: root.parent.l3.mail.focus = True
 <L3@MyCustomRelativeLayout>:
+    mail: mail
     MyCustomLabel:
         text:'E - m a i l  :'.upper()
     TextInput:
@@ -153,13 +163,17 @@ WindowManager:
         cursor_width: dp(3)
         cursor_height: dp(10)
         cursor_color: 1, 1, 1, 1
+        on_text_validate: root.parent.l4.age.focus = True
 <L4@MyCustomRelativeLayout>:
+    age: age
     MyCustomLabel:
         text:'a g e  :'.upper()
     FloatInput:
         id: age
         text:''
+        on_text_validate: root.parent.l6.username.focus = True
 <L5@MyCustomRelativeLayout>:
+    my_layout: my_layout
     MyCustomLabel:
         text:'L a n g u a g e  :'.upper()
     MyLayout:
@@ -167,6 +181,7 @@ WindowManager:
         pos_hint: {"x": .55, "top": .75}
         size_hint: .5, .65
 <L6@MyCustomRelativeLayout>:
+    username: username
     MyCustomLabel:
         text: "u s e r n a m e  :".upper()
     TextInput:
@@ -335,10 +350,6 @@ WindowManager:
             height: self.texture_size[1]
 
 <ThirdWidget>:
-    #canvas.before:
-    #    Rectangle:
-    #        size: self.size
-    #        source: "kivy_project\Galaxy_project\galaxy_images\planet1.jpg"
     scroll_eula: root.scroll_eula
     opacity: 0
     ScrollView:
@@ -404,6 +415,7 @@ WindowManager:
                     pos_hint: {"x": .8, "center_y": .5}
                     size_hint: .3, .5
                     disabled: not agree.active
+                    on_press: root.parent.manager.current = "tuto"
 
 
 <TransitionWidget>:
@@ -440,6 +452,137 @@ WindowManager:
 
 
 ##First Window & it's Widget
+<Tutorial>:
+    name: "tuto"
+    canvas:
+        Rectangle:
+            size: self.size
+            source: "kivy_project\Galaxy_project\galaxy_images\planet1.jpg"
+    tuto_01: tuto_01
+    Tutorial01:
+        id: tuto_01
+
+<PreTutorial>:
+    size_hint: 1, 1
+    pos_hint: {"left": .95, "top": .95}
+    BoxLayout:
+        orientation: "vertical"
+        spacing: dp(20)
+        padding: dp(35)
+        Label:
+            text: "W E L C O M E"
+            valign: "middle"
+            size_hint: 1, .2
+            color: .458, .866, .866, 1
+            font_size: dp(100)
+            font_name: "kivy_project/Galaxy_project/fonts/Eurostile.ttf"
+        Label:
+            text: "T O   T H E"
+            valign: "middle"
+            size_hint: 1, .15
+            color: .458, .866, .866, 1
+            font_size: dp(110)
+            font_name: "kivy_project/Galaxy_project/fonts/Eurostile.ttf"
+        Label:
+            text: "G  A  L  A  X  Y"
+            valign: "middle"
+            size_hint: 1, .25
+            color: .458, .866, .866, 1
+            font_size: dp(150)
+            font_name: "kivy_project/Galaxy_project/fonts/Eurostile.ttf"
+        Label:
+            text: "G A M E"
+            valign: "middle"
+            size_hint: 1, .2
+            font_size: dp(110)
+            color: .458, .866, .866, 1
+            font_name: "kivy_project/Galaxy_project/fonts/Eurostile.ttf"
+        Label:
+            text: "L e t ' s   B e g i n !"
+            valign: "middle"
+            size_hint: 1, .2
+            font_size: dp(100)
+            color: .458, .866, .866, 1
+
+
+<Tutorial01>:
+    size_hint: 1, 1
+    pos_hint: {"left": .95, "top": 1}
+    padding: dp(100)
+    BoxLayout:
+        orientation: "vertical"
+        spacing_y: dp(75)
+        padding: dp(15)
+        spacing_x: dp(30)
+        Label:
+            text:
+                "How to play ?"
+            valign: "top"
+            halign: "justify"
+            font_name: "kivy_project/Galaxy_project/fonts/Eurostile.ttf"
+            font_size: dp(100)
+            color: .458, .866, .866, 1
+            underline: True
+        Label:
+            text: 
+                "- To go left, press left arrow or the left side of the screen."
+            valign: "center"
+            halign: "justify"
+            font_name: "kivy_project/Galaxy_project/fonts/Eurostile.ttf"
+            text_size: self.width, None
+            font_size: dp(56)
+            #color: .458, .866, .866, 1
+        Label:
+            text: 
+                "- To go right, press right arrow or the right side of the screen."
+            valign: "center"
+            halign: "justify"
+            font_name: "kivy_project/Galaxy_project/fonts/Eurostile.ttf"
+            text_size: self.width, None
+            font_size: dp(56)
+            #color: .458, .866, .866, 1
+        Label:
+            text:
+                "- But, always remember to keep following the track !"
+            valign: "center"
+            halign: "justify"
+            font_name: "kivy_project/Galaxy_project/fonts/Eurostile.ttf"
+            text_size: self.width, None
+            font_size: dp(56)
+            #color: .458, .866, .866, 1
+    GridLayout:
+        cols: 2
+        spacing: dp(800)
+        padding: dp(5)
+        size_hint: .9, .1
+        pos_hint: {"center_x": .5, "top": .11}
+        Label:
+            center_x: True
+            pos_hint: {"x": .25, "center_y": .5}
+            size_hint: .055, .655
+        Button:
+            canvas.before:
+                Color:
+                    rgba: 0.458, 0.866, 0.866, 1
+                Line:
+                    width: dp(1.15)
+                    rectangle: self.x, self.y, self.width, self.height
+            text: "N  E  X  T"
+            #color: 0.458, 0.866, 0.866, 1
+            background_color: 0, 0, 0, 0
+            bold: True
+            font_name: "kivy_project/Galaxy_project/fonts/Eurostile.ttf"
+            font_size: dp(37.5)
+            pos_hint: {"x": .7, "center_y": .5}
+            size_hint: .15, .85        
+
+    
+    
+
+
+
+
+
 #
 #
 #<FirstWidget>:
