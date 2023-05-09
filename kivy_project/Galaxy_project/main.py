@@ -9,6 +9,7 @@ Ce jeu consiste a deplacer un spaceship sur un plan, et suivre le chemin trace d
 
 
 from kivy.config import Config
+from tuto import FirstWindow, SecondWindow, Tutorial
 
 # configuring the screen which is gonna be opened by kivy
 Config.set("graphics", "width", "1200")
@@ -36,7 +37,6 @@ from kivy.properties import (
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.screenmanager import Screen, ScreenManager, NoTransition
 from kivy.uix.image import Image
-from kivy.uix.button import Button
 from kivy.lang.builder import Builder
 from kivy.metrics import dp
 from kivy.storage.jsonstore import JsonStore
@@ -44,6 +44,7 @@ from kivy.storage.jsonstore import JsonStore
 # loading another .kv file...
 Builder.load_file("menu.kv")
 Builder.load_file("settings.kv")
+Builder.load_file("tuto.kv")
 
 store = JsonStore("myapp.json")
 
@@ -572,6 +573,28 @@ class GalaxyApp(App):
     icon = "galaxy_images/download.jpg"
     name = "G A L A X Y"
 
+    def progress_empty(self):
+        if (
+            self.store.get("Score")["value"] == 0
+            and self.store.get("Best Score")["value"] == 0
+            and self.store.get("Name of User")["value"] == ""
+            and self.store.get("Age of User")["value"] == ""
+            and self.store.get("Mail of User")["value"] == ""
+            and self.store.get("Level")["value"] == 0.0
+            and self.store.get("Current FPS Level")["value"] == 60
+            and self.store.get("Max FPS Level")["value"] == 60
+            and self.store.get("Song State")["value"] is True
+            and self.store.get("Song Volume")["value"] == 50
+            and self.store.get("Music State")["value"] is True
+            and self.store.get("Music Volume")["value"] == 50
+            and self.store.get("SFX Volume")["value"] == 50
+            and self.store.get("SFX State")["value"] is True
+        ):
+            progress = False
+        else:
+            progress = True
+        return progress
+
     def write_scores(self, score):
         self.store.put("Score", name="Score", value=score)
         if score > self.store.get("Best Score")["value"]:
@@ -597,6 +620,7 @@ class GalaxyApp(App):
 
     def on_start(self):
         self.is_desktop()
+        # print(self.progress_empty())
         self.profile.enable()
 
     def on_stop(self):

@@ -19,7 +19,7 @@ def init_audio(self):
     #    App.get_running_app().store.get("Sound Volume")["value"] / 100
     # )
     self.sound_galaxy.volume = (
-        App.get_running_app().store.get("Sound Volume")["value"] / 100
+        App.get_running_app().store.get("Song Volume")["value"] / 100
     )
     # self.sound_gameover_impact.volume = (
     #    App.get_running_app().store.get("SFX Volume")["value"] / 100

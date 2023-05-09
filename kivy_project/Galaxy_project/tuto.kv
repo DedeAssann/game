@@ -1,27 +1,15 @@
-"The kivy file of the tutorial"
-...
-
 #: set _bc (.180, .525, .757, .3)
 
-WindowManager:
-    FirstWindow:
-    SecondWindow:
-    Tutorial:
+#WindowManager:
+#    FirstWindow:
+#    SecondWindow:
+#    Tutorial:
+#
+## The manager
+#
+#<WindowManager>:
 
-# The manager
-
-<WindowManager>:
-
-<FirstWindow>:
-    name: "first"
-    load_widget: load_widget
-    first_widget: first_widget
-    FirstWidget:
-        id: first_widget
-    LoadingWidget:
-        id: load_widget
-
-<FirstWidget@RelativeLayout>:
+<FirstWidget>:
     stack: stack
     canvas.before:
         Rectangle:
@@ -73,17 +61,17 @@ WindowManager:
             l4: l4
             l5: l5
             l6: l6
-            L1:
+            L_1:
                 id: l1
-            L2:
+            L_2:
                 id: l2
-            L3:
+            L_3:
                 id: l3
-            L4:
+            L_4:
                 id: l4
-            L6:
+            L_6:
                 id: l6
-            L5:
+            L_5:
                 id: l5
     GridLayout:
         cols: 2
@@ -111,7 +99,16 @@ WindowManager:
             size_hint: .15, .85
             on_release: root.parent.transit_screen()
 
-<L1@MyCustomRelativeLayout>:
+<MyCustomRelativeLayout@RelativeLayout>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .2
+        Rectangle:
+            size: self.size
+    pos_hint: None, None
+    size_hint: 1, None
+
+<L_1@MyCustomRelativeLayout>:
     last_name: last_name
     Label:
         text:'l a s t   n a m e  :'.upper()
@@ -124,7 +121,7 @@ WindowManager:
         id: last_name
         text:''
         on_text_validate: root.parent.l2.first_name.focus = True
-<L2@MyCustomRelativeLayout>:
+<L_2@MyCustomRelativeLayout>:
     first_name: first_name
     Label:
         text:'f i r s t   n a m e  :'.upper()
@@ -137,7 +134,7 @@ WindowManager:
         id: first_name
         text:''
         on_text_validate: root.parent.l3.mail.focus = True
-<L3@MyCustomRelativeLayout>:
+<L_3@MyCustomRelativeLayout>:
     mail: mail
     Label:
         text:'E - m a i l  :'.upper()
@@ -167,7 +164,7 @@ WindowManager:
         cursor_height: dp(10)
         cursor_color: 1, 1, 1, 1
         on_text_validate: root.parent.l4.age.focus = True
-<L4@MyCustomRelativeLayout>:
+<L_4@MyCustomRelativeLayout>:
     age: age
     Label:
         text:'a g e  :'.upper()
@@ -180,7 +177,7 @@ WindowManager:
         id: age
         text:''
         on_text_validate: root.parent.l6.username.focus = True
-<L5@MyCustomRelativeLayout>:
+<L_5@MyCustomRelativeLayout>:
     my_layout: my_layout
     Label:
         text:'L a n g u a g e  :'.upper()
@@ -193,7 +190,7 @@ WindowManager:
         id: my_layout
         pos_hint: {"x": .55, "top": .75}
         size_hint: .5, .65
-<L6@MyCustomRelativeLayout>:
+<L_6@MyCustomRelativeLayout>:
     username: username
     Label:
         text: "u s e r n a m e  :".upper()
@@ -237,6 +234,30 @@ WindowManager:
         background_color: 0, 0, 0, .65
         color: .458, .866, .866, 1
         text: "E N G L I S H"
+        bold: True
+        font_name: "kivy_project/Galaxy_project/fonts/Sackers-Gothic-Std-Light.ttf"
+        font_size: dp(35)
+        size_hint_y: None
+        height: dp(70)
+        on_release:
+            root.select(self.text)
+            app.store.put("Language", name="Language", value=root.LANGUAGES[self.text])
+    Button:
+        background_color: 0, 0, 0, .65
+        color: .458, .866, .866, 1
+        text: "F R A N C A I S"
+        bold: True
+        font_name: "kivy_project/Galaxy_project/fonts/Sackers-Gothic-Std-Light.ttf"
+        font_size: dp(35)
+        size_hint_y: None
+        height: dp(70)
+        on_release:
+            root.select(self.text)
+            app.store.put("Language", name="Language", value=root.LANGUAGES[self.text])
+    Button:
+        background_color: 0, 0, 0, .65
+        color: .458, .866, .866, 1
+        text: "E S P A N O L"
         bold: True
         font_name: "kivy_project/Galaxy_project/fonts/Sackers-Gothic-Std-Light.ttf"
         font_size: dp(35)
@@ -345,7 +366,7 @@ WindowManager:
             spacing: dp(10)
             height: self.minimum_height
             orientation: "lr-tb"
-            MyCustomLabel:
+            Label:
                 text: root.eula_text
                 text_size: self.width, None
                 size_hint: 1, None
@@ -369,7 +390,7 @@ WindowManager:
                     width: dp(2)
                     height: dp(200)
                     active: False
-                MyCustomLabel:
+                Label:
                     text: "I   a g r e e !".capitalize()
                     font_size: dp(35)
                     color: .458, .866, .866, 1
@@ -549,4 +570,5 @@ WindowManager:
             font_name: "kivy_project/Galaxy_project/fonts/Eurostile.ttf"
             font_size: dp(37.5)
             pos_hint: {"x": .7, "center_y": .5}
-            size_hint: .15, .85        
+            size_hint: .15, .85
+            on_release: app.root.current = "home_screen"

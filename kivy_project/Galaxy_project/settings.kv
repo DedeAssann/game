@@ -49,7 +49,7 @@
             pos_hint: {"center_x": .5, "top": 1}
             size_hint: .7, 1
             font_size: dp(45)
-        MyCustomButton:
+        CustomButton:
             id: home_btn
             pos_hint: {"right": 1, "top": 1}
             size_hint: .18, 1
@@ -219,7 +219,7 @@
         cols: 3
         pos_hint: {"right": .985, "top": 1}
         size_hint: .225, 1
-        MyCustomButton:
+        CustomButton:
             id: l2_btn1
             text: " - "
             size_hint: None, None
@@ -235,7 +235,7 @@
             pos_hint: {"center_x": .3, "top": 1}
             font_name: "fonts/Lcd.ttf"
             font_size: l_txt_size
-        MyCustomButton:
+        CustomButton:
             id: l2_btn2
             text: " + "
             size_hint: None, None
@@ -270,7 +270,7 @@
         cols: 3
         pos_hint: {"right": .985, "top": 1}
         size_hint: .225, 1
-        MyCustomButton:
+        CustomButton:
             id: l3_btn1
             text: " - "
             size_hint: None, None
@@ -286,7 +286,7 @@
             pos_hint: {"center_x": .3, "top": 1}
             font_name: "fonts/Lcd.ttf"
             font_size: l_txt_size
-        MyCustomButton:
+        CustomButton:
             id: l3_btn2
             text: " + "
             size_hint: None, None
@@ -306,7 +306,7 @@
     size_hint: 1, None
     pos_hint: None, None
     Label:
-        text: "S o u n d"
+        text: "S o n g"
         size_hint: .3, 1
         pos_hint: {"left": 1, "top":1}
         font_size: l_txt_size
@@ -314,21 +314,21 @@
     MyCustomCheckBox:
         id: song_check
         pos_hint: {"right": .675, "top": 1}
-        on_press: app.store.put("Sound State", name="Sound State", value=self.active)
-        active: app.store.get("Sound State")["value"]
+        on_press: app.store.put("Song State", name="Song State", value=self.active)
+        #active: app.store.get("Song State")["value"]
         on_press: root.parent.override_volume(self, song_volume)
     MyCustomSlider:
         id: song_volume
-        text: "Sound Volume"
+        text: "Song Volume"
         pos_hint: {"right": .99, "top": .5}
         max: 100
-        value: app.store.get("Sound Volume")["value"]
+        #value: app.store.get("Song Volume")["value"]
         disabled: not song_check.active
         on_touch_up:
-            app.store.put("Sound Volume", name="Sound Volume", value=self.value)
-            root.parent.parent.parent.parent.manager.game_window.main_widget.sound_begin.volume = app.store.get("Sound Volume")["value"] / 100
-            root.parent.parent.parent.parent.manager.game_window.main_widget.sound_galaxy.volume = app.store.get("Sound Volume")["value"] / 100
-            root.parent.parent.parent.parent.manager.game_window.main_widget.sound_restart.volume = app.store.get("Sound Volume")["value"] / 100
+            app.store.put("Song Volume", name="Song Volume", value=self.value)
+            root.parent.parent.parent.parent.manager.game_window.main_widget.sound_begin.volume = app.store.get("Song Volume")["value"] / 100
+            root.parent.parent.parent.parent.manager.game_window.main_widget.sound_galaxy.volume = app.store.get("Song Volume")["value"] / 100
+            root.parent.parent.parent.parent.manager.game_window.main_widget.sound_restart.volume = app.store.get("Song Volume")["value"] / 100
     Label:
         text: "V O L U M E :   " + str(round(song_volume.value))
         pos_hint: {"right": .99, "top": 1}
@@ -429,7 +429,7 @@
         pos_hint: {"left": 1, "top":1}
         font_size: l_txt_size
         font_name: "fonts/Eurostile.ttf"
-    MyCustomButton:
+    CustomButton:
         text: "|   S c o r e s   |"
         color: .2, .7, 1, 1
         pos_hint: {"right": .99, "top": .85}
@@ -485,7 +485,7 @@
         pos_hint: {"left": 1, "top":1}
         font_size: l_txt_size
         font_name: "fonts/Eurostile.ttf"
-    MyCustomButton:
+    CustomButton:
         text: "|   I n f o s   |"
         color: 1, 1, 0, 1
         pos_hint: {"right": .99, "top": .85}
@@ -509,7 +509,7 @@
         pos_hint: {"left": 1, "top":1}
         font_size: l_txt_size
         font_name: "fonts/Eurostile.ttf"
-    MyCustomButton:
+    CustomButton:
         text: "|   A b o u t   U s   |"
         color: 0, 0, 1, 1
         pos_hint: {"right": .99, "top": .85}
@@ -533,7 +533,7 @@
         pos_hint: {"left": 1, "top":1}
         font_size: l_txt_size
         font_name: "fonts/Eurostile.ttf"
-    MyCustomButton:
+    CustomButton:
         text: "C o n n e c t   t o\n            U s !"
         color: 0, 1, 0, 1
         pos_hint: {"right": .99, "top": .85}
@@ -737,14 +737,14 @@
             spacing: dp(5)
             pos_hint: {"center_x": .5, "top": .145}
             size_hint: .70, .12
-            MyCustomButton:
+            CustomButton:
                 text: "C l o s e"
                 on_press: root.dismiss()
-            MyCustomButton:
+            CustomButton:
                 id: submit_btn
                 text: "|  S u b m i t  |"
                 on_press: root.on_submit()
-            MyCustomButton:
+            CustomButton:
                 id: modif_btn
                 text: "|  M o d i f y  |"
                 on_press: root.modify()
@@ -805,10 +805,10 @@
             spacing: dp(5)
             pos_hint: {"center_x": .5, "top": .18}
             size_hint: .70, .12
-            MyCustomButton:
+            CustomButton:
                 text: "C l o s e"
                 on_press: root.dismiss(1.0/60)
-            MyCustomButton:
+            CustomButton:
                 id: reset_btn
                 text: "R e s e t"
                 on_press: root.reset_score(1.0/60)
@@ -872,7 +872,7 @@
     sensitivity: "all"
     orientation: "horizontal"
 
-<MyCustomButton@Button>:
+<CustomButton@Button>:
     id: custom_btn
     canvas:
         Color:

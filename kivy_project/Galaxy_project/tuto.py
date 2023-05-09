@@ -1,8 +1,8 @@
 "This module is responsible for the tutorial of the game, whenever it needs to be displayed"
-...
 
 # pylint: disable= no-name-in-module, wrong-import-position, wrong-import-order
 
+from kivy.app import App
 from kivy.properties import (
     ObjectProperty,
     NumericProperty,
@@ -18,15 +18,15 @@ from kivy.uix.label import Label
 from kivy.uix.dropdown import DropDown
 from kivy.uix.floatlayout import FloatLayout
 from kivy.animation import Animation
-from kivy.uix.screenmanager import Screen, NoTransition, ScreenManager
+from kivy.uix.screenmanager import Screen, NoTransition
 import re
 
 
-class WindowManager(ScreenManager):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        transition = NoTransition(duration=0)
-        self.transition = transition
+# class WindowManagerTuto(ScreenManager):
+#    def __init__(self, **kwargs):
+#        super().__init__(**kwargs)
+#        transition = NoTransition(duration=0)
+#        self.transition = transition
 
 
 class FloatInput(TextInput):
@@ -63,9 +63,13 @@ class StringInput(TextInput):
         return super().insert_text(s, from_undo=from_undo)
 
 
+class FirstWidget(RelativeLayout):
+    pass
+
+
 class FirstWindow(Screen):
     "..."
-    first_widget = ObjectProperty()
+    first_widget = FirstWidget()
     transit_widget = ObjectProperty()
 
     def __init__(self, **kwargs):
@@ -78,6 +82,13 @@ class FirstWindow(Screen):
         self.first_widget.opacity = 0
         self.transit_widget = TransitionWidget()
         self.add_widget(self.transit_widget)
+
+    def switch_screen(self):
+        first_widget = FirstWidget()
+        if App.get_running_app().progress_empty() is False:
+            self.add_widget(first_widget)
+        else:
+            self.manager.current = "home_screen"
 
 
 class LoadingWidget(RelativeLayout):
@@ -103,9 +114,11 @@ class LoadingWidget(RelativeLayout):
         self.add_widget(self.label)
 
     def on_parent(self, widget, parent):
-        anim = Animation(value=100, duration=10)
-        anim.bind(on_complete=lambda *args: setattr(self, "opacity", 0))
-        anim.start(self.progress)
+        anim1 = Animation(value=100, duration=10)
+        anim2 = Animation(opacity=0, duration=1)
+        anim2.bind(on_complete=lambda *args: self.parent.switch_screen())
+        anim1.bind(on_complete=lambda *args: anim2.start(self))
+        anim1.start(self.progress)
 
 
 class MyLayout(FloatLayout):
@@ -174,7 +187,9 @@ class TransitionWidget(RelativeLayout):
     def animate(self, *args):
         anim = Animation(opacity=0, duration=1)
         anim.bind(
-            on_complete=lambda *args: setattr(self.parent.manager, "current", "second")
+            on_complete=lambda *args: setattr(
+                App.get_running_app().root, "current", "second"
+            )
         )
         anim.start(self)
 
