@@ -24,7 +24,9 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.dropdown import DropDown
+from kivy.uix.checkbox import CheckBox
 from kivy.uix.stacklayout import StackLayout
+from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.screenmanager import Screen, NoTransition
 from kivy.storage.jsonstore import JsonStore
 import re
@@ -156,6 +158,44 @@ class Connect(Popup):
         self.size_hint = (0.8, 0.8)
 
 
+class MyCustomCheckBox(CheckBox):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        Clock.schedule_interval(self.update, 1.0 / 90)
+
+    def update(self, _dt):
+        self.active = App.get_running_app().store.get(self.text)["value"]
+
+
+class MyDropDown(DropDown):
+    global LANGUAGES
+    LANGUAGES = {"E N G L I S H": "en", "F R A N C A I S": "fr", "E S P A N O L": "es"}
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.LANGUAGES = LANGUAGES
+
+
+class MainButton(Button):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+
+class MyCustomLayout(FloatLayout):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.dropdown = MyDropDown()
+        self.mainbutton = MainButton()
+        self.add_widget(self.mainbutton)
+        self.mainbutton.bind(on_release=self.dropdown.open)
+        self.dropdown.bind(
+            on_select=lambda instance, x: setattr(self.mainbutton, "text", x)
+        )
+
+    def callback(self, instance, x):
+        print("The chosen mode is: {0}".format(x))
+
+
 class Score(Popup):
     "..."
     score_nb = None  # 78
@@ -199,6 +239,27 @@ class Score(Popup):
             return self.reset_at_close
 
 
+class WarningMessages(Popup):
+    "..."
+
+    def __init__(self, my_text, **kwargs):
+        "..."
+        super().__init__(**kwargs)
+        self.size_hint = (0.7875, 0.538)
+        self.warn_label.text = my_text
+
+
+class MyCustomSlider(Slider):
+    "..."
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        Clock.schedule_interval(self.update, 1.0 / 90)
+
+    def update(self, _dt):
+        self.value = App.get_running_app().store.get(self.text)["value"]
+
+
 class StackWidget(StackLayout):
     "..."
     label_list = []
@@ -225,6 +286,14 @@ class StackWidget(StackLayout):
         "..."
         Connect.open(Connect())
 
+    def show_warning_msg(self):
+        "..."
+        WarningMessages.open(
+            WarningMessages(
+                my_text="By continuing this operation you're about to erase every information about game your progress. Do you wanna proceed ???"
+            )
+        )
+
     def override_volume(self, widget_1, widget_2):
         "..."
         if widget_1.active is False:
@@ -233,7 +302,7 @@ class StackWidget(StackLayout):
                 widget_2.text, name=widget_2.text, value=widget_2.value
             )
 
-    def get_fullscreen(self, args: list):
+    def get_fullscreen(self, *args):
         "..."
         if self.l_1.fullscreen_btn.active is True:
             Window.fullscreen = "auto"

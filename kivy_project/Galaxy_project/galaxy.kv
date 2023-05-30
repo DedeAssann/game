@@ -78,10 +78,11 @@ WindowManager:
     canvas.before:
         Rectangle:
             size: self.size
-            source: "galaxy_images/download.jpg"
+            source: "wallpaper/debris.jpg"
     ExitButton:
         id: exit_button
         on_release: root.exit()
+        background_color: 0, 0, 0, 0
     Label:
         font_size: dp(80)
         font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
@@ -95,6 +96,7 @@ WindowManager:
         text: home_button_title
         pos_hint: { "center_x": .5, "center_y": .3}
         size_hint: .18, .08
+        background_color: 0, 0, 0, 0
         on_press:
             app.root.current = "game_screen"
     MyCustomButton:
@@ -103,6 +105,7 @@ WindowManager:
         text: settings_button_title
         pos_hint: { "right": 1, "top": 1}
         size_hint: .18, .08
+        background_color: 0, 0, 0, 0
         on_press: app.root.current = "settings_screen"
 
 # the game widget

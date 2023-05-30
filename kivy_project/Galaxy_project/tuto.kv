@@ -10,11 +10,12 @@
 #<WindowManager>:
 
 <FirstWidget>:
+    id: first_widget
     stack: stack
     canvas.before:
         Rectangle:
             size: self.size
-            source: "kivy_project\Galaxy_project\galaxy_images\planet1.jpg"
+            source: "wallpaper/Earth_Mars.jpg"
     Label:
         text: 
             """
@@ -97,6 +98,9 @@
             font_size: dp(30)
             pos_hint: {"x": .7, "center_y": .5}
             size_hint: .15, .85
+            on_press:
+                #root.parent.save_infos()
+                root.opacity = 0
             on_release: root.parent.transit_screen()
 
 <MyCustomRelativeLayout@RelativeLayout>:
@@ -120,7 +124,9 @@
     StringInput:
         id: last_name
         text:''
-        on_text_validate: root.parent.l2.first_name.focus = True
+        on_text_validate: 
+            root.parent.l2.first_name.focus = True
+            app.store.put("Name of User", name="Name", value=self.text)
 <L_2@MyCustomRelativeLayout>:
     first_name: first_name
     Label:
@@ -133,7 +139,9 @@
     StringInput:
         id: first_name
         text:''
-        on_text_validate: root.parent.l3.mail.focus = True
+        on_text_validate:
+            root.parent.l3.mail.focus = True
+            app.store.put("Name of User", name="Name", value=first_name.text + " " + root.parent.l1.last_name.text)
 <L_3@MyCustomRelativeLayout>:
     mail: mail
     Label:
@@ -163,7 +171,9 @@
         cursor_width: dp(3)
         cursor_height: dp(10)
         cursor_color: 1, 1, 1, 1
-        on_text_validate: root.parent.l4.age.focus = True
+        on_text_validate:
+            root.parent.l4.age.focus = True
+            app.store.put("Mail of User", name="Mail", value=self.text)
 <L_4@MyCustomRelativeLayout>:
     age: age
     Label:
@@ -176,7 +186,9 @@
     FloatInput:
         id: age
         text:''
-        on_text_validate: root.parent.l6.username.focus = True
+        on_text_validate:
+            root.parent.l6.username.focus = True
+            app.store.put("Age of User", name="Age", value=self.text)
 <L_5@MyCustomRelativeLayout>:
     my_layout: my_layout
     Label:
@@ -219,7 +231,7 @@
         cursor_width: dp(3)
         cursor_height: dp(10)
         cursor_color: 1, 1, 1, 1
-
+        on_text_validate: app.store.put("Username", name="Username", value=self.text)
 <MyLayout>:
     canvas:
         Color:
@@ -311,7 +323,7 @@
     canvas.before:
         Rectangle:
             size: self.size
-            source: "kivy_project\Galaxy_project\galaxy_images\planet1.jpg"
+            source: "galaxy_images\planet1.jpg"
     third_widget: third_widget
     ThirdWidget:
         id: third_widget
@@ -418,14 +430,14 @@
     canvas.before:
         Rectangle:
             size: self.size
-            source: "kivy_project\Galaxy_project\galaxy_images\planet1.jpg"
+            source: "wallpaper/milano.jpg"
 
 
 <LoadingWidget>:
     canvas.before:
         Rectangle:
             size: self.size
-            source: "kivy_project\Galaxy_project\galaxy_images\planet1.jpg"
+            source: "wallpaper/milano.jpg"
 
 
 <SyncLabel>:

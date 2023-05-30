@@ -19,7 +19,7 @@
     canvas.before:
         Rectangle:
             size: self.size
-            source: "galaxy_images/bg1.jpg"
+            source: "wallpaper/debris.jpg"
     GridLayout:
         canvas:
             Color:
@@ -95,6 +95,8 @@
     l_10: l_10
     l_11: l_11
     l_12: l_12
+    l_13: l_13
+    l_14: l_14
     Label:
         canvas.before:
             Color:
@@ -170,6 +172,10 @@
         id: l_11
     L12:
         id: l_12
+    L13:
+        id: l_13
+    L14:
+        id: l_14
 
 # The layouts
 
@@ -189,10 +195,13 @@
         pos_hint: {"left": 1, "top":1}
         font_name: "fonts/Eurostile.ttf"
         font_size: l_txt_size
-    MyCustomCheckBox:
+    CheckBox:
         id: fullscreen_btn
+        size_hint: .21, 1
+        sensitivity: "handle"
+        color: .2, .6, 1, 1
         pos_hint: {"right": .975, "top": 1}
-        active: False
+        active: True
         on_active: root.parent.get_fullscreen(["KCFG_GRAPHICS_FULLSCREEN", "auto"])
 
 
@@ -298,6 +307,7 @@
 
 
 <L4@RelativeLayout>:
+    lbl: lbl
     canvas.before:
         Color:
             rgba: 0, 0, 0, .2
@@ -306,6 +316,7 @@
     size_hint: 1, None
     pos_hint: None, None
     Label:
+        id: lbl
         text: "S o n g"
         size_hint: .3, 1
         pos_hint: {"left": 1, "top":1}
@@ -313,16 +324,17 @@
         font_name: "fonts/Eurostile.ttf"
     MyCustomCheckBox:
         id: song_check
+        text: "Song State"
         pos_hint: {"right": .675, "top": 1}
         on_press: app.store.put("Song State", name="Song State", value=self.active)
-        #active: app.store.get("Song State")["value"]
+        active: app.store.get("Song State")["value"]
         on_press: root.parent.override_volume(self, song_volume)
     MyCustomSlider:
         id: song_volume
         text: "Song Volume"
         pos_hint: {"right": .99, "top": .5}
         max: 100
-        #value: app.store.get("Song Volume")["value"]
+        value: app.store.get("Song Volume")["value"]
         disabled: not song_check.active
         on_touch_up:
             app.store.put("Song Volume", name="Song Volume", value=self.value)
@@ -338,6 +350,7 @@
    
 
 <L5@RelativeLayout>:
+    lbl: lbl
     canvas.before:
         Color:
             rgba: 0, 0, 0, .2
@@ -347,6 +360,7 @@
     size_hint: 1, None
     pos_hint: None, None
     Label:
+        id: lbl
         text: "M u s i c"
         size_hint: .3, 1
         pos_hint: {"left": 1, "top":1}
@@ -354,6 +368,7 @@
         font_name: "fonts/Eurostile.ttf"
     MyCustomCheckBox:
         id: music_check
+        text: "Music State"
         pos_hint: {"right": .675, "top": 1}
         on_press: app.store.put("Music State", name="Music State", value=self.active)
         active: app.store.get("Music State")["value"]
@@ -377,6 +392,7 @@
 
 
 <L6@RelativeLayout>:
+    lbl: lbl
     canvas.before:
         Color:
             rgba: 0, 0, 0, .2
@@ -385,6 +401,7 @@
     size_hint: 1, None
     pos_hint: None, None
     Label:
+        id: lbl
         text: "S F X"
         size_hint: .3, 1
         pos_hint: {"left": 1, "top":1}
@@ -392,6 +409,7 @@
         font_name: "fonts/Eurostile.ttf"
     MyCustomCheckBox:
         id: sfx_check
+        text: "SFX State"
         pos_hint: {"right": .675, "top": 1}
         on_press: app.store.put("SFX State", name="SFX State", value=self.active)
         active: app.store.get("SFX State")["value"]
@@ -440,6 +458,7 @@
 
 
 <L8>:
+    lbl: lbl
     canvas.before:
         Color:
             rgba: 0, 0, 0, .2
@@ -450,6 +469,7 @@
     my_slider: my_slider
     my_label: my_label
     Label:
+        id: lbl
         text: "L e v e l"
         size_hint: .3, 1
         pos_hint: {"left": 1, "top":1}
@@ -464,6 +484,7 @@
         pos_hint: {"right": .975, "top": 1}
     MyCustomSlider:
         id: my_slider
+        text: "Level"
         max: 3
         value: app.store.get("Level")["value"]
         pos_hint: {"right": .99, "top": .5}
@@ -475,7 +496,6 @@
         Color:
             rgba: 0, 0, 0, .2
         Rectangle:
-            #pos: self.pos
             size: self.size
     size_hint: 1, None
     pos_hint: None, None
@@ -544,6 +564,54 @@
 
 
 <L12@RelativeLayout>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .2
+        Rectangle:
+            size: self.size
+    size_hint: 1, None
+    pos_hint: None, None
+    Label:
+        text: "R e s t o r e   F a c t o r y\n             D a t a"
+        size_hint: .3, 1
+        pos_hint: {"left": 1, "top":1}
+        font_size: l_txt_size
+        valign: "middle"
+        font_name: "fonts/Eurostile.ttf"
+    CustomButton:
+        text: "| | |   R e s e t   | | |"
+        color: 1, 0, 0, 1
+        bold: True
+        pos_hint: {"right": .99, "top": .85}
+        size_hint: .25, .5
+        font_size: dp(25)
+        font_name: "fonts/Eurostile.ttf"
+        on_press: root.parent.show_warning_msg()
+
+
+<L13@RelativeLayout>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .2
+        Rectangle:
+            size: self.size
+    size_hint: 1, None
+    pos_hint: None, None
+    my_cst_layout: my_cst_layout
+    Label:
+        text:'    L a n g u a g e'
+        font_name: "fonts/Eurostile.ttf"
+        font_size: dp(25)
+        size_hint: .25, .5
+        pos_hint: {"left": 1, "top":1}
+        bold: True
+        valign: "middle"
+    MyCustomLayout:
+        id: my_cst_layout
+        pos_hint: {"x": .55, "top": .75}
+        size_hint: .5, 1
+
+<L14@RelativeLayout>:
     canvas.before:
         Color:
             rgba: 0, 0, 0, .2
@@ -814,7 +882,143 @@
                 on_press: root.reset_score(1.0/60)
     
 
+<WarningMessages>:
+    canvas.before:
+        Color:
+            rgba: .180, .525, .757, .75
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    warn_label: warn_label
+    background_color: .180, .7, 1, .95
+    title: "| | |   W A R N I N G !   | | |"
+    title_align: "center"
+    title_size: dp(50)
+    bold: True
+    underline: True
+    title_font: "fonts/Eurostile.ttf"
+    title_color: 1, 0, 0, 1
+    pos_hint: {"center_x": .5, "center_y": .5}
+    opacity: 1
+    RelativeLayout:
+        canvas.before:
+            Color:
+                rgba: 0, 0, 0, 0
+            Rectangle:
+                size: root.size
+                pos: root.pos
+        Label:
+            id: warn_label
+            pos_hint: {"center_x": .5, "center_y": .6}
+            text_size: self.width, None
+            size_hint: 1, None
+            height: self.texture_size[1]
+            font_name: "fonts/Eurostile.ttf"
+            font_size: dp(45)
+        GridLayout:
+            cols: 2
+            padding: dp(10)
+            spacing: dp(15)
+            pos_hint: {"center_x": .5, "top": .325}
+            size_hint: .70, .25
+            CustomButton:
+                canvas:
+                    Color:
+                        rgba: 0, .694, 0, .8
+                    Line:
+                        width: dp(1.5)
+                        rectangle: self.x, self.y, self.width, self.height
+                text: "C l o s e"
+                font_size: dp(30)
+                on_press: root.dismiss()
+            Button:
+                id: reset_btn
+                canvas:
+                    Color:
+                        rgba: 1, 0, 0, 1
+                    Line:
+                        width: dp(1.5)
+                        rectangle: self.x, self.y, self.width, self.height
+                text: "R e s e t"
+                font_name: "fonts/Eurostile.ttf"
+                color: 1, 0, 0, 1
+                font_size: dp(30)
+                background_color: 1, 0, 0, .1
+                size_hint: .3, .5
+                on_press: 
+                    app.reset_progress()
+                    root.dismiss()
+                
 # My Custom Widgets
+
+<MainButton>:
+    canvas.before:
+        Color:
+            rgba: .282, .694, .882, .8
+        Line:
+            width: dp(1)
+            rectangle: self.x, self.y, self.width, self.height
+    text: "|   S e l e c t   |"
+    size_hint: 0.5, 0.5
+    pos_hint: {"center_x": 0.63, "top": 1}
+    bold: True
+    font_name: "fonts/Eurostile.ttf"
+    font_size: dp(22)
+    background_color: _bc
+    color: 0.458, 0.866, 0.866, 1
+
+<MyDropDown>:
+    padding: dp(20)
+    spacing: dp(50)
+    auto_width: False
+    size_hint_x: .25
+    Button:
+        background_color: 0, 0, 0, .65
+        color: .458, .866, .866, 1
+        text: "E N G L I S H"
+        bold: True
+        font_name: "fonts/Eurostile.ttf"
+        font_size: dp(25)
+        size_hint_y: None
+        height: dp(70)
+        on_release:
+            root.select(self.text)
+            app.store.put("Language", name="Language", value=root.LANGUAGES[self.text])
+    Button:
+        background_color: 0, 0, 0, .65
+        color: .458, .866, .866, 1
+        text: "F R A N C A I S"
+        bold: True
+        font_name: "fonts/Eurostile.ttf"
+        font_size: dp(25)
+        size_hint_y: None
+        height: dp(70)
+        on_release:
+            root.select(self.text)
+            app.store.put("Language", name="Language", value=root.LANGUAGES[self.text])
+    Button:
+        background_color: 0, 0, 0, .65
+        color: .458, .866, .866, 1
+        text: "E S P A N O L"
+        bold: True
+        font_name: "fonts/Eurostile.ttf"
+        font_size: dp(25)
+        size_hint_y: None
+        height: dp(70)
+        on_release:
+            root.select(self.text)
+            app.store.put("Language", name="Language", value=root.LANGUAGES[self.text])
+
+
+<MyCustomLayout>:
+    canvas:
+        Color:
+            rgba: 0, 0, 0, 0
+        Rectangle:
+            size: self.size
+    size_hint: .25, .5
+    pos_hint: {"right": .99, "top": .85}
+
 
 <BackgroundColor@Widget>:
     backghround_color: 1, 1, 1, 1
@@ -850,7 +1054,7 @@
     cursor_height: dp(10)
     cursor_color: 0, 0, 0, 1
 
-<MyCustomCheckBox@CheckBox>:
+<MyCustomCheckBox>:
     size_hint: .21, 1
     sensitivity: "handle"
     color: .2, .6, 1, 1
@@ -858,7 +1062,7 @@
     height: dp(100)
     active: True
 
-<MyCustomSlider@Slider>:
+<MyCustomSlider>:
     size_hint: .275, .5
     min: 0
     value: 50

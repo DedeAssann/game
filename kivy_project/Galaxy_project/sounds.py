@@ -15,21 +15,21 @@ def init_audio(self):
     self.sound_music1 = SoundLoader.load("audio/music1.wav")
     self.sound_restart = SoundLoader.load("audio/restart.wav")
 
-    # self.sound_begin.volume = (
-    #    App.get_running_app().store.get("Sound Volume")["value"] / 100
-    # )
+    self.sound_begin.volume = (
+        App.get_running_app().store.get("Song Volume")["value"] / 100
+    )
     self.sound_galaxy.volume = (
         App.get_running_app().store.get("Song Volume")["value"] / 100
     )
-    # self.sound_gameover_impact.volume = (
-    #    App.get_running_app().store.get("SFX Volume")["value"] / 100
-    # )
-    # self.sound_gameover_voice.volume = (
-    #    App.get_running_app().store.get("SFX Volume")["value"] / 100
-    # )
-    # self.sound_music1.volume = (
-    #    App.get_running_app().store.get("Music Volume")["value"] / 100
-    # )
-    # self.sound_restart.volume = (
-    #    App.get_running_app().store.get("Sound Volume")["value"] / 100
-    # )
+    self.sound_gameover_impact.volume = (
+        App.get_running_app().store.get("SFX Volume")["value"] / 100
+    )
+    self.sound_gameover_voice.volume = (
+        App.get_running_app().store.get("SFX Volume")["value"] / 100
+    )
+    self.sound_music1.volume = (
+        App.get_running_app().store.get("Music Volume")["value"] / 100
+    )
+    self.sound_restart.volume = (
+        App.get_running_app().store.get("Song Volume")["value"] / 100
+    )

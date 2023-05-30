@@ -18,7 +18,7 @@ from kivy.uix.label import Label
 from kivy.uix.dropdown import DropDown
 from kivy.uix.floatlayout import FloatLayout
 from kivy.animation import Animation
-from kivy.uix.screenmanager import Screen, NoTransition
+from kivy.uix.screenmanager import Screen
 import re
 
 
@@ -78,6 +78,12 @@ class FirstWindow(Screen):
         self.load_widget = LoadingWidget()
         self.add_widget(self.load_widget)
 
+    def on_pre_enter(self):
+        if App.get_running_app().progress_empty() is True:
+            self.remove_widget(self.first_widget)
+        else:
+            self.add_widget(self.first_widget)
+
     def transit_screen(self):
         self.first_widget.opacity = 0
         self.transit_widget = TransitionWidget()
@@ -89,6 +95,33 @@ class FirstWindow(Screen):
             self.add_widget(first_widget)
         else:
             self.manager.current = "home_screen"
+
+    def save_infos(self):
+        infos = {
+            "Last Name": self.first_widget.stack.l1.last_name.text,
+            "First Name": self.first_widget.stack.l2.first_name.text,
+            "Mail of User": self.first_widget.stack.l3.mail.text,
+            "Age of User": self.first_widget.stack.l4.age.text,
+            "Username": self.first_widget.stack.l6.username.text,
+        }
+        if infos["Last Name"] != "" or infos["First Name"] != "":
+            App.get_running_app().store.put(
+                "Name of User",
+                name="Name",
+                value=infos["Last Name"] + " " + infos["First Name"],
+            )
+        if infos["Age of User"] != "":
+            App.get_running_app().store.put(
+                "Age of User", name="Age", value=infos["Age of User"]
+            )
+        if infos["Mail of User"] != "":
+            App.get_running_app().store.put(
+                "Mail of User", name="Mail", value=infos["Mail of User"]
+            )
+        if infos["Username"] != "":
+            App.get_running_app().store.put(
+                "Username", name="Username", value=infos["Username"]
+            )
 
 
 class LoadingWidget(RelativeLayout):
@@ -114,8 +147,8 @@ class LoadingWidget(RelativeLayout):
         self.add_widget(self.label)
 
     def on_parent(self, widget, parent):
-        anim1 = Animation(value=100, duration=10)
-        anim2 = Animation(opacity=0, duration=1)
+        anim1 = Animation(value=100, duration=0)
+        anim2 = Animation(opacity=0, duration=0)
         anim2.bind(on_complete=lambda *args: self.parent.switch_screen())
         anim1.bind(on_complete=lambda *args: anim2.start(self))
         anim1.start(self.progress)

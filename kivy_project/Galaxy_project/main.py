@@ -9,6 +9,7 @@ Ce jeu consiste a deplacer un spaceship sur un plan, et suivre le chemin trace d
 
 
 from kivy.config import Config
+
 from tuto import FirstWindow, SecondWindow, Tutorial
 
 # configuring the screen which is gonna be opened by kivy
@@ -38,7 +39,8 @@ from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.screenmanager import Screen, ScreenManager, NoTransition
 from kivy.uix.image import Image
 from kivy.lang.builder import Builder
-from kivy.metrics import dp
+
+# from kivy.metrics import dp
 from kivy.storage.jsonstore import JsonStore
 
 # loading another .kv file...
@@ -595,6 +597,24 @@ class GalaxyApp(App):
             progress = True
         return progress
 
+    def reset_progress(self):
+        self.store.put("Score", name="Score", value=0)
+        self.store.put("Best Score", name="Best Score", value=0)
+        self.store.put("Name of User", name="Name", value="")
+        self.store.put("Age of User", name="Age", value="")
+        self.store.put("Username", name="Username", value="")
+        self.store.put("Mail of User", name="Mail", value="")
+        self.store.put("Level", name="Level", value=0.0)
+        self.store.put("Current FPS Level", name="FPS", value=60)
+        self.store.put("Max FPS Level", name="limit FPS", value=60)
+        self.store.put("Song State", name="Song State", value=True)
+        self.store.put("Song Volume", name="Song Volume", value=50)
+        self.store.put("Music State", name="Music State", value=True)
+        self.store.put("Music Volume", name="Music Volume", value=50)
+        self.store.put("SFX Volume", name="SFX Volume", value=50)
+        self.store.put("SFX State", name="SFX State", value=True)
+        self.store.put("Language", name="Language", value="en")
+
     def write_scores(self, score):
         self.store.put("Score", name="Score", value=score)
         if score > self.store.get("Best Score")["value"]:
@@ -604,7 +624,7 @@ class GalaxyApp(App):
             pass
 
     def on_key_down(self, keyboard, keycode, text, modifiers):
-        if keycode[1] == "escape":
+        if keycode[1] is "escape":
             pass
 
     def is_desktop(self):
