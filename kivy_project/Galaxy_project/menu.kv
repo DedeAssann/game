@@ -1,3 +1,6 @@
+#: set font "fonts/gtr.otf"
+#: set _ec (.282, .694, .882, .8)
+
 <MenuWidget>:
     canvas.before:
         Color:
@@ -6,18 +9,18 @@
             size: self.size
     Label:
         font_size: dp(75)
-        font_name: 'fonts/Sackers-Gothic-Std-Light.ttf'
+        font_name: font
         text: root.parent.menu_title
         pos_hint: { "center_x": .5, "center_y": .75}
     Button:
         canvas:
             Color:
-                rgba: .282, .694, .882, .8
+                rgba: _ec
             Line:
-                width: dp(1.2)
+                width: dp(1.5)
                 rectangle: self.x, self.y, self.width, self.height
         font_size: dp(35)
-        font_name: 'fonts/Eurostile.ttf'
+        font_name: font
         text: root.parent.menu_button_title
         pos_hint: { "center_x": .5, "center_y": .3}
         size_hint: .195, .085

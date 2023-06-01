@@ -91,9 +91,9 @@ class MainWidget(RelativeLayout):
     score_txt = StringProperty()
     best_score_txt = StringProperty()
     menu_title = StringProperty("G   A   L   A   X   Y")
-    menu_button_title = StringProperty("S T A R T")
-    settings_button_title = StringProperty(" S  E  T  T  I  N  G  S")
-    pause_button_txt = StringProperty("P A U S E")
+    menu_button_title = StringProperty("START")
+    settings_button_title = StringProperty("SETTINGS")
+    pause_button_txt = StringProperty("PAUSE")
 
     pause_state = BooleanProperty(False)
     state_game_over = BooleanProperty(False)
@@ -159,7 +159,7 @@ class MainWidget(RelativeLayout):
         self.current_y_loop = 0
         self.current_speed_x = 0
         self.current_offset_x = 0
-        self.score_txt = " S  C  O  R  E :  " + str(self.current_y_loop)
+        self.score_txt = str(self.current_y_loop)
         self.tiles_coordinates = []
         self.pre_fill_tiles_coordinates()
         self.generate_tiles_coordinates()
@@ -414,7 +414,7 @@ class MainWidget(RelativeLayout):
             while self.current_offset_y >= spacing_y:
                 self.current_offset_y -= spacing_y
                 self.current_y_loop += 1
-                self.score_txt = "S C O R E :  " + str(self.current_y_loop)
+                self.score_txt = str(self.current_y_loop)
                 if self.current_y_loop >= 9:
                     self.speed_update()
                 self.generate_tiles_coordinates()
@@ -529,13 +529,6 @@ class HomeWindow(Screen):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.starship = Image(
-            source="spaceship_models\spaceship6_edited.png",
-            pos_hint={"center_x": 0.5, "center_y": 0.5},
-            size_hint=(0.45, 0.4),
-            allow_stretch=True,
-        )
-        # self.add_widget(self.starship)
 
     def exit(self, *args):
         "Implementing an exit function for the game"
@@ -567,9 +560,7 @@ class GalaxyApp(App):
     """The main app class"""
 
     use_kivy_settings = False
-    title = "|             M   y      G   a   l   a   x   y      J   o   u   r   n   e   y              |".upper().ljust(
-        300
-    )
+    title = "| Galaxy Journey |"
     store = store
     profile = cProfile.Profile()
     icon = "galaxy_images/download.jpg"
