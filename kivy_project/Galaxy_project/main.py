@@ -37,7 +37,6 @@ from kivy.properties import (
 )
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.screenmanager import Screen, ScreenManager, NoTransition
-from kivy.uix.image import Image
 from kivy.lang.builder import Builder
 
 # from kivy.metrics import dp
@@ -435,7 +434,7 @@ class MainWidget(RelativeLayout):
             self.state_game_over = True
             self.menu_widget.opacity = 0.9
             self.menu_title = "G  A  M  E    O  V  E  R"
-            self.menu_button_title = "R E S T A R T"
+            self.menu_button_title = "RESTART"
             self.score = self.current_y_loop
 
             # PLaying the different songs related to the game over state
@@ -461,11 +460,13 @@ class MainWidget(RelativeLayout):
             self.update_pause_button_txt()
             self.sound_music1.stop()
             self.pause_widget.opacity = 0.7
+            self.pause_button.pos_hint = {"center_x": 0.5, "center_y": 0.3}
         elif not self.pause_state and not self.state_game_over:
             self.game_is_playing_state = True
             self.SPEED = actual_speed
             self.update_pause_button_txt()
             self.pause_widget.opacity = 0
+            self.pause_button.pos_hint = {"right": 0.18, "top": 1}
             self.sound_music1.play()
         else:
             pass
@@ -510,7 +511,7 @@ class GameWindow(Screen):
 
     def on_progress(self, _dt):
         "..."
-        if self.main_widget.game_is_playing_state:
+        if self.main_widget.game_is_playing_state or self.main_widget.pause_state:
             self.home_button.opacity = 0
             self.home_button.disabled = True
         else:
@@ -615,7 +616,7 @@ class GalaxyApp(App):
             pass
 
     def on_key_down(self, keyboard, keycode, text, modifiers):
-        if keycode[1] is "escape":
+        if keycode[1] == "escape":
             pass
 
     def is_desktop(self):
@@ -624,6 +625,7 @@ class GalaxyApp(App):
         """
         if platform in ("linux", "win", "macosx"):
             return True
+            print(platform)
         return False
 
     def open_settings(self, *largs):

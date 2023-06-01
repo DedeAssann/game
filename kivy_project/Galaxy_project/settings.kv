@@ -344,12 +344,24 @@
             root.parent.parent.parent.parent.manager.game_window.main_widget.sound_begin.volume = app.store.get("Song Volume")["value"] / 100
             root.parent.parent.parent.parent.manager.game_window.main_widget.sound_galaxy.volume = app.store.get("Song Volume")["value"] / 100
             root.parent.parent.parent.parent.manager.game_window.main_widget.sound_restart.volume = app.store.get("Song Volume")["value"] / 100
-    Label:
-        text: "VOLUME : " + str(round(song_volume.value))
-        pos_hint: {"right": .99, "top": 1}
+    GridLayout:
+        cols: 2
         size_hint: .245, .5
-        font_size: l_txt_size
-        font_name: "fonts/Lcd.ttf"
+        pos_hint: {"right": .99, "top": 1}
+        padding: dp(30)
+        spacing: dp(10)
+        Label:            
+            text: "VOLUME : "
+            font_size: l_txt_size
+            font_name: font
+            size_hint: .65, 1
+            pos_hint: {"x": .018, "top": 1}
+        Label:
+            text: str(round(song_volume.value))
+            font_size: dp(40)
+            font_name: "fonts/Lcd.ttf"
+            size_hint: .35,  1
+            pos_hint: {"left": 1, "top": 1}
    
 
 <L5@RelativeLayout>:
@@ -386,12 +398,24 @@
         on_touch_up:
             app.store.put("Music Volume", name="Music Volume", value=self.value)
             root.parent.parent.parent.parent.manager.game_window.main_widget.sound_music1.volume = app.store.get("Music Volume")["value"] / 100
-    Label:
-        text: "VOLUME : " + str(round(music_volume.value))
-        pos_hint: {"right": .99, "top": 1}
+    GridLayout:
+        cols: 2
         size_hint: .245, .5
-        font_size: l_txt_size
-        font_name: "fonts/Lcd.ttf"
+        pos_hint: {"right": .99, "top": 1}
+        padding: dp(30)
+        spacing: dp(10)
+        Label:            
+            text: "VOLUME : "
+            font_size: l_txt_size
+            font_name: font
+            size_hint: .65, 1
+            pos_hint: {"x": .018, "top": 1}
+        Label:            
+            text: str(round(music_volume.value))
+            font_size: dp(40)
+            font_name: "fonts/Lcd.ttf"
+            size_hint: .35,  1
+            pos_hint: {"left": 1, "top": 1}
 
 
 <L6@RelativeLayout>:
@@ -428,12 +452,24 @@
             app.store.put("SFX Volume", name="SFX Volume", value=self.value)
             root.parent.parent.parent.parent.manager.game_window.main_widget.sound_gameover_impact.volume = app.store.get("SFX Volume")["value"] / 100
             root.parent.parent.parent.parent.manager.game_window.main_widget.sound_gameover_voice.volume = app.store.get("SFX Volume")["value"] / 100
-    Label:
-        text: "VOLUME : " + str(round(sfx_volume.value))
-        pos_hint: {"right": .99, "top": 1}
+    GridLayout:
+        cols: 2
         size_hint: .245, .5
-        font_size: l_txt_size
-        font_name: "fonts/Lcd.ttf"
+        pos_hint: {"right": .99, "top": 1}
+        padding: dp(30)
+        spacing: dp(10)
+        Label:            
+            text: "VOLUME : "
+            font_size: l_txt_size
+            font_name: font
+            size_hint: .65, 1
+            pos_hint: {"x": .018, "top": 1}
+        Label:            
+            text: str(round(sfx_volume.value))
+            font_size: dp(40)
+            font_name: "fonts/Lcd.ttf"
+            size_hint: .35,  1
+            pos_hint: {"left": 1, "top": 1}
 
 
 <L7@RelativeLayout>:
@@ -481,8 +517,8 @@
     Label:
         id: my_label
         text: root.text_to_display
-        font_name: "fonts/Lcd.ttf"
-        font_size: l_txt_size
+        font_name: font
+        font_size: dp(20)
         size_hint: .25, .5
         pos_hint: {"right": .975, "top": 1}
     MyCustomSlider:
@@ -918,7 +954,7 @@
             size_hint: 1, None
             height: self.texture_size[1]
             font_name: font
-            font_size: dp(45)
+            font_size: dp(30)
         GridLayout:
             cols: 2
             padding: dp(10)
@@ -1093,5 +1129,7 @@
     size_hint: .3, .5
     background_color: _bc
     background_width: dp(40)
+    font_size: dp(25)
+    font_name: font
 
 # ...

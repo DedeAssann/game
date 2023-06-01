@@ -290,7 +290,7 @@ class StackWidget(StackLayout):
         "..."
         WarningMessages.open(
             WarningMessages(
-                my_text="By continuing this operation you're about to erase every information about game your progress. Do you wanna proceed ???"
+                my_text="By continuing this operation you're about to erase every information about your game progress.\nDo you wanna proceed ?"
             )
         )
 
@@ -406,10 +406,10 @@ class L8(RelativeLayout):
     def get_label_text(self, _dt):
         "..."
         text = {
-            0: "B e g i n n e r",
-            1: "I n t e r m e d i a t e",
-            2: "A d v a n c e d",
-            3: "E x p e r t",
+            0: "Beginner",
+            1: "Intermediate",
+            2: "Advanced",
+            3: "Expert",
         }
         self.text_to_display = text[round(self.my_slider.value)]
         App.get_running_app().store.put(
