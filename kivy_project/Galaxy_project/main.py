@@ -19,6 +19,7 @@ Config.set("graphics", "resizable", True)
 
 from kivy.core.window import Window
 
+Window.fullscreen = "auto"
 Window.allow_screensaver = True
 
 import cProfile
@@ -457,6 +458,7 @@ class MainWidget(RelativeLayout):
             global actual_speed
             actual_speed = self.SPEED
             self.SPEED = 0
+            self.SPEED_X = 0
             self.update_pause_button_txt()
             self.sound_music1.stop()
             self.pause_widget.opacity = 0.7
@@ -464,6 +466,7 @@ class MainWidget(RelativeLayout):
         elif not self.pause_state and not self.state_game_over:
             self.game_is_playing_state = True
             self.SPEED = actual_speed
+            self.SPEED_X = 3  # self.current_speed_x * self.width / 100
             self.update_pause_button_txt()
             self.pause_widget.opacity = 0
             self.pause_button.pos_hint = {"right": 0.18, "top": 1}

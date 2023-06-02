@@ -137,7 +137,7 @@ class LoadingWidget(RelativeLayout):
         self.add_widget(self.progress)
         self.label = Label(
             text="W  E  L  C  O  M  E",
-            font_name="kivy_project/Galaxy_project/fonts/Sackers-Gothic-Std-Light.ttf",
+            font_name="fonts/gtr.ttf",
             font_size=dp(80),
             underline=True,
             pos_hint={"center": (0.5, 0.8)},
@@ -147,8 +147,8 @@ class LoadingWidget(RelativeLayout):
         self.add_widget(self.label)
 
     def on_parent(self, widget, parent):
-        anim1 = Animation(value=100, duration=0)
-        anim2 = Animation(opacity=0, duration=0)
+        anim1 = Animation(value=100, duration=10)
+        anim2 = Animation(opacity=0, duration=1)
         anim2.bind(on_complete=lambda *args: self.parent.switch_screen())
         anim1.bind(on_complete=lambda *args: anim2.start(self))
         anim1.start(self.progress)
@@ -163,7 +163,7 @@ class MyLayout(FloatLayout):
             size_hint=(0.9, 0.9),
             pos_hint={"center_x": 0.5, "top": 0.95},
             bold=True,
-            font_name="kivy_project/Galaxy_project/fonts/Sackers-Gothic-Std-Light.ttf",
+            font_name="fonts/gtr.ttf",
             font_size=dp(35),
             background_color=(0, 0, 0, 0),
             color=(0.458, 0.866, 0.866, 1),
@@ -184,7 +184,7 @@ class MainButton(Button):
 
 class MyCustomDropDown(DropDown):
     global LANGUAGES
-    LANGUAGES = {"E N G L I S H": "en", "F R A N C A I S": "fr", "E S P A N O L": "es"}
+    LANGUAGES = {"ENGLISH": "en", "FRANCAIS": "fr", "ESPANOL": "es"}
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -229,11 +229,8 @@ class TransitionWidget(RelativeLayout):
 
 class SecondWidget(RelativeLayout):
     wlcm_text = (
-        "W e l c o m e\n\n".center(1).upper()
-        + "t o  y o u r  {}, C a p t a i n  {}.\n\n".format(
-            "G a l a x y  J o u r n e y", "D E D E"
-        )
-        + "L e t ' s  b e g i n  w i t h  h o w  t o  g u i d e  y o u r\n\ns t a r s h i p  t h r o u g h o u t  t h e  G A L A X Y .\n\nA s  w e  b e g i n ,  c o n s i d e r\n\na g r e e i n g  t o  t h e  U s e r  L i c e n s e ."
+        "\nWelcome to your G a l a x y Journey, \nCaptain {}.\n\n".format("D E D E")
+        + "Let's begin with how to guide your starship throughout the GALAXY.\n As we begin, consider agreeing to the User License."
     )
 
     def on_parent(self, widget, parent):
@@ -255,13 +252,13 @@ class SyncLabel(Label):
 
     def start_animation(self):
         for _ in range(2):
-            self.anim = Animation(angle=360, duration=3)
-            self.anim += Animation(size=(600, 100), duration=3)
+            self.anim = Animation(angle=360, duration=0)
+            self.anim += Animation(size=(600, 100), duration=0)
             self.anim += Animation(
                 size=(self.texture_size[0] + dp(10), self.texture_size[1] + dp(5)),
                 duration=3,
             )
-            self.anim += Animation(size=(600, 100), duration=3)
+            self.anim += Animation(size=(600, 100), duration=0)
             self.anim.repeat = True
         self.anim.start(self)
 

@@ -169,7 +169,7 @@ class MyCustomCheckBox(CheckBox):
 
 class MyDropDown(DropDown):
     global LANGUAGES
-    LANGUAGES = {"E N G L I S H": "en", "F R A N C A I S": "fr", "E S P A N O L": "es"}
+    LANGUAGES = {"ENGLISH": "en", "FRANCAIS": "fr", "ESPANOL": "es"}
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

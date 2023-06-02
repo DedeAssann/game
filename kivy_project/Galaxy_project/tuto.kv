@@ -1,4 +1,6 @@
-#: set _bc (.180, .525, .757, .3)
+#: set _bc (.282, .694, .882, .2)
+#: set _ec (.282, .694, .882, .8)
+#: set font "fonts/gtr.ttf"
 
 #WindowManager:
 #    FirstWindow:
@@ -19,11 +21,11 @@
     Label:
         text: 
             """
-            W e l c o m e !   L e t ' s   k n o w   e a c h   o t h e r  ! ! !
+            Welcome ! Let's know each other !
             """
         underline: True
         italic: True
-        font_name: "kivy_project/Galaxy_project/fonts/Eurostile.ttf"
+        font_name: font
         font_size: dp(40)
         size_hint: 1, .1
         pos_hint: {"center_x": .5, "top": .95}
@@ -91,15 +93,14 @@
                 Line:
                     width: dp(1)
                     rectangle: self.x, self.y, self.width, self.height
-            text: "N  E  X  T".upper()
+            text: "NEXT"
             color: .458, .866, .866, 1
             background_color: 0, 0, 0, 0
-            font_name: "kivy_project/Galaxy_project/fonts/Eurostile.ttf"
+            font_name: font
             font_size: dp(30)
             pos_hint: {"x": .7, "center_y": .5}
             size_hint: .15, .85
-            on_press:
-                #root.parent.save_infos()
+            on_press:                
                 root.opacity = 0
             on_release: root.parent.transit_screen()
 
@@ -115,8 +116,8 @@
 <L_1@MyCustomRelativeLayout>:
     last_name: last_name
     Label:
-        text:'l a s t   n a m e  :'.upper()
-        font_name: "kivy_project/Galaxy_project/fonts/Sackers-Gothic-Std-Light.ttf"
+        text:'last name :'.upper()
+        font_name: font
         font_size: dp(30)
         pos_hint: {"center_x": .25, "top": .75}
         size_hint: .4, .9
@@ -130,8 +131,8 @@
 <L_2@MyCustomRelativeLayout>:
     first_name: first_name
     Label:
-        text:'f i r s t   n a m e  :'.upper()
-        font_name: "kivy_project/Galaxy_project/fonts/Sackers-Gothic-Std-Light.ttf"
+        text:'first name :'.upper()
+        font_name: font
         font_size: dp(30)
         pos_hint: {"center_x": .25, "top": .75}
         size_hint: .4, .9
@@ -145,8 +146,8 @@
 <L_3@MyCustomRelativeLayout>:
     mail: mail
     Label:
-        text:'E - m a i l  :'.upper()
-        font_name: "kivy_project/Galaxy_project/fonts/Sackers-Gothic-Std-Light.ttf"
+        text:'E-mail :'.upper()
+        font_name: font
         font_size: dp(30)
         pos_hint: {"center_x": .25, "top": .75}
         size_hint: .4, .9
@@ -160,7 +161,7 @@
             Line:
                 width: dp(.5)
                 rectangle: self.x, self.y, self.width, self.height
-        font_name: "kivy_project/Galaxy_project/fonts/Eurostile.ttf"
+        font_name: font
         font_size: dp(47.5)
         size_hint: .5, .65
         pos_hint: {"x": .55, "top": .75}
@@ -177,8 +178,8 @@
 <L_4@MyCustomRelativeLayout>:
     age: age
     Label:
-        text:'a g e  :'.upper()
-        font_name: "kivy_project/Galaxy_project/fonts/Sackers-Gothic-Std-Light.ttf"
+        text:'age :'.upper()
+        font_name: font
         font_size: dp(30)
         pos_hint: {"center_x": .25, "top": .75}
         size_hint: .4, .9
@@ -192,8 +193,8 @@
 <L_5@MyCustomRelativeLayout>:
     my_layout: my_layout
     Label:
-        text:'L a n g u a g e  :'.upper()
-        font_name: "kivy_project/Galaxy_project/fonts/Sackers-Gothic-Std-Light.ttf"
+        text:'Language :'.upper()
+        font_name: font
         font_size: dp(30)
         pos_hint: {"center_x": .25, "top": .75}
         size_hint: .4, .9
@@ -205,8 +206,8 @@
 <L_6@MyCustomRelativeLayout>:
     username: username
     Label:
-        text: "u s e r n a m e  :".upper()
-        font_name: "kivy_project/Galaxy_project/fonts/Sackers-Gothic-Std-Light.ttf"
+        text: "username :".upper()
+        font_name: font
         font_size: dp(30)
         pos_hint: {"center_x": .25, "top": .75}
         size_hint: .4, .9
@@ -220,7 +221,7 @@
             Line:
                 width: dp(.5)
                 rectangle: self.x, self.y, self.width, self.height
-        font_name: "kivy_project/Galaxy_project/fonts/Eurostile.ttf"
+        font_name: font
         font_size: dp(47.5)
         size_hint: .5, .65
         pos_hint: {"x": .55, "top": .75}
@@ -245,9 +246,9 @@
     Button:
         background_color: 0, 0, 0, .65
         color: .458, .866, .866, 1
-        text: "E N G L I S H"
+        text: "ENGLISH"
         bold: True
-        font_name: "kivy_project/Galaxy_project/fonts/Sackers-Gothic-Std-Light.ttf"
+        font_name: font
         font_size: dp(35)
         size_hint_y: None
         height: dp(70)
@@ -257,9 +258,9 @@
     Button:
         background_color: 0, 0, 0, .65
         color: .458, .866, .866, 1
-        text: "F R A N C A I S"
+        text: "FRANCAIS"
         bold: True
-        font_name: "kivy_project/Galaxy_project/fonts/Sackers-Gothic-Std-Light.ttf"
+        font_name: font
         font_size: dp(35)
         size_hint_y: None
         height: dp(70)
@@ -269,9 +270,9 @@
     Button:
         background_color: 0, 0, 0, .65
         color: .458, .866, .866, 1
-        text: "E S P A N O L"
+        text: "ESPANOL"
         bold: True
-        font_name: "kivy_project/Galaxy_project/fonts/Sackers-Gothic-Std-Light.ttf"
+        font_name: font
         font_size: dp(35)
         size_hint_y: None
         height: dp(70)
@@ -286,7 +287,7 @@
         Line:
             width: dp(.5)
             rectangle: self.x, self.y, self.width, self.height
-    font_name: "kivy_project/Galaxy_project/fonts/Eurostile.ttf"
+    font_name: font
     font_size: dp(47.5)
     size_hint: .5, .65
     pos_hint: {"x": .55, "top": .75}
@@ -305,7 +306,7 @@
         Line:
             width: dp(.5)
             rectangle: self.x, self.y, self.width, self.height
-    font_name: "kivy_project/Galaxy_project/fonts/Eurostile.ttf"
+    font_name: "fonts/Lcd.ttf"
     font_size: dp(47.5)
     size_hint: .5, .65
     pos_hint: {"x": .55, "top": .75}
@@ -318,6 +319,7 @@
     cursor_color: 1, 1, 1, 1
 
 # 2nd
+
 <SecondWindow>:
     name: "second"
     canvas.before:
@@ -349,7 +351,7 @@
             size_hint: .985, .95
             pos_hint: {"center_x": .5, "top": .975}
             text: root.wlcm_text
-            font_name: "kivy_project/Galaxy_project/fonts/Eurostile.ttf"
+            font_name: font
             font_size: dp(52)
             halign: "center"
             valign: "middle"
@@ -384,7 +386,7 @@
                 size_hint: 1, None
                 height: self.texture_size[1]
                 font_size: dp(35)
-                font_name: "kivy_project/Galaxy_project/fonts/Eurostile.ttf"
+                font_name: font
                 halign: "justify"
                 valign: "center"
             MyCustomRelativeLayout:
@@ -403,10 +405,10 @@
                     height: dp(200)
                     active: False
                 Label:
-                    text: "I   a g r e e !".capitalize()
+                    text: "I agree !".capitalize()
                     font_size: dp(35)
                     color: .458, .866, .866, 1
-                    font_name: "kivy_project/Galaxy_project/fonts/Eurostile.ttf"
+                    font_name: font
                     pos_hint: {"x": .075, "center_y": .5}
                     size_hint: .4, 1
                 Button:
@@ -418,8 +420,8 @@
                             rectangle: self.x, self.y, self.width, self.height
                     background_color: 0, 0, 0, 0
                     color: .458, .866, .866, 1
-                    text: "N  E  X  T"
-                    font_name: 
+                    text: "NEXT"
+                    font_name: font
                     font_size: dp(30)
                     pos_hint: {"x": .8, "center_y": .5}
                     size_hint: .3, .5
@@ -447,8 +449,9 @@
         Line:
             width: dp(2)
             rectangle: self.x, self.y, self.width, self.height
-    text: "S Y N C H R O N I Z I N G . . ."
+    text: "SYNCHRONIZING ..."
     font_size: dp(40)
+    font_name: font
     bold: True
     size_hint: None, None
     size: self.texture_size[0] + dp(10), self.texture_size[1] + dp(5)
@@ -459,12 +462,13 @@
             origin: self.center
 
 # Tuto
+
 <Tutorial>:
     name: "tuto"
     canvas:
         Rectangle:
             size: self.size
-            source: "kivy_project\Galaxy_project\galaxy_images\planet1.jpg"
+            source: "galaxy_images\planet1.jpg"
     tuto_01: tuto_01
     Tutorial01:
         id: tuto_01
@@ -477,39 +481,40 @@
         spacing: dp(20)
         padding: dp(35)
         Label:
-            text: "W E L C O M E"
+            text: "WELCOME"
             valign: "middle"
             size_hint: 1, .2
             color: .458, .866, .866, 1
-            font_size: dp(100)
-            font_name: "kivy_project/Galaxy_project/fonts/Eurostile.ttf"
+            font_size: dp(85)
+            font_name: font
         Label:
-            text: "T O   T H E"
+            text: "TO THE"
             valign: "middle"
             size_hint: 1, .15
             color: .458, .866, .866, 1
-            font_size: dp(110)
-            font_name: "kivy_project/Galaxy_project/fonts/Eurostile.ttf"
+            font_size: dp(85)
+            font_name: font
         Label:
             text: "G  A  L  A  X  Y"
             valign: "middle"
             size_hint: 1, .25
             color: .458, .866, .866, 1
-            font_size: dp(150)
-            font_name: "kivy_project/Galaxy_project/fonts/Eurostile.ttf"
+            font_size: dp(105)
+            font_name: font
         Label:
             text: "G A M E"
             valign: "middle"
             size_hint: 1, .2
-            font_size: dp(110)
+            font_size: dp(85)
             color: .458, .866, .866, 1
-            font_name: "kivy_project/Galaxy_project/fonts/Eurostile.ttf"
+            font_name: font
         Label:
-            text: "L e t ' s   B e g i n !"
+            text: "Let's Begin !"
             valign: "middle"
             size_hint: 1, .2
-            font_size: dp(100)
+            font_size: dp(87.5)
             color: .458, .866, .866, 1
+            font_name: font
 
 
 <Tutorial01>:
@@ -526,8 +531,8 @@
                 "How to play ?"
             valign: "top"
             halign: "justify"
-            font_name: "kivy_project/Galaxy_project/fonts/Eurostile.ttf"
-            font_size: dp(100)
+            font_name: font
+            font_size: dp(90)
             color: .458, .866, .866, 1
             underline: True
         Label:
@@ -535,27 +540,27 @@
                 "- To go left, press left arrow or the left side of the screen."
             valign: "center"
             halign: "justify"
-            font_name: "kivy_project/Galaxy_project/fonts/Eurostile.ttf"
+            font_name: font
             text_size: self.width, None
-            font_size: dp(56)
+            font_size: dp(40)
             #color: .458, .866, .866, 1
         Label:
             text: 
                 "- To go right, press right arrow or the right side of the screen."
             valign: "center"
             halign: "justify"
-            font_name: "kivy_project/Galaxy_project/fonts/Eurostile.ttf"
+            font_name: font
             text_size: self.width, None
-            font_size: dp(56)
+            font_size: dp(40)
             #color: .458, .866, .866, 1
         Label:
             text:
                 "- But, always remember to keep following the track !"
             valign: "center"
             halign: "justify"
-            font_name: "kivy_project/Galaxy_project/fonts/Eurostile.ttf"
+            font_name: font
             text_size: self.width, None
-            font_size: dp(56)
+            font_size: dp(40)
             #color: .458, .866, .866, 1
 
     GridLayout:
@@ -575,11 +580,10 @@
                 Line:
                     width: dp(1.15)
                     rectangle: self.x, self.y, self.width, self.height
-            text: "N  E  X  T"
-            #color: 0.458, 0.866, 0.866, 1
+            text: "NEXT"            
             background_color: 0, 0, 0, 0
             bold: True
-            font_name: "kivy_project/Galaxy_project/fonts/Eurostile.ttf"
+            font_name: font
             font_size: dp(37.5)
             pos_hint: {"x": .7, "center_y": .5}
             size_hint: .15, .85

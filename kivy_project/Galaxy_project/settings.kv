@@ -180,7 +180,6 @@
 
 # The layouts
 
-
 <L1@RelativeLayout>:
     canvas.before:
         Color:
@@ -518,7 +517,7 @@
         id: my_label
         text: root.text_to_display
         font_name: font
-        font_size: dp(20)
+        font_size: dp(25)
         size_hint: .25, .5
         pos_hint: {"right": .975, "top": 1}
     MyCustomSlider:
@@ -662,7 +661,6 @@
 
 # My Popups
 
-
 <About>:
     canvas.before:
         Color:
@@ -741,12 +739,6 @@
     lbl2: lbl2
     lbl3: lbl3
     content:
-    canvas.before:
-        Color:
-            rgba: 1, 1, 1, .085
-        Rectangle:
-            size: self.size
-            pos: self.pos
     canvas:
         Color:
             rgba: .282, .694, .882, .8  #1, 1, 0, 1
@@ -767,7 +759,7 @@
                 font_size: h_size
             StringInput:
                 id: input_name
-                text:
+                text: ""
                 pos_hint: {"right": .99, "top": .79}
                 size_hint: .5, .585
                 opacity: 0
@@ -792,7 +784,7 @@
                 font_size: h_size
             FloatInput:
                 id: input_age
-                text: 
+                text: ""
                 pos_hint: {"right": .99, "top": .79}
                 size_hint: .5, .585
                 opacity: 0
@@ -816,14 +808,20 @@
                 font_name: font
                 font_size: h_size
             TextInput:
+                canvas.before:
+                    Color:
+                        rgba: .184, .525, .749, .8
+                    Line:
+                        width: dp(1)
+                        rectangle: self.x, self.y, self.width, self.height
                 id: input_mail
-                text:
+                text: ""
                 pos_hint: {"right": .99, "top": .79}
-                font_name: font
-                font_size: dp(36.5)
+                font_name: "fonts/Eurostile.ttf"
+                font_size: dp(40)
                 size_hint: .5, .585
                 multiline: False
-                background_color: .184, .525, .749, .8
+                background_color: 0, 0, 0, 0 #.184, .525, .749, .8
                 background_width: dp(18)
                 cursor_width: dp(3)
                 cursor_height: dp(10)
@@ -1003,7 +1001,7 @@
     pos_hint: {"center_x": 0.63, "top": 1}
     bold: True
     font_name: font
-    font_size: dp(22)
+    font_size: dp(25)
     background_color: _bc
     color: 0.458, 0.866, 0.866, 1
 
@@ -1013,7 +1011,13 @@
     auto_width: False
     size_hint_x: .25
     Button:
-        background_color: 0, 0, 0, .65
+        canvas.before:
+            Color:
+                rgba: _ec
+            Line:
+                width: dp(1.25)
+                rectangle: self.x, self.y, self.width, self.height
+        background_color: 0, 0, 0, .9
         color: .458, .866, .866, 1
         text: "ENGLISH"
         bold: True
@@ -1025,7 +1029,13 @@
             root.select(self.text)
             app.store.put("Language", name="Language", value=root.LANGUAGES[self.text])
     Button:
-        background_color: 0, 0, 0, .65
+        canvas.before:
+            Color:
+                rgba: _ec
+            Line:
+                width: dp(1.25)
+                rectangle: self.x, self.y, self.width, self.height
+        background_color: 0, 0, 0, .9
         color: .458, .866, .866, 1
         text: "FRANCAIS"
         bold: True
@@ -1037,7 +1047,13 @@
             root.select(self.text)
             app.store.put("Language", name="Language", value=root.LANGUAGES[self.text])
     Button:
-        background_color: 0, 0, 0, .65
+        canvas.before:
+            Color:
+                rgba: _ec
+            Line:
+                width: dp(1.25)
+                rectangle: self.x, self.y, self.width, self.height
+        background_color: 0, 0, 0, .9
         color: .458, .866, .866, 1
         text: "ESPANOL"
         bold: True
@@ -1078,7 +1094,7 @@
     font_size: dp(36.5)
     size_hint: .1, .375
     multiline: False
-    background_color: .184, .525, .749
+    background_color: 0, 0, 0, 0 #.184, .525, .749
     background_width: dp(18)
     cursor_width: dp(3)
     cursor_height: dp(10)
@@ -1086,10 +1102,10 @@
 
 <FloatInput>:
     font_name: "fonts/Lcd.ttf"
-    font_size: dp(36.5)
+    font_size: dp(100)
     size_hint: .1, .375
     multiline: False
-    background_color: .184, .525, .749, .8
+    background_color: 0, 0, 0, 0 #.184, .525, .749, .8
     background_width: dp(18)
     cursor_width: dp(3)
     cursor_height: dp(10)

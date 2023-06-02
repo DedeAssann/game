@@ -2,7 +2,9 @@
 
 import turtle
 
+turtle.Screen().setup(width=0.5, height=0.75, startx=None, starty=None)
 pen = turtle.Turtle()
+
 
 def curve():
     "fe curve"
@@ -12,9 +14,9 @@ def curve():
         pen.right(1)
         pen.forward(1)
 
+
 # Defining method to write text
 def text():
-    
     # Move turtle to the air
     pen.up()
     # Move turtle to a given position
@@ -26,6 +28,7 @@ def text():
     # Write the specified text
     # specified font style and size
     pen.write("I LuV U Sweetie", font=("Verdana", 12, "bold"))
+
 
 # Defining method to draw a full heart
 def heart():
@@ -44,7 +47,8 @@ def heart():
     pen.fd(112)
     # Ending the fill of the heart
     pen.end_fill()
-    
+
+
 def make_heart():
     "Create a heart"
     # Draw the heart
@@ -53,6 +57,9 @@ def make_heart():
     text()
     # To hide turtle
     pen.ht()
-    
+
+    turtle.Screen().exitonclick()
+
+
 if __name__ == "__main__":
     make_heart()
