@@ -1,8 +1,10 @@
 {
-    "recommendations": [
-        "codiga.vscode-plugin",
-        "timkmecl.codegpt3",
-        "blackboxapp.blackbox",
-        "github.copilot"
-    ]
+  "recommendations": [
+    "codiga.vscode-plugin",
+    "timkmecl.codegpt3",
+    "blackboxapp.blackbox",
+    "github.copilot",
+    "magicstack.magicpython",
+    "zhang-renyang.chat-gpt"
+  ]
 }

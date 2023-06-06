@@ -785,6 +785,7 @@
             FloatInput:
                 id: input_age
                 text: ""
+                font_size: dp(70)
                 pos_hint: {"right": .99, "top": .79}
                 size_hint: .5, .585
                 opacity: 0
@@ -808,7 +809,7 @@
                 font_name: font
                 font_size: h_size
             TextInput:
-                canvas.before:
+                canvas.after:
                     Color:
                         rgba: .184, .525, .749, .8
                     Line:
@@ -816,9 +817,10 @@
                         rectangle: self.x, self.y, self.width, self.height
                 id: input_mail
                 text: ""
+                color: 1, 1, 1, 1
                 pos_hint: {"right": .99, "top": .79}
                 font_name: "fonts/Eurostile.ttf"
-                font_size: dp(40)
+                font_size: dp(60)
                 size_hint: .5, .585
                 multiline: False
                 background_color: 0, 0, 0, 0 #.184, .525, .749, .8
@@ -831,7 +833,7 @@
                 id: lbl3
                 background_color: .184, .525, .749, .8
                 text: input_mail.text
-                color: _Bc
+                color: _ec
                 pos_hint: {"right": 0.99, "top": 0.79}
                 font_name: font
                 font_size: dp(36.5)
@@ -1102,7 +1104,7 @@
 
 <FloatInput>:
     font_name: "fonts/Lcd.ttf"
-    font_size: dp(100)
+    color: 0, 0, 0, 0
     size_hint: .1, .375
     multiline: False
     background_color: 0, 0, 0, 0 #.184, .525, .749, .8

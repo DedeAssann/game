@@ -1,6 +1,8 @@
 "A sikmple script that can make a heart"
 
 import turtle
+from turtle import *
+from math import cos, sin
 
 turtle.Screen().setup(width=0.5, height=0.75, startx=None, starty=None)
 pen = turtle.Turtle()
@@ -33,7 +35,7 @@ def text():
 # Defining method to draw a full heart
 def heart():
     pen.speed(25)
-    pen.fillcolor("red")
+    pen.fillcolor("black")
     pen.begin_fill()
     # Draw the left line
     pen.left(140)
@@ -58,6 +60,7 @@ def make_heart():
     # To hide turtle
     pen.ht()
 
+    bgcolor("red")
     turtle.Screen().exitonclick()
 
 

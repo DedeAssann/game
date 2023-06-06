@@ -161,8 +161,9 @@
             Line:
                 width: dp(.5)
                 rectangle: self.x, self.y, self.width, self.height
-        font_name: font
-        font_size: dp(47.5)
+        font_name: "fonts/Eurostile.ttf"
+        font_size: dp(60)
+        bold: True
         size_hint: .5, .65
         pos_hint: {"x": .55, "top": .75}
         multiline: False
@@ -187,6 +188,7 @@
     FloatInput:
         id: age
         text:''
+        font_size: dp(60)
         on_text_validate:
             root.parent.l6.username.focus = True
             app.store.put("Age of User", name="Age", value=self.text)
@@ -244,7 +246,13 @@
     padding: dp(20)
     spacing: dp(50)
     Button:
-        background_color: 0, 0, 0, .65
+        canvas.before:
+            Color:
+                rgba: _ec
+            Line:
+                width: dp(1.25)
+                rectangle: self.x, self.y, self.width, self.height
+        background_color: 0, 0, 0, .9
         color: .458, .866, .866, 1
         text: "ENGLISH"
         bold: True
@@ -256,7 +264,13 @@
             root.select(self.text)
             app.store.put("Language", name="Language", value=root.LANGUAGES[self.text])
     Button:
-        background_color: 0, 0, 0, .65
+        canvas.before:
+            Color:
+                rgba: _ec
+            Line:
+                width: dp(1.25)
+                rectangle: self.x, self.y, self.width, self.height    
+        background_color: 0, 0, 0, .9
         color: .458, .866, .866, 1
         text: "FRANCAIS"
         bold: True
@@ -268,7 +282,13 @@
             root.select(self.text)
             app.store.put("Language", name="Language", value=root.LANGUAGES[self.text])
     Button:
-        background_color: 0, 0, 0, .65
+        canvas.before:
+            Color:
+                rgba: _ec
+            Line:
+                width: dp(1.25)
+                rectangle: self.x, self.y, self.width, self.height    
+        background_color: 0, 0, 0, .9
         color: .458, .866, .866, 1
         text: "ESPANOL"
         bold: True

@@ -147,8 +147,8 @@ class LoadingWidget(RelativeLayout):
         self.add_widget(self.label)
 
     def on_parent(self, widget, parent):
-        anim1 = Animation(value=100, duration=10)
-        anim2 = Animation(opacity=0, duration=1)
+        anim1 = Animation(value=100, duration=0)
+        anim2 = Animation(opacity=0, duration=0)
         anim2.bind(on_complete=lambda *args: self.parent.switch_screen())
         anim1.bind(on_complete=lambda *args: anim2.start(self))
         anim1.start(self.progress)
