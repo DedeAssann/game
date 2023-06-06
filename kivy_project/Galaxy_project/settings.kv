@@ -990,14 +990,21 @@
                     root.dismiss()
                 
 # My Custom Widgets
-
+<RoundButton>:
+    #canvas.before:
+    #    Color:
+    #        rgba: _ec
+    #    Line:
+    #        width: dp(1.5)
+    #        rectangle: self.x, self.y, self.width, self.height 
+    background_color: 0, 0, 0, 0
 <MainButton>:
-    canvas.before:
-        Color:
-            rgba: _ec
-        Line:
-            width: dp(1.5)
-            rectangle: self.x, self.y, self.width, self.height
+    #canvas.before:
+    #    Color:
+    #        rgba: _ec
+    #    Line:
+    #        width: dp(1.5)
+    #        rectangle: self.x, self.y, self.width, self.height
     text: "|   Select   |"
     size_hint: 0.5, 0.5
     pos_hint: {"center_x": 0.63, "top": 1}
@@ -1012,13 +1019,13 @@
     spacing: dp(50)
     auto_width: False
     size_hint_x: .25
-    Button:
-        canvas.before:
-            Color:
-                rgba: _ec
-            Line:
-                width: dp(1.25)
-                rectangle: self.x, self.y, self.width, self.height
+    RoundButton:
+        #canvas.before:
+        #    Color:
+        #        rgba: _ec
+        #    Line:
+        #        width: dp(1.25)
+        #        rectangle: self.x, self.y, self.width, self.height
         background_color: 0, 0, 0, .9
         color: .458, .866, .866, 1
         text: "ENGLISH"
@@ -1030,13 +1037,13 @@
         on_release:
             root.select(self.text)
             app.store.put("Language", name="Language", value=root.LANGUAGES[self.text])
-    Button:
-        canvas.before:
-            Color:
-                rgba: _ec
-            Line:
-                width: dp(1.25)
-                rectangle: self.x, self.y, self.width, self.height
+    RoundButton:
+        #canvas.before:
+        #    Color:
+        #        rgba: _ec
+        #    Line:
+        #        width: dp(1.25)
+        #        rectangle: self.x, self.y, self.width, self.height
         background_color: 0, 0, 0, .9
         color: .458, .866, .866, 1
         text: "FRANCAIS"
@@ -1048,13 +1055,13 @@
         on_release:
             root.select(self.text)
             app.store.put("Language", name="Language", value=root.LANGUAGES[self.text])
-    Button:
-        canvas.before:
-            Color:
-                rgba: _ec
-            Line:
-                width: dp(1.25)
-                rectangle: self.x, self.y, self.width, self.height
+    RoundButton:
+        #canvas.before:
+        #    Color:
+        #        rgba: _ec
+        #    Line:
+        #        width: dp(1.25)
+        #        rectangle: self.x, self.y, self.width, self.height
         background_color: 0, 0, 0, .9
         color: .458, .866, .866, 1
         text: "ESPANOL"
@@ -1135,14 +1142,14 @@
     sensitivity: "all"
     orientation: "horizontal"
 
-<CustomButton@Button>:
+<CustomButton@RoundButton>:
     id: custom_btn
-    canvas:
-        Color:
-            rgba: _ec
-        Line:
-            width: dp(1.5)
-            rectangle: self.x, self.y, self.width, self.height
+    #canvas:
+    #    Color:
+    #        rgba: _ec
+    #    Line:
+    #        width: dp(1.5)
+    #        rectangle: self.x, self.y, self.width, self.height
     text: "My Pretty Button"
     size_hint: .3, .5
     background_color: _bc

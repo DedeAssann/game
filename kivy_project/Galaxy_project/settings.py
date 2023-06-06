@@ -17,6 +17,7 @@ from kivy.properties import (
     StringProperty,
     Clock,
 )
+from kivy.graphics import Color, RoundedRectangle, Line
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.popup import Popup
 from kivy.metrics import dp
@@ -31,22 +32,53 @@ from kivy.uix.screenmanager import Screen, NoTransition
 from kivy.storage.jsonstore import JsonStore
 import re
 
+class RoundButton(Button):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
-btn1 = Button(
+        self.background_color = (0, 0, 0, 0)  # Set the background color to transparent
+
+        with self.canvas.before:
+            Color(.282, .694, .882, .2)  # Set the color of the rounded rectangle
+            
+            # Draw a border line
+            self.border_line = Line(width=2)
+
+            # Draw a rounded rectangle
+            self.rounded_rect = RoundedRectangle()
+
+        self.bind(pos=self.update_rounded_rect, size=self.update_rounded_rect)
+
+    def update_rounded_rect(self, *args):
+        # Update the position and size of the rounded rectangle to match the button
+        x, y = self.pos
+        width, height = self.size
+
+        # Set the corner radius as a fraction of the smallest dimension of the button
+        corner_radius = min(width, height) * 0.2
+
+        self.rounded_rect.pos = self.pos
+        self.rounded_rect.size = self.size
+        self.rounded_rect.radius = [corner_radius]
+        
+        #self.border_line.rectangle = self.rounded_rect.pos + self.rounded_rect.size
+        
+
+btn1 = RoundButton(
     text="60 fps",
     size_hint_y=None,
     height=50,
     font_name="fonts/Lcd.ttf",
     font_size="30dp",
 )
-btn2 = Button(
+btn2 = RoundButton(
     text="80 fps",
     size_hint_y=None,
     height=50,
     font_name="fonts/Lcd.ttf",
     font_size="30dp",
 )
-btn3 = Button(
+btn3 = RoundButton(
     text="80 fps",
     size_hint_y=None,
     height=50,
@@ -176,7 +208,7 @@ class MyDropDown(DropDown):
         self.LANGUAGES = LANGUAGES
 
 
-class MainButton(Button):
+class MainButton(RoundButton):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
