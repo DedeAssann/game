@@ -17,7 +17,14 @@ from kivy.properties import (
     StringProperty,
     Clock,
 )
-from kivy.graphics import Color, RoundedRectangle, Line
+from kivy.graphics import (
+    Color,
+    RoundedRectangle,
+    Line,
+    InstructionGroup,
+    # RoundedRectangleEffect,
+)  # Color, RoundedRectangle, Line
+from kivy.uix.effectwidget import EffectWidget
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.popup import Popup
 from kivy.metrics import dp
@@ -32,6 +39,7 @@ from kivy.uix.screenmanager import Screen, NoTransition
 from kivy.storage.jsonstore import JsonStore
 import re
 
+
 class RoundButton(Button):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -39,10 +47,10 @@ class RoundButton(Button):
         self.background_color = (0, 0, 0, 0)  # Set the background color to transparent
 
         with self.canvas.before:
-            Color(.282, .694, .882, .2)  # Set the color of the rounded rectangle
-            
+            Color(0.262, 0.714, 0.98, 0.025)  # Set the color of the rounded rectangle
+
             # Draw a border line
-            self.border_line = Line(width=2)
+            # self.border_line = Line(width=2)
 
             # Draw a rounded rectangle
             self.rounded_rect = RoundedRectangle()
@@ -60,9 +68,9 @@ class RoundButton(Button):
         self.rounded_rect.pos = self.pos
         self.rounded_rect.size = self.size
         self.rounded_rect.radius = [corner_radius]
-        
-        #self.border_line.rectangle = self.rounded_rect.pos + self.rounded_rect.size
-        
+
+        # self.border_line.rectangle = self.rounded_rect.pos + self.rounded_rect.size
+
 
 btn1 = RoundButton(
     text="60 fps",
@@ -127,7 +135,7 @@ class Infos(Popup):
     def __init__(self, **kwargs):
         "..."
         super().__init__(**kwargs)
-        self.size_hint = (0.825, 0.825)
+        self.size_hint = (0.725, 0.725)
         self.input_name.text = App.get_running_app().store.get("Name of User")["value"]
         self.input_age.text = App.get_running_app().store.get("Age of User")["value"]
         self.input_mail.text = App.get_running_app().store.get("Mail of User")["value"]
@@ -178,7 +186,7 @@ class About(Popup):
     def __init__(self, **kwargs):
         "..."
         super().__init__(**kwargs)
-        self.size_hint = (0.8, 0.8)
+        self.size_hint = (0.7, 0.7)
 
 
 class Connect(Popup):
@@ -187,7 +195,7 @@ class Connect(Popup):
     def __init__(self, **kwargs):
         "..."
         super().__init__(**kwargs)
-        self.size_hint = (0.8, 0.8)
+        self.size_hint = (0.7, 0.7)
 
 
 class MyCustomCheckBox(CheckBox):
@@ -240,12 +248,12 @@ class Score(Popup):
     def __init__(self, **kwargs):
         "..."
         super().__init__(**kwargs)
-        self.size_hint = (0.785, 0.785)
+        self.size_hint = (0.65, 0.6)
         self.reset_at_close = self.on_dismiss()
         self.score_nb = App.get_running_app().store.get("Score")["value"]
         self.best_score_nb = App.get_running_app().store.get("Best Score")["value"]
-        self.score = "Y O U R   L A S T   S C O R E : " + str(self.score_nb)
-        self.best_score = "B E S T   S C O R E : " + str(self.best_score_nb)
+        self.score = "YOUR LAST SCORE : " + str(self.score_nb)
+        self.best_score = "BST SCORE : " + str(self.best_score_nb)
 
     def on_progress(self):
         "..."
@@ -261,8 +269,8 @@ class Score(Popup):
             App.get_running_app().store.put("Best Score", name="Best Score", value=0)
             self.score_nb = App.get_running_app().store.get("Score")["value"]
             self.best_score_nb = App.get_running_app().store.get("Best Score")["value"]
-            self.score = "Y O U R   S C O R E : " + str(self.score_nb)
-            self.best_score = "B E S T   S C O R E : " + str(self.best_score_nb)
+            self.score = "YOUR SCORE : " + str(self.score_nb)
+            self.best_score = "BEST SCORE : " + str(self.best_score_nb)
 
     def on_dismiss(self, *_dt):
         "..."

@@ -28,6 +28,7 @@ from kivy import platform
 
 from kivy.app import App
 from kivy.graphics.context_instructions import Color
+from kivy.graphics import Rectangle
 from kivy.graphics.vertex_instructions import Line, Quad
 from kivy.properties import (
     NumericProperty,
@@ -37,7 +38,7 @@ from kivy.properties import (
     Clock,
 )
 from kivy.uix.relativelayout import RelativeLayout
-from kivy.uix.screenmanager import Screen, ScreenManager, NoTransition
+from kivy.uix.screenmanager import Screen, ScreenManager, FadeTransition
 from kivy.lang.builder import Builder
 
 # from kivy.metrics import dp
@@ -555,7 +556,7 @@ class WindowManager(ScreenManager):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        transition = NoTransition(duration=0)
+        transition = FadeTransition(duration=.1)
         self.transition = transition
 
 

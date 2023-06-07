@@ -23,8 +23,8 @@
 WindowManager:
     game_window: game_window
     settings_window: settings_window
-    FirstWindow:
-        id: first_window
+    #FirstWindow:
+    #    id: first_window
     HomeWindow:
         id: home_window
     SettingsWindow:
@@ -85,14 +85,22 @@ WindowManager:
         on_release: root.exit()
         background_color: 0, 0, 0, 0
     Label:
-        font_size: dp(92)
+        font_size: dp(95)
+        font_name: font
+        text: menu_title
+        bold: True
+        pos_hint: {"center_x": .495, "top": .985}
+        size_hint: 1, .3
+        color: 0, 0, 0, .5
+    Label:
+        font_size: dp(95)
         font_name: font
         text: menu_title
         bold: True
         pos_hint: {"center_x": .5, "top": .99}
         size_hint: 1, .3
     MyCustomButton:
-        font_size: dp(35)
+        font_size: dp(30)
         font_name: font
         text: home_button_title
         pos_hint: { "center_x": .5, "center_y": .3}
@@ -108,6 +116,33 @@ WindowManager:
         size_hint: .18, .08
         background_color: 0, 0, 0, 0
         on_press: app.root.current = "settings_screen"
+    #Label:
+    #    canvas.before:
+    #        Color:
+    #            rgba: _ec
+    #        Line:
+    #            width: dp(1.5)
+    #            points: self.x, self.top, self.width, self.top  # Top line
+    #        Line:
+    #            width: dp(1.5)
+    #            points: self.x, self.y, self.x, self.top  # Left line
+    #        Line:
+    #            width: dp(1.5)
+    #            points: self.x, self.y, self.width*.2, self.y  # First bottom Segment
+    #        Line:
+    #            width: dp(1.5)
+    #            points: self.width*.2, self.y, self.width*.28, self.top  # Inclined Segment 1
+    #        Line:
+    #            width: dp(1.5)
+    #            points: self.width*.145, self.y, self.width*.225, self.top # Inclined Segment 2
+    #        Line:
+    #            width: dp(1.5)
+    #            points: self.width, self.y, self.width, self.top
+#
+    #    text:''        
+    #    pos_hint: {'center_x': 0.5, 'top': 1}
+    #    size_hint: 1, None
+    #    size_y: self.texture_size[0]+50#, self.texture_size[1]+50
 
 # the game widget
 
@@ -169,13 +204,21 @@ WindowManager:
 
 # The Home Button
 
-<HomeButton@MyCustomButton>:
-    font_size: dp(30)
+<HomeButton@Button>:
+    canvas.before:
+        Color:
+            rgba: _ec
+        Line:
+            width: dp(1.25)
+            rounded_rectangle: (self.x, self.y, self.width, self.height, 10)
+            cap: "round"
+            joint: "round"
+    background_color: 0, 0, 0, 0
+    font_size: dp(35)
     font_name: font
     text: return_settings_button_title
     pos_hint: { "right": 1, "top": 1}
     size_hint: .18, .08
-    disabled: 
 
 
 # The Exit button
@@ -184,7 +227,9 @@ WindowManager:
     font_size: dp(30)
     font_name: font
     text: "EXIT"
-    pos_hint: { "right": .18, "top": 1}
+    halign: "center"
+    valign: "middle"
+    pos_hint: { "x": 0, "top": 1}
     size_hint: .18, .08
 
 
@@ -203,11 +248,19 @@ WindowManager:
 # My Custom Button
 <MyCustomButton@Button>:
     id: custom_btn
-    canvas:
+    canvas.before:
         Color:
             rgba: _ec
         Line:
-            width: dp(1.5)
-            rectangle: self.x, self.y, self.width, self.height
+            width: dp(1.25)
+            rounded_rectangle: (self.x, self.y, self.width, self.height, 10)
+            cap: "round"
+            joint: "round"
+        Color:
+            rgba: .282, .694, .882, .025
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [10, 10, 10, 10]
     background_color: _bc
     background_width: dp(40)

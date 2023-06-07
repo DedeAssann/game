@@ -17,8 +17,10 @@
             Color:
                 rgba: _ec
             Line:
-                width: dp(1.5)
-                rectangle: self.x, self.y, self.width, self.height
+                width: dp(1.25)
+                rounded_rectangle: (self.x, self.y, self.width, self.height, 10)
+                cap: "round"
+                joint: "round"
         font_size: dp(35)
         font_name: font
         text: root.parent.menu_button_title

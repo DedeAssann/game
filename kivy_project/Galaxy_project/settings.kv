@@ -39,17 +39,32 @@
             font_name: font
             on_press:
                 app.get_running_app().stop()
-        BackgroundLabel:
-            text:'S E T T I N G S'
-            size: self.texture_size
-            bold: True
-            italic: True
-            halign: "justify"
-            valign: "middle"
-            font_name: font
+        RelativeLayout:
             pos_hint: {"center_x": .5, "top": 1}
             size_hint: .7, 1
-            font_size: dp(60)
+            BackgroundLabel:
+                text:'S E T T I N G S'
+                size: self.texture_size
+                bold: True
+                italic: True
+                halign: "justify"
+                valign: "middle"
+                font_name: font
+                color: 0, 0, 0, .8
+                pos_hint: {"center_x": .495, "top": .95}
+                #size_hint: .7, 1
+                font_size: dp(60)
+            BackgroundLabel:
+                text:'S E T T I N G S'
+                size: self.texture_size
+                bold: True
+                italic: True
+                halign: "justify"
+                valign: "middle"
+                font_name: font
+                pos_hint: {"center_x": .5, "top": 1}
+                #size_hint: .7, 1
+                font_size: dp(60)
         CustomButton:
             id: home_btn
             pos_hint: {"right": 1, "top": 1}
@@ -105,6 +120,7 @@
             Rectangle:
                 size: self.size
                 pos: self.pos
+                #radius: [30, 30, 30, 30]
         canvas:
             Color:
                 rgba: .282, .694, .882, .8
@@ -115,6 +131,7 @@
         font_size: L_txt_size
         font_name: font
         size_hint: 1, .035
+        #pos_hint: {"center_x":.5, "center_y": None}
     L1:
         id: l_1
     L2:
@@ -128,6 +145,7 @@
             Rectangle:
                 size: self.size
                 pos: self.pos
+                #radius: [30, 30, 30, 30]
         canvas:
             Color:
                 rgba: .282, .694, .882, .8
@@ -153,6 +171,7 @@
             Rectangle:
                 size: self.size
                 pos: self.pos
+                #radius: [30, 30, 30, 30]
         canvas:
             Color:
                 rgba: .282, .694, .882, .8
@@ -665,9 +684,10 @@
     canvas.before:
         Color:
             rgba: .180, .525, .757, .75
-        Rectangle:
+        RoundedRectangle:
             size: self.size
             pos: self.pos
+            radius: [20, 20, 20, 20]
     background_color: .180, .7, 1, .95 #1, 1, 1, .5
     title: "|   About Us   |"
     title_align: "center"
@@ -675,27 +695,21 @@
     title_font: font
     title_color: 0, 0, 1, 1   #.1, .3, .85, .5
     pos_hint: {"center_x": .5, "center_y": .5}
-    content:
-    canvas.before:
-        Color:
-            rgba: 1, 1, 1, .085
-        Rectangle:
-            size: self.size
-            pos: self.pos
-    canvas:
-        Color:
-            rgba: .282, .694, .882, .8
-        Line:
-            width: dp(1)
-            rectangle: self.x, self.y, self.width, self.height
+    #canvas:
+    #    Color:
+    #        rgba: .282, .694, .882, .8
+    #    Line:
+    #        width: dp(1)
+    #        rectangle: self.x, self.y, self.width, self.height
 
 <Connect>:
     canvas.before:
         Color:
             rgba: .180, .525, .757, .75
-        Rectangle:
+        RoundedRectangle:
             size: self.size
             pos: self.pos
+            radius: [20, 20, 20, 20]
     background_color: .180, .7, 1, .95 #1, 1, 1, .5
     title: "|   Connect   |"
     title_align: "center"
@@ -703,27 +717,21 @@
     title_font: font
     title_color: 0, 1, 0, 1  #.1, .3, .85, .5
     pos_hint: {"center_x": .5, "center_y": .5}
-    content:
-    canvas.before:
-        Color:
-            rgba: 1, 1, 1, .085
-        Rectangle:
-            size: self.size
-            pos: self.pos
-    canvas:
-        Color:
-            rgba: .282, .694, .882, .8
-        Line:
-            width: dp(1)
-            rectangle: self.x, self.y, self.width, self.height
+    #canvas:
+    #    Color:
+    #        rgba: .282, .694, .882, .8
+    #    Line:
+    #        width: dp(1)
+    #        rectangle: self.x, self.y, self.width, self.height
 
 <Infos>:
     canvas.before:
         Color:
             rgba: .180, .525, .757, .75
-        Rectangle:
+        RoundedRectangle:
             size: self.size
             pos: self.pos
+            radius: [20, 20, 20, 20]
     background_color: .180, .7, 1, .95 
     title: "|   Infos   |"
     title_align: "center"
@@ -739,12 +747,6 @@
     lbl2: lbl2
     lbl3: lbl3
     content:
-    canvas:
-        Color:
-            rgba: .282, .694, .882, .8  #1, 1, 0, 1
-        Line:
-            width: dp(1)
-            rectangle: self.x, self.y, self.width, self.height
     RelativeLayout:
         pos_hint: {"center_x": .5, "center_y": .5}
         size_hint: .825, .825
@@ -765,7 +767,7 @@
                 opacity: 0
             Label:
                 id: lbl1
-                background_color: .184, .525, .749, .8
+                #background_color: .184, .525, .749, .8
                 color: _Bc
                 text: input_name.text
                 pos_hint: {"right": 0.99, "top": 0.79}
@@ -795,8 +797,8 @@
                 color: _Bc
                 text: input_age.text
                 pos_hint: {"right": 0.99, "top": 0.79}
-                font_name: font
-                font_size: dp(36.5)
+                font_name: "fonts/Lcd.ttf"
+                font_size: dp(55)
                 size_hint: .5, .6
                 opacity: 1
         RelativeLayout:
@@ -813,14 +815,20 @@
                     Color:
                         rgba: .184, .525, .749, .8
                     Line:
-                        width: dp(1)
-                        rectangle: self.x, self.y, self.width, self.height
+                        width: dp(1.25)
+                        rounded_rectangle: (self.x, self.y, self.width, self.height, 20)
+                    Color:
+                        rgba: .184, .525, .749, .05
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [20, 20, 20, 20]
                 id: input_mail
                 text: ""
-                color: 1, 1, 1, 1
+                #color: 1, 1, 1, 1
                 pos_hint: {"right": .99, "top": .79}
                 font_name: "fonts/Eurostile.ttf"
-                font_size: dp(60)
+                font_size: dp(40)
                 size_hint: .5, .585
                 multiline: False
                 background_color: 0, 0, 0, 0 #.184, .525, .749, .8
@@ -833,16 +841,17 @@
                 id: lbl3
                 background_color: .184, .525, .749, .8
                 text: input_mail.text
-                color: _ec
+                color: _Bc
                 pos_hint: {"right": 0.99, "top": 0.79}
-                font_name: font
-                font_size: dp(36.5)
+                font_name: "fonts/Eurostile.ttf"
+                font_size: dp(40)
                 size_hint: .5, .6
+                #width: self.texture_size[1] + dp(10)
                 opacity: 1
         GridLayout:
             cols: 3
-            padding: dp(2)
-            spacing: dp(5)
+            padding: dp(5)
+            spacing: dp(15)
             pos_hint: {"center_x": .5, "top": .145}
             size_hint: .70, .12
             CustomButton:
@@ -865,9 +874,10 @@
     canvas.before:
         Color:
             rgba: .180, .525, .757, .75
-        Rectangle:
-            size: self.size
+        RoundedRectangle:
             pos: self.pos
+            size: self.size
+            radius: [20, 20, 20, 20]
     background_color: .180, .7, 1, .95 #1, 1, 1, .5
     title: "|   SCORES   |"
     title_align: "center"
@@ -876,20 +886,6 @@
     title_color: .2, .7, 1, 1  #.1, .3, .85, .5
     pos_hint: {"center_x": .5, "center_y": .5}
     reset_btn: reset_btn
-    content:
-    opacity: 1
-    canvas.before:
-        Color:
-            rgba: 1, 1, 1, .085
-        Rectangle:
-            size: self.size
-            pos: self.pos
-    canvas:
-        Color:
-            rgba: .282, .694, .882, .8
-        Line:
-            width: dp(1)
-            rectangle: self.x, self.y, self.width, self.height
     RelativeLayout:
         BoxLayout:
             orientation: "vertical"
@@ -898,19 +894,19 @@
             Label:
                 text: root.score
                 size_hint: 1, .3
-                font_size: dp(35)
+                font_size: dp(30)
                 font_name: font
                 pos_hint: {"center_x": .5, "top": .99}
             Label:
                 text: root.best_score
                 size_hint: 1,.3
-                font_size: dp(35)
+                font_size: dp(30)
                 font_name: font
                 pos_hint: {"center_x": .5, "top": .75}
         GridLayout:
             cols: 2
-            padding: dp(2)
-            spacing: dp(5)
+            padding: dp(5)
+            spacing: dp(15)
             pos_hint: {"center_x": .5, "top": .18}
             size_hint: .70, .12
             CustomButton:
@@ -926,9 +922,10 @@
     canvas.before:
         Color:
             rgba: .180, .525, .757, .75
-        Rectangle:
+        RoundedRectangle:
             size: self.size
             pos: self.pos
+            radius: [20, 20, 20, 20]
     warn_label: warn_label
     background_color: .180, .7, 1, .95
     title: "| | |   WARNING   | | |"
@@ -958,27 +955,47 @@
         GridLayout:
             cols: 2
             padding: dp(10)
-            spacing: dp(15)
+            spacing: dp(20)
             pos_hint: {"center_x": .5, "top": .325}
             size_hint: .70, .25
-            CustomButton:
+            Button:
                 canvas:
                     Color:
-                        rgba: 0, .694, 0, .8
+                        rgba: 0, .694, 0, .05
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [20, 20, 20, 20]
+                    Color:
+                        rgba: 0, .694, 0, .7
                     Line:
-                        width: dp(1.5)
-                        rectangle: self.x, self.y, self.width, self.height
+                        width: dp(1.25)
+                        rounded_rectangle: (self.x, self.y, self.width, self.height, 20)
+                        cap: "round"
+                        joint: "round"
                 text: "|  Close  |"
+                color: 0, 1, 0, 1
                 font_size: dp(30)
+                background_color: 0, 1, 0, .1
+                size_hint: .3, .5
+                font_name: font
                 on_press: root.dismiss()
             Button:
                 id: reset_btn
                 canvas:
                     Color:
-                        rgba: 1, 0, 0, 1
+                        rgba: 1, 0, 0, .05
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [20, 20, 20, 20]
+                    Color:
+                        rgba: 1, 0, 0, .7
                     Line:
-                        width: dp(1.5)
-                        rectangle: self.x, self.y, self.width, self.height
+                        width: dp(1.25)
+                        rounded_rectangle: (self.x, self.y, self.width, self.height, 20)
+                        cap: "round"
+                        joint: "round"
                 text: "|  Reset  |"
                 font_name: font
                 color: 1, 0, 0, 1
@@ -991,13 +1008,18 @@
                 
 # My Custom Widgets
 <RoundButton>:
-    #canvas.before:
-    #    Color:
-    #        rgba: _ec
-    #    Line:
-    #        width: dp(1.5)
-    #        rectangle: self.x, self.y, self.width, self.height 
+    #background_normal: 'icons/button.png'
+    #background_down: 'icons/button.png'
+    canvas.before:
+        Color:
+            rgba: .282, .694, .882, .7
+        Line:
+            width: dp(1.25)
+            rounded_rectangle: (self.x, self.y, self.width, self.height, 10)
+            cap: "round"
+            joint: "round"            
     background_color: 0, 0, 0, 0
+    background_opacity: 1
 <MainButton>:
     #canvas.before:
     #    Color:
@@ -1015,18 +1037,24 @@
     color: 0.458, 0.866, 0.866, 1
 
 <MyDropDown>:
-    padding: dp(20)
-    spacing: dp(50)
     auto_width: False
     size_hint_x: .25
     RoundButton:
-        #canvas.before:
-        #    Color:
-        #        rgba: _ec
-        #    Line:
-        #        width: dp(1.25)
-        #        rectangle: self.x, self.y, self.width, self.height
-        background_color: 0, 0, 0, .9
+        canvas.before:
+            Color:
+                rgba: 0, 0, 0, .9
+            RoundedRectangle:
+                pos: self.pos
+                size: self.size
+                radius: [20, 20, 20, 20]
+            Color:
+                rgba: _ec
+            Line:
+                width: dp(1.25)
+                rounded_rectangle: (self.x, self.y, self.width, self.height, 20)
+                cap: "round"
+                joint: "round"
+        background_color: 0, 0, 0, 0
         color: .458, .866, .866, 1
         text: "ENGLISH"
         bold: True
@@ -1038,13 +1066,21 @@
             root.select(self.text)
             app.store.put("Language", name="Language", value=root.LANGUAGES[self.text])
     RoundButton:
-        #canvas.before:
-        #    Color:
-        #        rgba: _ec
-        #    Line:
-        #        width: dp(1.25)
-        #        rectangle: self.x, self.y, self.width, self.height
-        background_color: 0, 0, 0, .9
+        canvas.before:
+            Color:
+                rgba: 0, 0, 0, .9
+            RoundedRectangle:
+                pos: self.pos
+                size: self.size
+                radius: [20, 20, 20, 20]
+            Color:
+                rgba: _ec
+            Line:
+                width: dp(1.25)
+                rounded_rectangle: (self.x, self.y, self.width, self.height, 20)
+                cap: "round"
+                joint: "round"
+        background_color: 0, 0, 0, 0
         color: .458, .866, .866, 1
         text: "FRANCAIS"
         bold: True
@@ -1056,13 +1092,21 @@
             root.select(self.text)
             app.store.put("Language", name="Language", value=root.LANGUAGES[self.text])
     RoundButton:
-        #canvas.before:
-        #    Color:
-        #        rgba: _ec
-        #    Line:
-        #        width: dp(1.25)
-        #        rectangle: self.x, self.y, self.width, self.height
-        background_color: 0, 0, 0, .9
+        canvas.before:
+            Color:
+                rgba: 0, 0, 0, .9
+            RoundedRectangle:
+                pos: self.pos
+                size: self.size
+                radius: [20, 20, 20, 20]
+            Color:
+                rgba: _ec
+            Line:
+                width: dp(1.25)
+                rounded_rectangle: (self.x, self.y, self.width, self.height, 20)
+                cap: "round"
+                joint: "round"
+        background_color: 0, 0, 0, 0
         color: .458, .866, .866, 1
         text: "ESPANOL"
         bold: True
@@ -1099,6 +1143,20 @@
     backghround_color: 0, 0, 0, 0
 
 <StringInput>:
+    canvas.before:
+        Color: 
+            rgba: 282, .694, .882, .05
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [20, 20, 20, 20]
+        Color:
+            rgba: .282, .694, .882, .7
+        Line:
+            width: dp(1.25)
+            rounded_rectangle: (self.x, self.y, self.width, self.height, 20)
+            cap: "round"
+            joint: "round"                        
     font_name: font
     font_size: dp(36.5)
     size_hint: .1, .375
@@ -1110,15 +1168,29 @@
     cursor_color: 0, 0, 0, 1
 
 <FloatInput>:
+    canvas.before:
+        Color:
+            rgba: 282, .694, .882, .05
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [20, 20, 20, 20]
+        Color:
+            rgba: 282, .694, .882, .7
+        Line:
+            width: dp(1.25)
+            rounded_rectangle: (self.x, self.y, self.width, self.height, 20)
+            cap: "round"
+            joint: "round"
     font_name: "fonts/Lcd.ttf"
-    color: 0, 0, 0, 0
+    color: 1, 1, 1, 1
     size_hint: .1, .375
     multiline: False
     background_color: 0, 0, 0, 0 #.184, .525, .749, .8
     background_width: dp(18)
     cursor_width: dp(3)
     cursor_height: dp(10)
-    cursor_color: 0, 0, 0, 1
+    #cursor_color: 0, 0, 0, 1
 
 <MyCustomCheckBox>:
     size_hint: .21, 1
@@ -1144,12 +1216,6 @@
 
 <CustomButton@RoundButton>:
     id: custom_btn
-    #canvas:
-    #    Color:
-    #        rgba: _ec
-    #    Line:
-    #        width: dp(1.5)
-    #        rectangle: self.x, self.y, self.width, self.height
     text: "My Pretty Button"
     size_hint: .3, .5
     background_color: _bc
