@@ -28,7 +28,7 @@ from kivy import platform
 
 from kivy.app import App
 from kivy.graphics.context_instructions import Color
-from kivy.graphics import Rectangle
+from kivy.animation import Animation
 from kivy.graphics.vertex_instructions import Line, Quad
 from kivy.properties import (
     NumericProperty,
@@ -385,6 +385,7 @@ class MainWidget(RelativeLayout):
         self.update_horizontal_lines()
         self.update_tiles()
         self.update_ship()
+        anim = Animation(opacity=1, duration=1)
 
         # pause button behavior
         if not self.state_game_over:
@@ -396,6 +397,9 @@ class MainWidget(RelativeLayout):
             self.pause_button.disabled = True
             # setting the pause widget opacity to 0 at startup
             self.pause_widget.opacity = 0
+            # the position of the score group label
+            self.score_wdgt.opacity = 0
+            self.score_wdgt.pos_hint = {"center_x": 0.5, "top": 0.8}
 
         if self.state_game_over:
             self.pause_button.opacity = 0
@@ -407,6 +411,8 @@ class MainWidget(RelativeLayout):
             and self.state_game_has_started
             and not self.pause_state
         ):
+            self.score_wdgt.opacity = 1
+            self.score_wdgt.pos_hint = {"center_x": 0.5, "top": 1}
             self.game_is_playing_state = True
             speed_y = self.SPEED * self.height / 100
             self.current_offset_y += speed_y * time_factor
@@ -434,10 +440,11 @@ class MainWidget(RelativeLayout):
         if not self.check_ship_collision() and not self.state_game_over:
             self.game_is_playing_state = False
             self.state_game_over = True
-            self.menu_widget.opacity = 0.9
-            self.menu_title = "G  A  M  E    O  V  E  R"
+            anim.start(self.menu_widget)
+            self.menu_title = "GAME OVER"
             self.menu_button_title = "RESTART"
             self.score = self.current_y_loop
+            self.score_wdgt.pos_hint = {"center_x": 0.5, "top": 0.8}
 
             # PLaying the different songs related to the game over state
             self.sound_music1.stop()
@@ -464,6 +471,7 @@ class MainWidget(RelativeLayout):
             self.sound_music1.stop()
             self.pause_widget.opacity = 0.7
             self.pause_button.pos_hint = {"center_x": 0.5, "center_y": 0.3}
+            self.score_wdgt.opacity = 0
         elif not self.pause_state and not self.state_game_over:
             self.game_is_playing_state = True
             self.SPEED = actual_speed
@@ -472,6 +480,7 @@ class MainWidget(RelativeLayout):
             self.pause_widget.opacity = 0
             self.pause_button.pos_hint = {"right": 0.18, "top": 1}
             self.sound_music1.play()
+            self.score_wdgt.opacity = 1
         else:
             pass
 
@@ -489,17 +498,20 @@ class MainWidget(RelativeLayout):
         It also reset all the variables in the game, such as the self.state_game_has_started is set
         to True, the opacity of the menu widget is set to 0 and the main theme of the game is played
         """
+        anim = Animation(opacity=0, duration=1)
         if self.state_game_over:
             self.sound_gameover_voice.stop()
             self.sound_gameover_impact.stop()
             self.sound_restart.play()
+            anim.start(self.menu_widget)
         else:
             self.sound_begin.play()
+            anim.start(self.menu_widget)
         self.sound_music1.play()
         self.reset_game()
         self.get_speed()
         self.state_game_has_started = True
-        self.menu_widget.opacity = 0
+        # self.menu_widget.opacity = 0
 
 
 # the GameWindow class
@@ -556,7 +568,7 @@ class WindowManager(ScreenManager):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        transition = FadeTransition(duration=.1)
+        transition = FadeTransition(duration=0.1)
         self.transition = transition
 
 

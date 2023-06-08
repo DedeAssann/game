@@ -116,33 +116,6 @@ WindowManager:
         size_hint: .18, .08
         background_color: 0, 0, 0, 0
         on_press: app.root.current = "settings_screen"
-    #Label:
-    #    canvas.before:
-    #        Color:
-    #            rgba: _ec
-    #        Line:
-    #            width: dp(1.5)
-    #            points: self.x, self.top, self.width, self.top  # Top line
-    #        Line:
-    #            width: dp(1.5)
-    #            points: self.x, self.y, self.x, self.top  # Left line
-    #        Line:
-    #            width: dp(1.5)
-    #            points: self.x, self.y, self.width*.2, self.y  # First bottom Segment
-    #        Line:
-    #            width: dp(1.5)
-    #            points: self.width*.2, self.y, self.width*.28, self.top  # Inclined Segment 1
-    #        Line:
-    #            width: dp(1.5)
-    #            points: self.width*.145, self.y, self.width*.225, self.top # Inclined Segment 2
-    #        Line:
-    #            width: dp(1.5)
-    #            points: self.width, self.y, self.width, self.top
-#
-    #    text:''        
-    #    pos_hint: {'center_x': 0.5, 'top': 1}
-    #    size_hint: 1, None
-    #    size_y: self.texture_size[0]+50#, self.texture_size[1]+50
 
 # the game widget
 
@@ -154,6 +127,7 @@ WindowManager:
     menu_widget: menu_widget
     pause_widget: pause_widget
     pause_button: pause_button
+    score_wdgt: score_wdgt
     perspective_point_x: self.width/2
     perspective_point_y: self.height*0.75
     PauseWidget:
@@ -166,14 +140,15 @@ WindowManager:
     MenuWidget:
         id: menu_widget
     GridLayout:
+        id: score_wdgt
         cols: 2
         size_hint: .35, .2
         pos_hint: {"center_x": .5, "top": 1}
         padding: dp(30)
         spacing: dp(10)
+        #opacity: 0
         Label:
-            id: score
-            text: "S C O R E :  "
+            text: "S C O R E : "
             font_size: dp(50)
             font_name: font
             size_hint: .65, 1

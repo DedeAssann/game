@@ -3,15 +3,25 @@
 
 <MenuWidget>:
     canvas.before:
+        Rectangle:
+            size: self.size
+            source: "wallpaper/mania_galaxy.jpg"
+    canvas:
         Color:
-            rgba: 0, 0, 0, .9
+            rgba: 0, 0, 0, .2
         Rectangle:
             size: self.size
     Label:
-        font_size: dp(75)
+        font_size: dp(100)
+        color: 0, 0, 0, .5
         font_name: font
         text: root.parent.menu_title
-        pos_hint: { "center_x": .5, "center_y": .75}
+        pos_hint: { "center_x": .495, "center_y": .849}
+    Label:
+        font_size: dp(100)
+        font_name: font
+        text: root.parent.menu_title
+        pos_hint: { "center_x": .5, "center_y": .85}    
     Button:
         canvas:
             Color:
@@ -28,3 +38,63 @@
         size_hint: .195, .085
         on_press: root.parent.on_menu_button_pressed()
         background_color: 0, .05, .2, .2
+    ScrollView:
+        pos_hint: {"left": 1, "top": .9}
+        stack: stack
+        do_scroll_x: True
+        do_scroll_y: False
+        always_overscoll: True
+        bar_width: dp(5)
+        bar_color: _bc
+        smooth_scroll_end: dp(8)
+        scroll_wheel_distance: dp(45)
+        StackWidget:
+            id: stack
+            size_hint: None, 1
+            width: self.minimum_width
+
+<StackWidget@StackLayout>:
+    id: stack
+    orientation: "lr-tb"
+    padding: dp(25)
+    spacing: dp(50)
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, 0
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    s1: s1
+    s2: s2
+    s3: s3
+    Site1:
+        id: s1
+    Site2:
+        id: s2
+    Site3:
+        id: s3
+
+<Site1@Site>:
+
+
+<Site2@Site>:
+
+
+<Site3@Site>:
+
+    
+<Site@RelativeLayout>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, 1
+        RoundedRectangle:
+            radius: [20, 20, 20, 20]
+        Color:
+            rgba: _ec
+        Line:
+            width: dp(1.25)
+            rounded_rectangle: (self.x, self.y, self.width, self.height, 10)
+            cap: "round"
+            joint: "round"
+    size_hint: None, 1
+    width: dp(100)
