@@ -29,6 +29,7 @@ from kivy import platform
 from kivy.app import App
 from kivy.graphics.context_instructions import Color
 from kivy.animation import Animation
+from kivy.metrics import dp
 from kivy.graphics.vertex_instructions import Line, Quad
 from kivy.properties import (
     NumericProperty,
@@ -40,6 +41,7 @@ from kivy.properties import (
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.screenmanager import Screen, ScreenManager, FadeTransition
 from kivy.lang.builder import Builder
+from random import randint
 
 # from kivy.metrics import dp
 from kivy.storage.jsonstore import JsonStore
@@ -50,6 +52,11 @@ Builder.load_file("settings.kv")
 Builder.load_file("tuto.kv")
 
 store = JsonStore("myapp.json")
+
+font = "fonts/gtr.otf"
+_ec = (0.282, 0.694, 0.882, 0.8)
+
+_bc = (0.282, 0.694, 0.882, 0.4)
 
 
 class MainWidget(RelativeLayout):
@@ -123,7 +130,7 @@ class MainWidget(RelativeLayout):
 
     ship = None
 
-    fps = NumericProperty(60)
+    fps = NumericProperty(50)
 
     def __init__(self, **kwargs):
         """
@@ -170,8 +177,9 @@ class MainWidget(RelativeLayout):
         """
         Initialisation du chemin a suivre
         """
+        colors = [(0, 0, 0, 0.5), (1, 0, 0, 0.5), (0, 1, 0, 0.5), (0, 0, 1, 0.5)]
         with self.canvas:
-            Color(1, 1, 1)
+            Color(rgba=_bc)  # colors[randint(0, 3)])
             for _ in range(0, self.NB_TILES):
                 self.tiles.append(Quad())
 
@@ -478,7 +486,7 @@ class MainWidget(RelativeLayout):
             self.SPEED_X = 3  # self.current_speed_x * self.width / 100
             self.update_pause_button_txt()
             self.pause_widget.opacity = 0
-            self.pause_button.pos_hint = {"right": 0.18, "top": 1}
+            self.pause_button.pos_hint = {"right": 1, "top": 1}
             self.sound_music1.play()
             self.score_wdgt.opacity = 1
         else:

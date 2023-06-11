@@ -5,7 +5,9 @@
 from typing import List
 from xmlrpc.client import Boolean
 from kivy.graphics.vertex_instructions import Triangle
-from kivy.graphics.context_instructions import Color
+from kivy.graphics import Color, Line
+from kivy.metrics import dp
+from random import randint
 
 
 SHIP_WIDTH = 0.1
@@ -14,10 +16,17 @@ SHIP_BASE_Y = 0.04
 ship_coordinates = [(0, 0), (0, 0), (0, 0)]
 
 
+def get_colors_from(colors: tuple):
+    for item in colors:
+        return item
+
+
 def init_ship(self):
     """Initialisation du vaisseau spatial"""
+    colors = [(0, 0, 0), (1, 0, 0), (0, 1, 0), (0, 0, 1)]
+    # color = get_colors_from(self, colors[2])
     with self.canvas:
-        Color(0, 0, 0)
+        Color(rgb=colors[randint(0, 3)])
         self.ship = Triangle()
 
 

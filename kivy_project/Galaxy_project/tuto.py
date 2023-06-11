@@ -147,8 +147,8 @@ class LoadingWidget(RelativeLayout):
         self.add_widget(self.label)
 
     def on_parent(self, widget, parent):
-        anim1 = Animation(value=100, duration=0)
-        anim2 = Animation(opacity=0, duration=0)
+        anim1 = Animation(value=100, duration=10)
+        anim2 = Animation(opacity=0, duration=1)
         anim2.bind(on_complete=lambda *args: self.parent.switch_screen())
         anim1.bind(on_complete=lambda *args: anim2.start(self))
         anim1.start(self.progress)
@@ -215,12 +215,12 @@ class TransitionWidget(RelativeLayout):
         self.sync.start_animation()
 
     def on_parent(self, widget, parent):
-        Clock.schedule_once(self.animate, 10)
+        Clock.schedule_once(self.animate, 5)
 
     def animate(self, *args):
         anim = Animation(opacity=0, duration=1)
         anim.bind(
-            on_complete=lambda *args: setattr(
+            on_progress=lambda *args: setattr(
                 App.get_running_app().root, "current", "second"
             )
         )

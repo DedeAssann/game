@@ -12,7 +12,7 @@
 #: set home_button_title "PLAY"
 #: set pause_widget_title "R E S U M E"
 #: set settings_button_title "SETTINGS"
-#: set return_settings_button_title "HOME"
+#: set return_settings_button_title "BACK"
 #: set _bc (.282, .694, .882, .2) #(.180, .525, .757, .3)
 #: set _ec (.282, .694, .882, .8)
 #: set _bw dp(3)
@@ -31,10 +31,12 @@ WindowManager:
         id: settings_window
     GameWindow:
         id: game_window
-    SecondWindow:
-        id: second_window
-    Tutorial:
-        id: tuto
+    MenuWindow:
+        id: menu_window
+    #SecondWindow:
+    #    id: second_window
+    #Tutorial:
+    #    id: tuto
 
 
 # Window manager
@@ -58,6 +60,24 @@ WindowManager:
         id: settings_widget
 
 
+# the Menu Window
+
+<MenuWindow>:
+    name: "menu"
+    menu_widget: menu_widget
+    #menu_widget_2: menu_widget_2
+    menu_title: "G  A  L  A  X  Y"
+    menu_button_title: "NEXT"
+    MenuWidget:
+        id: menu_widget
+    MyCustomButton:
+        text: "BACK"
+        size_hint: .18, .08
+        pos_hint: {"x": 0, "top": 1}
+        font_size: dp(30)
+        on_press: app.root.current = "home_screen"
+
+
 # the game window
 
 <GameWindow>:
@@ -69,7 +89,7 @@ WindowManager:
     HomeButton:
         id: home_button
         on_press:
-            app.root.current = "home_screen"
+            app.root.current = "menu"
 
 
 # home window
@@ -107,7 +127,7 @@ WindowManager:
         size_hint: .18, .08
         background_color: 0, 0, 0, 0
         on_press:
-            app.root.current = "game_screen"
+            app.root.current = "menu"
     MyCustomButton:
         font_size: dp(30)
         font_name: font
@@ -124,7 +144,7 @@ WindowManager:
         Rectangle:
             size: self.size
             source: "galaxy_images/bg1.jpg"
-    menu_widget: menu_widget
+    menu_widget: start_widget
     pause_widget: pause_widget
     pause_button: pause_button
     score_wdgt: score_wdgt
@@ -137,8 +157,8 @@ WindowManager:
         text: root.pause_button_txt
         on_press:
             root.on_pause_button_pressed()
-    MenuWidget:
-        id: menu_widget
+    StartWidget:
+        id: start_widget
     GridLayout:
         id: score_wdgt
         cols: 2
@@ -192,7 +212,7 @@ WindowManager:
     font_size: dp(35)
     font_name: font
     text: return_settings_button_title
-    pos_hint: { "right": 1, "top": 1}
+    pos_hint: { "left": 1, "top": 1}
     size_hint: .18, .08
 
 
@@ -214,13 +234,14 @@ WindowManager:
     id: pause_button
     font_name: font
     font_size: dp(30)
-    pos_hint: {"right": .18, "top": 1}
+    pos_hint: {"right": 1, "top": 1}
     size_hint: .18, .075
     disabled: True
 
 # Creation of all the settings page button
 # Management all the buttons on the settings page
 # My Custom Button
+
 <MyCustomButton@Button>:
     id: custom_btn
     canvas.before:
@@ -239,3 +260,4 @@ WindowManager:
             radius: [10, 10, 10, 10]
     background_color: _bc
     background_width: dp(40)
+    font_name: font

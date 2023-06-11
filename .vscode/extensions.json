@@ -5,6 +5,7 @@
     "blackboxapp.blackbox",
     "github.copilot",
     "magicstack.magicpython",
-    "zhang-renyang.chat-gpt"
+    "zhang-renyang.chat-gpt",
+    "alefragnani.project-manager"
   ]
 }

@@ -2,6 +2,7 @@
 #: set _ec (.282, .694, .882, .8)
 
 <MenuWidget>:
+    s_stack: s_stack
     canvas.before:
         Rectangle:
             size: self.size
@@ -16,85 +17,408 @@
         color: 0, 0, 0, .5
         font_name: font
         text: root.parent.menu_title
-        pos_hint: { "center_x": .495, "center_y": .849}
+        pos_hint: { "center_x": .495, "center_y": .869}
     Label:
         font_size: dp(100)
         font_name: font
         text: root.parent.menu_title
-        pos_hint: { "center_x": .5, "center_y": .85}    
-    Button:
-        canvas:
+        pos_hint: { "center_x": .5, "center_y": .87}    
+    ScrollView:
+        canvas.before:
             Color:
                 rgba: _ec
             Line:
-                width: dp(1.25)
-                rounded_rectangle: (self.x, self.y, self.width, self.height, 10)
-                cap: "round"
-                joint: "round"
-        font_size: dp(35)
-        font_name: font
-        text: root.parent.menu_button_title
-        pos_hint: { "center_x": .5, "center_y": .3}
-        size_hint: .195, .085
-        on_press: root.parent.on_menu_button_pressed()
-        background_color: 0, .05, .2, .2
-    ScrollView:
-        pos_hint: {"left": 1, "top": .9}
-        stack: stack
+                width: dp(4)
+                points: self.x, self.y, self.width, self.y
+            Line:
+                width: dp(4)
+                points: self.x, self.top, self.width, self.top
+        pos_hint: {"center_x": .5, "top": .775}
+        size_hint: 1, .65
+        s_stack: s_stack
         do_scroll_x: True
         do_scroll_y: False
         always_overscoll: True
-        bar_width: dp(5)
-        bar_color: _bc
+        bar_width: dp(2)
+        bar_color: 1, 0, 0, .8
         smooth_scroll_end: dp(8)
-        scroll_wheel_distance: dp(45)
-        StackWidget:
-            id: stack
+        scroll_wheel_distance: dp(100)
+        StackSites:
+            id: s_stack
             size_hint: None, 1
             width: self.minimum_width
 
-<StackWidget@StackLayout>:
-    id: stack
-    orientation: "lr-tb"
-    padding: dp(25)
-    spacing: dp(50)
+<StackSites@StackLayout>:
+    orientation: "tb-lr"
+    spacing: dp(20)
     canvas.before:
         Color:
-            rgba: 0, 0, 0, 0
+            rgba: 0, 0, 0, .6
         Rectangle:
             size: self.size
             pos: self.pos
     s1: s1
     s2: s2
     s3: s3
+    s4: s4
+    s5: s5
+    s6: s6
+    s7: s7
     Site1:
         id: s1
     Site2:
         id: s2
     Site3:
         id: s3
+    Site4:
+        id: s4
+    Site5:
+        id: s5
+    Site6:
+        id: s6
+    Site7:
+        id: s7
 
 <Site1@Site>:
+    s_button: s_button
+    container: container
+    site_img: "wallpaper/bg1.jpg"
+    BoxLayout:
+        id: container
+        label: label
+        label2: label2
+        size_hint: 1, 1
+        orientation: "vertical"
+        padding: 10
+        Label:
+            id: label
+            text:'Joven'
+            size_hint: 1, .4
+            font_name: font
+            font_size: dp(40)
+        SpecialButton:    
+            id: s_button        
+            canvas.before:                                    
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    source: "wallpaper/bg1.jpg"
+                    radius: [20, 20, 20, 20]
+            on_state: 
+                root.parent.parent.parent.on_site_selection(self)
+        Label:
+            id: label2
+            text:'Planetary System'
+            size_hint: 1, .4
+            font_name: font
+            font_size: dp(35)
 
 
 <Site2@Site>:
+    s_button: s_button
+    container: container
+    site_img: "wallpaper/dying2.jpg"
+    BoxLayout:
+        id: container
+        label: label
+        label2: label2
+        size_hint: 1, 1
+        orientation: "vertical"
+        padding: 10
+        Label:
+            id: label2
+            text:'Galaxy'
+            size_hint: 1, .4
+            font_name: font
+            font_size: dp(40)
+        SpecialButton:  
+            id: s_button                      
+            canvas.before:                                    
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    source: "wallpaper/dying.jpg"
+                    radius: [20, 20, 20, 20]
+            on_state: root.parent.parent.parent.on_site_selection(self)
+        Label:
+            id: label
+            text:'Dying World'
+            size_hint: 1, .4
+            font_name: font
+            font_size: dp(35)
 
 
 <Site3@Site>:
+    s_button: s_button
+    site_img: "wallpaper/debris.jpg"
+    container: container
+    BoxLayout:
+        id: container
+        label: label
+        size_hint: 1, 1
+        orientation: "vertical"
+        padding: 10
+        Label:
+            id: label
+            text:'Pebble'
+            size_hint: 1, .4
+            font_name: font
+            font_size: dp(40)
+        SpecialButton:            
+            id: s_button
+            canvas.before:                                    
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    source: "wallpaper/debris.jpg"
+                    radius: [20, 20, 20, 20]
+            on_state: root.parent.parent.parent.on_site_selection(self)
+        Label:
+            text:'Planetary System'
+            size_hint: 1, .4
+            font_name: font
+            font_size: dp(35)
 
-    
-<Site@RelativeLayout>:
+
+<Site4@Site>:
+    s_button: s_button
+    site_img: "wallpaper/space_network.jpg"
+    container: container
+    BoxLayout:
+        id: container
+        label: label
+        size_hint: 1, 1
+        orientation: "vertical"
+        padding: 10
+        Label:
+            text:'Network'
+            size_hint: 1, .4
+            font_name: font
+            font_size: dp(40)
+        SpecialButton:            
+            id: s_button
+            canvas.before:
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    source: "wallpaper/space_network.jpg"
+                    radius: [20, 20, 20, 20]
+            on_state: root.parent.parent.parent.on_site_selection(self)
+        Label:
+            id: label
+            text:'Data System'
+            size_hint: 1, .4
+            font_name: font
+            font_size: dp(35)
+
+
+<Site5@Site>:
+    s_button: s_button
+    site_img: "wallpaper/dwarf.jpg"
+    container: container
+    BoxLayout:
+        id: container
+        label: label
+        size_hint: 1, 1
+        orientation: "vertical"
+        padding: 10
+        Label:
+            id: label
+            text:'White Dwarf'
+            size_hint: 1, .4
+            font_name: font
+            font_size: dp(40)
+        SpecialButton:   
+            id: s_button         
+            canvas.before:
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    source: "wallpaper/dwarf.jpg"
+                    radius: [20, 20, 20, 20]
+            on_state: root.parent.parent.parent.on_site_selection(self)
+        Label:
+            text:'Solar System'
+            size_hint: 1, .4
+            font_name: font
+            font_size: dp(35)
+
+
+<Site6@Site>:
+    s_button: s_button
+    site_img: "wallpaper/mania_galaxy.jpg"
+    container: container
+    BoxLayout:
+        id: container
+        label: label
+        size_hint: 1, 1
+        orientation: "vertical"
+        padding: 10
+        Label:
+            id: label
+            text:'E-Fire'
+            size_hint: 1, .4
+            font_name: font
+            font_size: dp(40)
+        SpecialButton:
+            id: s_button
+            canvas.before:
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    source: "wallpaper/mania_galaxy.jpg"
+                    radius: [20, 20, 20, 20]
+            on_state: root.parent.parent.parent.on_site_selection(self)
+        Label:
+            text:'Cloud Star'
+            size_hint: 1, .4
+            font_name: font
+            font_size: dp(35)
+
+
+<Site7@Site>:
+    s_button: s_button
+    site_img: "wallpaper/planet1.jpg"
+    container: container
+    BoxLayout:
+        id: container
+        label: label
+        size_hint: 1, 1
+        orientation: "vertical"
+        padding: 10
+        Label:
+            id: label
+            text:'Triangulo-P'
+            size_hint: 1, .4
+            font_name: font
+            font_size: dp(40)
+        SpecialButton:                        
+            id: s_button
+            canvas.before:
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    source: "wallpaper/planet1.jpg"
+                    radius: [20, 20, 20, 20]
+            on_state: root.parent.parent.parent.on_site_selection(self)
+        Label:
+            text:'Abstract World'
+            size_hint: 1, .4
+            font_name: font
+            font_size: dp(35)
+
+
+<SpecialButton>:            
+    group: "site options"
     canvas.before:
         Color:
-            rgba: 0, 0, 0, 1
+            rgba: _ec
+        Line:
+            width: dp(1.25)
+            rounded_rectangle: (self.x, self.y, self.width, self.height, 20)
+            cap: "round"
+            joint: "round"
+        Color:
+            rgba: self.color
+    background_color: 0, 0, 0, 0
+    size_hint: 1, 1
+    on_state: root.highlight()
+
+<Site>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .4
         RoundedRectangle:
+            pos: self.pos
+            size: self.size
             radius: [20, 20, 20, 20]
         Color:
             rgba: _ec
         Line:
             width: dp(1.25)
-            rounded_rectangle: (self.x, self.y, self.width, self.height, 10)
+            rounded_rectangle: (self.x, self.y, self.width, self.height, 20)
             cap: "round"
             joint: "round"
     size_hint: None, 1
-    width: dp(100)
+    width: dp(500)
+
+
+# Popup Widget in Menu
+
+<SitesPopup>:
+    #layout: layout
+    canvas.before:
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [20, 20, 20, 20]
+            source: "wallpaper/mania_galaxy.jpg"
+        Color:
+            rgba: .2, .7, 1, 1
+        Line:
+            width: dp(3)
+            rounded_rectangle: (self.x, self.y, self.width, self.height, 20)
+            cap: "round"
+            joint: "round"
+    title: "|   S i t e   |"
+    background_color: 0, 0, 0, .1
+    opacity: 1
+    title_align: "center"
+    title_size: dp(80)
+    title_font: font
+    title_color: .2, .7, 1, 1
+    pos_hint: {"center_x": .5, "center_y": .5}
+
+
+
+# The start widget
+
+<StartWidget>:
+    canvas:
+        Color:
+            rgba: 0, 0, 0, .8
+        Rectangle:
+            size: self.size
+    Label:
+        font_size: dp(100)
+        color: 0, 0, 0, .5
+        font_name: font
+        text: root.parent.menu_title
+        pos_hint: { "center_x": .495, "center_y": .865}
+    Label:
+        font_size: dp(100)
+        font_name: font
+        text: root.parent.menu_title
+        pos_hint: { "center_x": .5, "center_y": .87}    
+    Button:
+        canvas.before:
+            Color:
+                rgba: .282, .694, .882, .05
+            RoundedRectangle:
+                pos: self.pos
+                size: self.size
+                radius: [20, 20, 20, 20]
+            Color:
+                rgba: _ec
+            Line:
+                width: dp(1.25)
+                rounded_rectangle: (self.x, self.y, self.width, self.height, 20)
+                cap: "round"
+                joint: "round"
+        background_color: 0, 0, 0, 0
+        text: "PLAY"
+        font_name: font
+        font_size: dp(50)
+        size_hint: .25, .1
+        pos_hint: {"center_x":.5, "center_y":.25}
+        on_press: root.parent.on_menu_button_pressed()
+
+
+# ...
+
+
+<TransitWidget>:
+    canvas.before:
+        Rectangle:
+            size: self.size
+            source: "wallpaper/milano.jpg"

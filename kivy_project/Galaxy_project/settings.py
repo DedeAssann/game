@@ -24,7 +24,6 @@ from kivy.graphics import (
     InstructionGroup,
     # RoundedRectangleEffect,
 )  # Color, RoundedRectangle, Line
-from kivy.uix.effectwidget import EffectWidget
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.popup import Popup
 from kivy.metrics import dp
@@ -48,9 +47,6 @@ class RoundButton(Button):
 
         with self.canvas.before:
             Color(0.262, 0.714, 0.98, 0.025)  # Set the color of the rounded rectangle
-
-            # Draw a border line
-            # self.border_line = Line(width=2)
 
             # Draw a rounded rectangle
             self.rounded_rect = RoundedRectangle()
