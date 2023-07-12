@@ -433,8 +433,8 @@ class MainWidget(RelativeLayout):
                 if self.current_y_loop >= 9:
                     self.speed_update()
                 self.generate_tiles_coordinates()
-                print("actual speed: " + str(self.SPEED))
-                print("loop : " + str(self.current_y_loop))
+                # print("actual speed: " + str(self.SPEED))
+                # print("loop : " + str(self.current_y_loop))
 
             speed_x = self.current_speed_x * self.width / 100
             self.current_offset_x += speed_x * time_factor

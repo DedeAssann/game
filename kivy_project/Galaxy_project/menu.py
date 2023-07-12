@@ -35,9 +35,6 @@ class TransitWidget(TransitionWidget):
 
 
 class MenuWindow(Screen):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
     def get_down_button(self):
         sites = self.menu_widget.s_stack.children
         for site in sites:
@@ -56,7 +53,10 @@ class MenuWidget(RelativeLayout):
             # Retrieving the Image and the Title
             site = self.parent.get_down_button()
             site_img = site.site_img
-            self.parent.manager.game_window.main_widget.canvas.after.clear()
+            # Unhighlighting the widget and setting it's state to "normal"
+            widget.state = "normal"
+            widget.unhighlight()
+            #self.parent.manager.game_window.main_widget.canvas.after.clear()
             with self.parent.manager.game_window.main_widget.canvas.before:
                 self.parent.manager.game_window.main_widget.rect = Rectangle(
                     source=site_img,
@@ -70,9 +70,6 @@ class MenuWidget(RelativeLayout):
             site_name = site.container.label.text
             # Giving the site the title
             self.sitepopup = SitesPopup()
-            # Unhighlighting the widget and setting it's state to "normal"
-            # widget.state = "normal"
-            widget.unhighlight()
             # Creating the Main Layout that the popup's gonna display
             mainlayout = RelativeLayout(
                 pos_hint={"center_x": 0.5, "center_y": 0.5},
@@ -96,9 +93,10 @@ class MenuWidget(RelativeLayout):
             sitelabel = Label(
                 text=site_name,
                 font_name=font,
-                font_size=dp(95),
+                font_size=dp(200),
                 size_hint=(0.8, 0.8),
-                color=_ec,
+                # color=_ec,
+                opacity=0.3,
                 halign="justify",
                 valign="center",
                 pos_hint={"center_x": 0.5, "center_y": 0.5},
@@ -126,6 +124,7 @@ class MenuWidget(RelativeLayout):
             playbutton.bind(on_press=self.switch_to_game)
             playbutton.bind(on_press=self.sitepopup.dismiss)
             container.add_widget(playbutton)
+        pass
 
     def update_rect(self, widget, *args):
         x, y = widget.pos
@@ -155,7 +154,6 @@ class MenuWidget(RelativeLayout):
 class SpecialButton(ToggleButton):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
         self.background_color = (0, 0, 0, 0)
 
     def highlight(self, *args):
@@ -185,10 +183,10 @@ class SpecialButton(ToggleButton):
                 )
 
     def unhighlight(self):
-        if hasattr(self, "rounded_rect") and hasattr(self, "line"):
-            self.canvas.after.remove(self.rounded_rect), self.canvas.after.remove(
-                self.line
-            )
+        if hasattr(self, "rounded_rect"):
+            self.canvas.after.remove(self.rounded_rect)
+        if hasattr(self, "line"):
+            self.canvas.after.remove(self.line)
 
 
 class Site(RelativeLayout):

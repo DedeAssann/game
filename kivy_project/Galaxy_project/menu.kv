@@ -83,6 +83,8 @@
     s_button: s_button
     container: container
     site_img: "wallpaper/bg1.jpg"
+    tile_color: ()
+    ship_color: ()
     BoxLayout:
         id: container
         label: label
@@ -104,8 +106,7 @@
                     size: self.size
                     source: "wallpaper/bg1.jpg"
                     radius: [20, 20, 20, 20]
-            on_state: 
-                root.parent.parent.parent.on_site_selection(self)
+            on_state: root.parent.parent.parent.on_site_selection(self)
         Label:
             id: label2
             text:'Planetary System'
@@ -117,7 +118,9 @@
 <Site2@Site>:
     s_button: s_button
     container: container
-    site_img: "wallpaper/dying2.jpg"
+    site_img: "wallpaper/dying.jpg"
+    tile_color: ()
+    ship_color: ()
     BoxLayout:
         id: container
         label: label
@@ -151,6 +154,8 @@
 <Site3@Site>:
     s_button: s_button
     site_img: "wallpaper/debris.jpg"
+    tile_color: ()
+    ship_color: ()
     container: container
     BoxLayout:
         id: container
@@ -184,6 +189,8 @@
     s_button: s_button
     site_img: "wallpaper/space_network.jpg"
     container: container
+    tile_color: ()
+    ship_color: ()
     BoxLayout:
         id: container
         label: label
@@ -216,6 +223,8 @@
     s_button: s_button
     site_img: "wallpaper/dwarf.jpg"
     container: container
+    tile_color: ()
+    ship_color: ()
     BoxLayout:
         id: container
         label: label
@@ -247,6 +256,8 @@
 <Site6@Site>:
     s_button: s_button
     site_img: "wallpaper/mania_galaxy.jpg"
+    tile_color: ()
+    ship_color: ()
     container: container
     BoxLayout:
         id: container
@@ -280,6 +291,8 @@
     s_button: s_button
     site_img: "wallpaper/planet1.jpg"
     container: container
+    tile_color: ()
+    ship_color: ()
     BoxLayout:
         id: container
         label: label

@@ -460,9 +460,11 @@
             rgba: .458, .866, .866, 1
         Line:
             width: dp(2)
-            rectangle: self.x, self.y, self.width, self.height
+            rounded_rectangle: (self.x, self.y, self.width, self.height, 20)
+            cap: "round"
+            joint: "round"
     text: "SYNCHRONIZING ..."
-    font_size: dp(40)
+    font_size: dp(40)#self.texture_size[1]#dp(40)
     font_name: font
     bold: True
     size_hint: None, None
