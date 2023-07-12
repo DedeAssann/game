@@ -152,7 +152,9 @@
                 rgba: .458, .866, .866, 1
             Line:
                 width: dp(.5)
-                rectangle: self.x, self.y, self.width, self.height
+                rounded_rectangle: self.x, self.y, self.width, self.height, 20
+                cap: "round"
+                joint: "round"
         font_name: "fonts/Eurostile.ttf"
         font_size: dp(60)
         bold: True
@@ -214,7 +216,9 @@
                 rgba: .458, .866, .866, 1
             Line:
                 width: dp(.5)
-                rectangle: self.x, self.y, self.width, self.height
+                rounded_rectangle: self.x, self.y, self.width, self.height, 20
+                cap: "round"
+                joint: "round"
         font_name: font
         font_size: dp(47.5)
         size_hint: .5, .65
@@ -293,12 +297,14 @@
             app.store.put("Language", name="Language", value=root.LANGUAGES[self.text])
 
 <StringInput>:
-    #canvas.after:
-    #    Color:
-    #        rgba: .458, .866, .866, 1
-    #    Line:
-    #        width: dp(.5)
-    #        rectangle: self.x, self.y, self.width, self.height
+    canvas.after:
+        Color:
+            rgba: .458, .866, .866, 1
+        Line:
+            width: dp(.5)
+            rounded_rectangle: self.x, self.y, self.width, self.height, 20
+            cap: "round"
+            joint: "round"
     font_name: font
     font_size: dp(47.5)
     size_hint: .5, .65
@@ -312,12 +318,12 @@
     cursor_color: 1, 1, 1, 1
 
 <FloatInput>:
-    #canvas.after:
-    #    Color:
-    #        rgba: .458, .866, .866, 1
-    #    Line:
-    #        width: dp(.5)
-    #        rectangle: self.x, self.y, self.width, self.height
+    canvas.after:
+        Color:
+            rgba: .458, .866, .866, 1
+        Line:
+            width: dp(.5)
+            rounded_rectangle: self.x, self.y, self.width, self.height, 20
     font_name: "fonts/Lcd.ttf"
     font_size: dp(47.5)
     size_hint: .5, .65

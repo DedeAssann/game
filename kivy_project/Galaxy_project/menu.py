@@ -54,9 +54,9 @@ class MenuWidget(RelativeLayout):
             site = self.parent.get_down_button()
             site_img = site.site_img
             # Unhighlighting the widget and setting it's state to "normal"
+            # widget.unhighlight()
             widget.state = "normal"
-            widget.unhighlight()
-            #self.parent.manager.game_window.main_widget.canvas.after.clear()
+            # self.parent.manager.game_window.main_widget.canvas.after.clear()
             with self.parent.manager.game_window.main_widget.canvas.before:
                 self.parent.manager.game_window.main_widget.rect = Rectangle(
                     source=site_img,
@@ -93,13 +93,13 @@ class MenuWidget(RelativeLayout):
             sitelabel = Label(
                 text=site_name,
                 font_name=font,
-                font_size=dp(200),
+                font_size=dp(90),
                 size_hint=(0.8, 0.8),
                 # color=_ec,
                 opacity=0.3,
                 halign="justify",
                 valign="center",
-                pos_hint={"center_x": 0.5, "center_y": 0.5},
+                pos_hint={"center_x": 0.5, "center_y": 0.7},
             )
 
             container.add_widget(sitelabel)
@@ -124,7 +124,6 @@ class MenuWidget(RelativeLayout):
             playbutton.bind(on_press=self.switch_to_game)
             playbutton.bind(on_press=self.sitepopup.dismiss)
             container.add_widget(playbutton)
-        pass
 
     def update_rect(self, widget, *args):
         x, y = widget.pos
@@ -183,10 +182,11 @@ class SpecialButton(ToggleButton):
                 )
 
     def unhighlight(self):
-        if hasattr(self, "rounded_rect"):
-            self.canvas.after.remove(self.rounded_rect)
-        if hasattr(self, "line"):
-            self.canvas.after.remove(self.line)
+        if hasattr(self, "rounded_rect") or hasattr(self, "line"):
+            self.canvas.after.remove(self.rounded_rect), self.canvas.after.remove(
+                self.line
+            )
+        pass
 
 
 class Site(RelativeLayout):

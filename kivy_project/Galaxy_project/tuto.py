@@ -22,13 +22,6 @@ from kivy.uix.screenmanager import Screen
 import re
 
 
-# class WindowManagerTuto(ScreenManager):
-#    def __init__(self, **kwargs):
-#        super().__init__(**kwargs)
-#        transition = NoTransition(duration=0)
-#        self.transition = transition
-
-
 class FloatInput(TextInput):
     "..."
 
@@ -147,7 +140,7 @@ class LoadingWidget(RelativeLayout):
         self.add_widget(self.label)
 
     def on_parent(self, widget, parent):
-        anim1 = Animation(value=100, duration=10)
+        anim1 = Animation(value=100, duration=5)
         anim2 = Animation(opacity=0, duration=1)
         anim2.bind(on_complete=lambda *args: self.parent.switch_screen())
         anim1.bind(on_complete=lambda *args: anim2.start(self))
@@ -253,12 +246,12 @@ class SyncLabel(Label):
     def start_animation(self):
         for _ in range(2):
             self.anim = Animation(angle=360, duration=0)
-            self.anim += Animation(size=(600, 100), duration=0)
+            self.anim += Animation(size=(600, 100), duration=1)
             self.anim += Animation(
                 size=(self.texture_size[0] + dp(10), self.texture_size[1] + dp(5)),
                 duration=3,
             )
-            self.anim += Animation(size=(600, 100), duration=0)
+            self.anim += Animation(size=(600, 100), duration=1)
             self.anim.repeat = True
         self.anim.start(self)
 

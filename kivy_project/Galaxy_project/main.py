@@ -55,7 +55,6 @@ store = JsonStore("myapp.json")
 
 font = "fonts/gtr.otf"
 _ec = (0.282, 0.694, 0.882, 0.8)
-
 _bc = (0.282, 0.694, 0.882, 0.4)
 
 
@@ -177,9 +176,9 @@ class MainWidget(RelativeLayout):
         """
         Initialisation du chemin a suivre
         """
-        colors = [(0, 0, 0, 0.5), (1, 0, 0, 0.5), (0, 1, 0, 0.5), (0, 0, 1, 0.5)]
+        colors = [(0, 0, 0, 0.8), (1, 0, 0, 0.5), (0, 1, 0, 0.5), (0, 0, 1, 0.5)]
         with self.canvas:
-            Color(rgba=_bc)  # colors[randint(0, 3)])
+            Color(rgba=colors[0])  # colors[randint(0, 3)])
             for _ in range(0, self.NB_TILES):
                 self.tiles.append(Quad())
 
