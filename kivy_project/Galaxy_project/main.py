@@ -5,12 +5,10 @@ A present, dans ce module je developpe avec aide le jeu du projet Galaxy.
 Ce jeu consiste a deplacer un spaceship sur un plan, et suivre le chemin trace devant soi...
 """
 
-# pylint: disable = wrong-import-order, no-name-in-module, import-outside-toplevel, wrong-import-position
+# pylint: disable = wrong-import-order, import-outside-toplevel, wrong-import-position
 
 
 from kivy.config import Config
-
-from tuto import FirstWindow, SecondWindow, Tutorial
 
 # configuring the screen which is gonna be opened by kivy
 Config.set("graphics", "width", "1200")
